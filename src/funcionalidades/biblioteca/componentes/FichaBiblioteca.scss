@@ -1,147 +1,272 @@
 ﻿@use "../../../estilos/variaveis" as *;
 
 .ficha-biblioteca {
-  padding: 1.2rem 1.3rem;
-  border-radius: 16px;
-  background: rgba(40, 32, 70, 0.55);
-  border: 1px solid rgba(167, 139, 250, 0.25);
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  transition: border-color $transicao-rapida, transform $transicao-rapida;
+  gap: 1.35rem;
+  min-width: 0;
+  height: 100%;
+  padding: clamp(1.25rem, 2vw, 1.75rem);
+  border: 1px solid $oraculum-pergaminho-escuro;
+  border-radius: 0;
+  background: $oraculum-pergaminho-claro;
+  box-shadow: none;
+  color: $oraculum-tinta;
 
-  &:hover {
-    border-color: rgba(167, 139, 250, 0.5);
-    transform: translateY(-2px);
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
   }
 
   &__topo {
     display: flex;
     align-items: center;
-    gap: 0.8rem;
+    gap: 1rem;
+    min-width: 0;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid rgba($oraculum-tinta, 0.2);
   }
 
   &__icone {
     display: grid;
     place-items: center;
-    width: 46px;
-    height: 46px;
     flex-shrink: 0;
-    border-radius: 12px;
-    background: rgba(167, 139, 250, 0.12);
-    border: 1px solid rgba(167, 139, 250, 0.3);
-    color: $cor-primaria;
+    width: 64px;
+    height: 64px;
+    border: 1px solid rgba($oraculum-vinho, 0.45);
+    border-radius: 50%;
+    background: rgba($oraculum-vinho, 0.06);
+    color: $oraculum-vinho;
+
+    svg {
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  &__identidade {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    flex: 1;
+    min-width: 0;
   }
 
   &__nome {
+    margin: 0;
     font-family: $fonte-titulo;
-    font-size: 1.05rem;
-    color: $cor-primaria;
-    line-height: 1.2;
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    font-weight: 600;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+    color: $oraculum-vinho;
   }
 
   &__extra {
-    font-size: 0.75rem;
-    color: $cor-texto-suave;
-    opacity: 0.7;
+    display: block;
+    font-family: $fonte-corpo;
+    font-size: 1rem;
     font-style: italic;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+    color: $oraculum-tinta-suave;
   }
 
   &__descricao {
-    font-size: 0.85rem;
-    line-height: 1.6;
-    color: $cor-texto-suave;
+    margin: 0;
+    font-family: $fonte-corpo;
+    font-size: 1.25rem;
+    line-height: 1.55;
+    color: $oraculum-tinta;
   }
 
   &__meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.8rem;
-    padding: 0.6rem 0;
-    border-top: 1px dashed rgba(167, 139, 250, 0.2);
-    border-bottom: 1px dashed rgba(167, 139, 250, 0.2);
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(min(100%, 110px), 1fr)
+    );
+    gap: 1rem;
+    padding: 1.15rem 0;
+    border-top: 1px solid rgba($oraculum-tinta, 0.2);
+    border-bottom: 1px solid rgba($oraculum-tinta, 0.2);
   }
 
   &__meta-item {
     display: flex;
     flex-direction: column;
-    gap: 0.1rem;
+    gap: 0.4rem;
+    min-width: 0;
   }
 
   &__meta-rotulo {
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
+    font-family: $fonte-titulo;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    line-height: 1.4;
     text-transform: uppercase;
-    color: $cor-secundaria;
-    opacity: 0.85;
+    color: $oraculum-vinho;
   }
 
   &__meta-valor {
-    font-size: 0.8rem;
-    color: $cor-texto-suave;
+    font-family: $fonte-corpo;
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+    color: $oraculum-tinta;
   }
 
   &__props {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.35rem;
+    gap: 0.5rem;
   }
 
   &__tag {
-    padding: 0.2rem 0.6rem;
-    border-radius: 999px;
-    font-size: 0.7rem;
-    background: rgba(240, 164, 184, 0.1);
-    border: 1px solid rgba(240, 164, 184, 0.3);
-    color: $cor-secundaria;
+    display: inline-flex;
+    align-items: center;
+    min-height: 29px;
+    padding: 0.35rem 0.7rem;
+    border: 1px solid rgba($oraculum-vinho, 0.3);
+    border-radius: 0;
+    background: rgba($oraculum-vinho, 0.06);
+    font-family: $fonte-corpo;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.25;
+    color: $oraculum-vinho;
   }
 
   &__bloco {
     display: flex;
     flex-direction: column;
-    gap: 0.2rem;
-    padding: 0.6rem 0.8rem;
-    border-radius: 8px;
-    background: rgba(167, 139, 250, 0.06);
-    border: 1px solid rgba(167, 139, 250, 0.15);
+    gap: 0.75rem;
+    padding: 1.15rem;
+    border: 1px solid rgba($oraculum-vinho, 0.2);
+    border-radius: 0;
+    background: rgba($oraculum-pergaminho-escuro, 0.2);
+  }
+
+  &__bloco-cabecalho {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+
+    svg {
+      flex-shrink: 0;
+      width: 19px;
+      height: 19px;
+      color: $oraculum-cobre;
+    }
   }
 
   &__bloco-rotulo {
     font-family: $fonte-titulo;
-    font-size: 0.65rem;
+    font-size: 0.68rem;
+    font-weight: 600;
     letter-spacing: 0.08em;
+    line-height: 1.4;
     text-transform: uppercase;
-    color: $cor-secundaria;
-    opacity: 0.85;
+    color: $oraculum-vinho;
   }
 
   &__bloco-texto {
-    font-size: 0.83rem;
+    margin: 0;
+    font-family: $fonte-corpo;
+    font-size: 1.15rem;
     line-height: 1.55;
-    color: $cor-texto-suave;
+    color: $oraculum-tinta;
   }
 
   &__cuidados {
     display: flex;
     align-items: flex-start;
-    gap: 0.5rem;
-    padding: 0.55rem 0.8rem;
-    border-radius: 8px;
-    background: rgba(248, 113, 113, 0.06);
-    border-left: 3px solid #fca5a5;
+    gap: 0.85rem;
+    padding: 1.15rem;
+    border: 1px solid rgba($oraculum-cobre, 0.45);
+    border-left: 3px solid $oraculum-cobre;
+    border-radius: 0;
+    background: rgba($oraculum-cobre, 0.09);
 
-    i {
-      color: #fca5a5;
-      font-size: 0.8rem;
-      margin-top: 0.15rem;
+    > svg {
       flex-shrink: 0;
+      width: 21px;
+      height: 21px;
+      margin-top: 0.1rem;
+      color: $oraculum-vinho;
     }
+  }
+
+  &__cuidados-conteudo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+    min-width: 0;
 
     p {
-      font-size: 0.78rem;
+      margin: 0;
+      font-family: $fonte-corpo;
+      font-size: 1.1rem;
       line-height: 1.5;
-      color: $cor-texto-suave;
-      opacity: 0.9;
+      color: $oraculum-tinta;
+    }
+  }
+
+  &__cuidados-rotulo {
+    font-family: $fonte-titulo;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    line-height: 1.4;
+    text-transform: uppercase;
+    color: $oraculum-vinho;
+  }
+}
+
+@media (max-width: 700px) {
+  .ficha-biblioteca {
+    gap: 1.15rem;
+    padding: 1.25rem;
+
+    &__topo {
+      gap: 0.85rem;
+    }
+
+    &__icone {
+      width: 55px;
+      height: 55px;
+
+      svg {
+        width: 28px;
+        height: 28px;
+      }
+    }
+
+    &__descricao {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .ficha-biblioteca {
+    padding: 1.15rem;
+
+    &__nome {
+      font-size: 1rem;
+    }
+
+    &__meta {
+      gap: 0.85rem;
+    }
+
+    &__bloco,
+    &__cuidados {
+      padding: 1rem;
     }
   }
 }

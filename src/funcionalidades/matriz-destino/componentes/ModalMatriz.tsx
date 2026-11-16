@@ -1,4 +1,6 @@
-﻿import { useEffect } from "react";
+﻿import { useEffect, useId, useRef } from "react";
+import { createPortal } from "react-dom";
+import { Icon } from "@iconify/react";
 import { ARCANOS } from "../dados/arcanos";
 import "./ModalMatriz.scss";
 
@@ -9,19 +11,84 @@ interface Props {
 }
 
 const PONTOS = [
-  { letra: "A", nome: "Eu (Personalidade)", descricao: "O centro da Matriz. Representa quem você é por dentro, sua essência mais profunda." },
-  { letra: "B", nome: "Futuro", descricao: "O que está à sua frente. As tendências do seu caminho, o que você tende a se tornar." },
-  { letra: "C", nome: "Céu (Talento)", descricao: "Seu dom divino. O que você trouxe ao nascer, sua conexão com o alto." },
-  { letra: "D", nome: "Direita (Mãe)", descricao: "Sua linhagem materna. O que você herdou da sua mãe e das mulheres da família." },
-  { letra: "E", nome: "Esquerda (Pai)", descricao: "Sua linhagem paterna. O que você herdou do seu pai e dos homens da família." },
-  { letra: "F", nome: "Passado", descricao: "O que você deixou para trás. As lições aprendidas, o que já foi superado." },
-  { letra: "G", nome: "Saúde", descricao: "Sua relação com o corpo e a saúde. O que precisa de atenção nessa área." },
-  { letra: "H", nome: "Terra (Missão)", descricao: "Sua missão neste mundo. O que você veio realizar, o seu propósito concreto." },
-  { letra: "I", nome: "Finanças", descricao: "Sua relação com dinheiro e prosperidade. Os padrões que regem sua abundância." },
-  { letra: "J", nome: "Ancestral", descricao: "O que vem dos seus ancestrais. As heranças espirituais e comportamentais." },
-  { letra: "K", nome: "Karma", descricao: "Suas lições cármicas. O que você veio resolver nesta vida." },
-  { letra: "L", nome: "Dharma", descricao: "Seu caminho de realização. Como você cumpre seu propósito no mundo." },
-  { letra: "M", nome: "Propósito", descricao: "A síntese dos seus propósitos. O que orienta sua jornada maior." },
+  {
+    letra: "A",
+    nome: "Eu (Personalidade)",
+    descricao:
+      "O centro da Matriz. Representa quem você é por dentro, sua essência mais profunda.",
+  },
+  {
+    letra: "B",
+    nome: "Futuro",
+    descricao:
+      "O que está à sua frente. As tendências do seu caminho, o que você tende a se tornar.",
+  },
+  {
+    letra: "C",
+    nome: "Céu (Talento)",
+    descricao:
+      "Seu dom divino. O que você trouxe ao nascer, sua conexão com o alto.",
+  },
+  {
+    letra: "D",
+    nome: "Direita (Mãe)",
+    descricao:
+      "Sua linhagem materna. O que você herdou da sua mãe e das mulheres da família.",
+  },
+  {
+    letra: "E",
+    nome: "Esquerda (Pai)",
+    descricao:
+      "Sua linhagem paterna. O que você herdou do seu pai e dos homens da família.",
+  },
+  {
+    letra: "F",
+    nome: "Passado",
+    descricao:
+      "O que você deixou para trás. As lições aprendidas, o que já foi superado.",
+  },
+  {
+    letra: "G",
+    nome: "Saúde",
+    descricao:
+      "Sua relação com o corpo e a saúde. O que precisa de atenção nessa área.",
+  },
+  {
+    letra: "H",
+    nome: "Terra (Missão)",
+    descricao:
+      "Sua missão neste mundo. O que você veio realizar, o seu propósito concreto.",
+  },
+  {
+    letra: "I",
+    nome: "Finanças",
+    descricao:
+      "Sua relação com dinheiro e prosperidade. Os padrões que regem sua abundância.",
+  },
+  {
+    letra: "J",
+    nome: "Ancestral",
+    descricao:
+      "O que vem dos seus ancestrais. As heranças espirituais e comportamentais.",
+  },
+  {
+    letra: "K",
+    nome: "Karma",
+    descricao:
+      "Suas lições cármicas. O que você veio resolver nesta vida.",
+  },
+  {
+    letra: "L",
+    nome: "Dharma",
+    descricao:
+      "Seu caminho de realização. Como você cumpre seu propósito no mundo.",
+  },
+  {
+    letra: "M",
+    nome: "Propósito",
+    descricao:
+      "A síntese dos seus propósitos. O que orienta sua jornada maior.",
+  },
 ];
 
 const ARCANOS_LISTA = [
@@ -49,29 +116,93 @@ const ARCANOS_LISTA = [
   { numero: 22, nome: "O Louco", resumo: "Liberdade, fé, salto no desconhecido, começos." },
 ];
 
-function reduzir(n: number): number {
-  while (n > 22) {
-    n = String(n).split("").reduce((soma, d) => soma + Number(d), 0);
+function reduzir(numero: number): number {
+  while (numero > 22) {
+    numero = String(numero)
+      .split("")
+      .reduce((soma, digito) => soma + Number(digito), 0);
   }
-  return n;
+
+  return numero;
 }
 
 function somaDigitos(texto: string): number {
-  return texto.replace(/\D/g, "").split("").reduce((soma, d) => soma + Number(d), 0);
+  return texto
+    .replace(/\D/g, "")
+    .split("")
+    .reduce((soma, digito) => soma + Number(digito), 0);
 }
 
-export function ModalMatriz({ aberto, aoFechar, dataNascimento }: Props) {
-        useEffect(() => {
+export function ModalMatriz({
+  aberto,
+  aoFechar,
+  dataNascimento,
+}: Props) {
+  const tituloId = useId();
+  const fecharRef = useRef<HTMLButtonElement>(null);
+  const caixaRef = useRef<HTMLDivElement>(null);
+  const aoFecharRef = useRef(aoFechar);
+
+  useEffect(() => {
+    aoFecharRef.current = aoFechar;
+  }, [aoFechar]);
+
+  useEffect(() => {
     if (!aberto) return;
-    document.body.classList.add("modal-aberto");
+
+    const elementoAnterior = document.activeElement as HTMLElement | null;
+    const overflowAnterior = document.body.style.overflow;
+
+    document.body.style.overflow = "hidden";
+
+    fecharRef.current?.focus();
+
+    const aoPressionarTecla = (evento: KeyboardEvent) => {
+      if (evento.key === "Escape") {
+        aoFecharRef.current();
+      }
+
+      if (evento.key === "Tab" && caixaRef.current) {
+        const elementos = Array.from(
+          caixaRef.current.querySelectorAll<HTMLElement>(
+            'button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+          )
+        );
+
+        if (elementos.length === 0) {
+          evento.preventDefault();
+          return;
+        }
+
+        const primeiro = elementos[0];
+        const ultimo = elementos[elementos.length - 1];
+
+        if (evento.shiftKey && document.activeElement === primeiro) {
+          evento.preventDefault();
+          ultimo.focus();
+        } else if (
+          !evento.shiftKey &&
+          document.activeElement === ultimo
+        ) {
+          evento.preventDefault();
+          primeiro.focus();
+        }
+      }
+    };
+
+    document.addEventListener("keydown", aoPressionarTecla);
+
     return () => {
-      document.body.classList.remove("modal-aberto");
+      document.body.style.overflow = overflowAnterior;
+      document.removeEventListener("keydown", aoPressionarTecla);
+      elementoAnterior?.focus();
     };
   }, [aberto]);
 
   if (!aberto) return null;
 
-  const [ano, mes, dia] = dataNascimento.split("-");
+  const [ano = "", mes = "", dia = ""] = dataNascimento.split("-");
+
   const diaStr = dia.padStart(2, "0");
   const mesStr = mes.padStart(2, "0");
 
@@ -105,106 +236,222 @@ export function ModalMatriz({ aberto, aoFechar, dataNascimento }: Props) {
     { letra: "M", formula: `K + L = ${K} + ${L} = ${M}`, arcano: ARCANOS[M]?.nome },
   ];
 
-  return (
-    <div className="modal-matriz" onClick={aoFechar}>
-      <div className="modal-matriz__caixa" onClick={(e) => e.stopPropagation()}>
-        <div className="modal-matriz__fechar-wrapper">
-          <button type="button" className="modal-matriz__fechar" onClick={aoFechar} aria-label="Fechar">
-            <i className="fa-solid fa-xmark" />
-          </button>
-        </div>
-
-        <button type="button" className="modal-matriz__fechar" onClick={aoFechar} aria-label="Fechar">
-          <i className="fa-solid fa-xmark" />
+  return createPortal(
+    <div
+      className="modal-matriz"
+      onMouseDown={(evento) => {
+        if (evento.target === evento.currentTarget) {
+          aoFechar();
+        }
+      }}
+    >
+      <div
+        ref={caixaRef}
+        className="modal-matriz__caixa"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={tituloId}
+      >
+        <button
+          ref={fecharRef}
+          type="button"
+          className="modal-matriz__fechar"
+          onClick={aoFechar}
+          aria-label="Fechar modal"
+        >
+          <Icon icon="mdi:close" />
         </button>
-        <h2 className="modal-matriz__titulo">A Matriz do Destino</h2>
 
-        <p className="modal-matriz__texto">
-          A Matriz do Destino é um sistema russo de autoconhecimento baseado nos <strong>22 Arcanos Maiores do Tarô</strong>.
-          Ela combina o tarô tradicional com a numerologia, gerando um mapa energético que revela os padrões
-          que regem a sua vida.
-        </p>
+        <header className="modal-matriz__cabecalho">
+          <div className="modal-matriz__emblema" aria-hidden="true">
+            <Icon icon="mdi:shape-outline" />
+          </div>
 
-        <h3 className="modal-matriz__subtitulo">Como funciona</h3>
-        <p className="modal-matriz__texto">
-          A Matriz é calculada a partir da sua <strong>data de nascimento</strong>. Cada dígito da data é somado
-          e o resultado é reduzido até virar um número de <strong>1 a 22</strong> — que corresponde a um dos
-          22 arcanos. A partir desses números básicos, são gerados os demais pontos através de somas diagonais.
-        </p>
+          <span className="modal-matriz__rotulo">
+            MANUAL DE INTERPRETAÇÃO
+          </span>
 
-              <h3 className="modal-matriz__subtitulo">Como cada ponto é calculado</h3>
-        <p className="modal-matriz__texto">
-          Veja como a sua Matriz foi calculada a partir da sua data de nascimento:
-        </p>
-        <div className="modal-matriz__calculo">
-          {calculos.map((c) => (
-            <div key={c.letra} className="modal-matriz__calculo-linha">
-              <span className="modal-matriz__calculo-letra">{c.letra}</span>
-              <span className="modal-matriz__calculo-formula">
-                {c.formula} → <strong>{c.arcano}</strong>
-              </span>
+          <h2 id={tituloId} className="modal-matriz__titulo">
+            A Matriz do Destino
+          </h2>
+
+          <div className="modal-matriz__divisor" aria-hidden="true">
+            <span />
+            <Icon icon="mdi:star-four-points" />
+            <span />
+          </div>
+
+          <p className="modal-matriz__introducao">
+            Um guia sobre a composição, os cálculos e os significados
+            dos vinte e dois arcanos utilizados na Matriz do Destino.
+          </p>
+        </header>
+
+        <div className="modal-matriz__corpo">
+          <section className="modal-matriz__secao">
+            <div className="modal-matriz__secao-cabecalho">
+              <span>CAPÍTULO I</span>
+              <h3>O que é a Matriz do Destino?</h3>
             </div>
-          ))}
-        </div>
 
-        <p className="modal-matriz__texto">
-          No diagrama, cada ponto mostra a <strong>letra da posição</strong> e o <strong>número do arcano</strong>.
-          Clicando em qualquer ponto, você vê a interpretação completa do arcano que caiu ali.
-        </p>
+            <p className="modal-matriz__texto">
+              A Matriz do Destino é um sistema russo de autoconhecimento
+              baseado nos <strong>22 Arcanos Maiores do Tarô</strong>.
+              Ela combina o tarô tradicional com a numerologia,
+              gerando um mapa simbólico para interpretar diferentes
+              aspectos da vida.
+            </p>
 
-        <p className="modal-matriz__texto">
-          <strong>Regra da redução:</strong> se a soma passar de 22, somamos os dígitos do resultado até
-          chegar num número entre 1 e 22. Exemplo: 26 → 2 + 6 = 8. Isso é necessário porque existem
-          apenas 22 arcanos maiores.
-        </p>
+            <p className="modal-matriz__texto">
+              Cada posição da matriz representa uma área específica,
+              enquanto o número associado a ela corresponde a um
+              arcano e à sua interpretação.
+            </p>
+          </section>
 
-        <h3 className="modal-matriz__subtitulo">Os 13 pontos da Matriz (letras A a M)</h3>
-        <p className="modal-matriz__texto">
-          Cada <strong>letra</strong> representa uma posição específica na Matriz — ou seja, uma área da sua vida.
-          O número que aparece em cada posição indica qual arcano rege aquela área.
-        </p>
-        <div className="modal-matriz__lista">
-          {PONTOS.map((p) => (
-            <div key={p.letra} className="modal-matriz__item">
-              <span className="modal-matriz__item-letra">{p.letra}</span>
-              <div className="modal-matriz__item-info">
-                <strong className="modal-matriz__item-nome">{p.nome}</strong>
-                <span className="modal-matriz__item-descricao">{p.descricao}</span>
-              </div>
+          <section className="modal-matriz__secao">
+            <div className="modal-matriz__secao-cabecalho">
+              <span>CAPÍTULO II</span>
+              <h3>Como funciona o cálculo?</h3>
             </div>
-          ))}
-        </div>
 
-        <h3 className="modal-matriz__subtitulo">Os 22 arcanos (números 1 a 22)</h3>
-        <p className="modal-matriz__texto">
-          Cada <strong>número</strong> corresponde a um arcano do tarô. O arcano que aparece em cada ponto
-          revela a energia que rege aquela área da sua vida.
-        </p>
-        <div className="modal-matriz__lista">
-          {ARCANOS_LISTA.map((a) => (
-            <div key={a.numero} className="modal-matriz__item">
-              <span className="modal-matriz__item-letra">{a.numero}</span>
-              <div className="modal-matriz__item-info">
-                <strong className="modal-matriz__item-nome">{a.nome}</strong>
-                <span className="modal-matriz__item-descricao">{a.resumo}</span>
-              </div>
+            <p className="modal-matriz__texto">
+              A matriz é calculada a partir da sua{" "}
+              <strong>data de nascimento</strong>. Os dígitos são
+              somados e os resultados são reduzidos a valores de{" "}
+              <strong>1 a 22</strong>, correspondentes aos arcanos.
+              Os demais pontos são obtidos por meio de combinações
+              desses valores.
+            </p>
+
+            <div className="modal-matriz__nota">
+              <Icon icon="mdi:information-outline" />
+              <p>
+                <strong>Regra da redução:</strong> quando uma soma
+                ultrapassa 22, seus dígitos são somados novamente
+                até que o resultado esteja dentro do intervalo.
+                Por exemplo, 26 → 2 + 6 = 8.
+              </p>
             </div>
-          ))}
-        </div>
+          </section>
 
-  
+          <section className="modal-matriz__secao">
+            <div className="modal-matriz__secao-cabecalho">
+              <span>CAPÍTULO III</span>
+              <h3>O cálculo da sua matriz</h3>
+            </div>
+
+            <p className="modal-matriz__texto">
+              A tabela abaixo apresenta os treze cálculos realizados
+              a partir da sua data de nascimento.
+            </p>
+
+            <div className="modal-matriz__calculo">
+              {calculos.map((calculo) => (
+                <div
+                  key={calculo.letra}
+                  className="modal-matriz__calculo-linha"
+                >
+                  <span className="modal-matriz__calculo-letra">
+                    {calculo.letra}
+                  </span>
+
+                  <div className="modal-matriz__calculo-conteudo">
+                    <span className="modal-matriz__calculo-formula">
+                      {calculo.formula}
+                    </span>
+
+                    <strong className="modal-matriz__calculo-arcano">
+                      {calculo.arcano ?? "Arcano não identificado"}
+                    </strong>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <p className="modal-matriz__texto">
+              No diagrama, cada ponto apresenta sua letra e o número
+              correspondente. Ao selecionar um ponto, você pode
+              consultar a interpretação completa do arcano.
+            </p>
+          </section>
+
+          <section className="modal-matriz__secao">
+            <div className="modal-matriz__secao-cabecalho">
+              <span>CAPÍTULO IV</span>
+              <h3>Os treze pontos da matriz</h3>
+            </div>
+
+            <p className="modal-matriz__texto">
+              As letras de A a M identificam as posições da matriz.
+              Cada uma corresponde a um aspecto específico da vida.
+            </p>
+
+            <div className="modal-matriz__lista">
+              {PONTOS.map((ponto) => (
+                <div key={ponto.letra} className="modal-matriz__item">
+                  <span className="modal-matriz__item-letra">
+                    {ponto.letra}
+                  </span>
+
+                  <div className="modal-matriz__item-info">
+                    <strong className="modal-matriz__item-nome">
+                      {ponto.nome}
+                    </strong>
+
+                    <p className="modal-matriz__item-descricao">
+                      {ponto.descricao}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="modal-matriz__secao">
+            <div className="modal-matriz__secao-cabecalho">
+              <span>CAPÍTULO V</span>
+              <h3>Os vinte e dois arcanos</h3>
+            </div>
+
+            <p className="modal-matriz__texto">
+              Cada número de 1 a 22 corresponde a um Arcano Maior
+              do Tarô. A interpretação depende do arcano e da
+              posição que ele ocupa na matriz.
+            </p>
+
+            <div className="modal-matriz__lista">
+              {ARCANOS_LISTA.map((arcano) => (
+                <div key={arcano.numero} className="modal-matriz__item">
+                  <span className="modal-matriz__item-letra">
+                    {arcano.numero}
+                  </span>
+
+                  <div className="modal-matriz__item-info">
+                    <strong className="modal-matriz__item-nome">
+                      {arcano.nome}
+                    </strong>
+
+                    <p className="modal-matriz__item-descricao">
+                      {arcano.resumo}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <footer className="modal-matriz__rodape">
+            <Icon icon="mdi:star-four-points" />
+            <p>
+              A Matriz do Destino é uma tradição interpretativa
+              simbólica, não um método científico de previsão.
+            </p>
+            <Icon icon="mdi:star-four-points" />
+          </footer>
+        </div>
       </div>
-      
-    </div>
+    </div>,
+    document.body
   );
 }
-
-
-
-
-
-
-
-
-
-

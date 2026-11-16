@@ -1,167 +1,558 @@
 ﻿@use "../../../estilos/variaveis" as *;
 
 .resumo-planetas {
-  max-width: 760px;
-  margin: 3rem auto 0;
+  width: 100%;
+  min-width: 0;
+  color: $oraculum-pergaminho;
 
   &__cabecalho {
-    margin-bottom: 1.6rem;
+    margin-bottom: 2.5rem;
   }
 
-  &__titulo {
-    font-family: $fonte-titulo;
-    font-size: 1.4rem;
-    color: $cor-primaria;
-    letter-spacing: 0.04em;
-  }
-
-  &__subtitulo {
-    margin-top: 0.3rem;
-    font-size: 0.85rem;
-    color: $cor-texto-suave;
-    opacity: 0.8;
-    line-height: 1.5;
-  }
-
-  &__destaques {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin-bottom: 1.6rem;
-    padding-bottom: 1.6rem;
-    border-bottom: 1px solid rgba(167, 139, 250, 0.15);
-  }
-
-  &__destaque {
+  &__identificacao {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    padding: 1rem 1.2rem;
-    border-radius: 14px;
-    background: linear-gradient(135deg, rgba(167, 139, 250, 0.1), rgba(240, 164, 184, 0.06));
-    border: 1px solid rgba(167, 139, 250, 0.3);
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba($oraculum-ouro, 0.4);
+    font-family: $fonte-titulo;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.13em;
+    color: $oraculum-pergaminho-escuro;
+
+    svg {
+      flex-shrink: 0;
+      width: 14px;
+      height: 14px;
+      color: $oraculum-ouro;
+    }
+  }
+
+  &__introducao {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 750px;
+    margin: 0 auto;
+    padding: 3rem 1rem 0;
+    text-align: center;
+  }
+
+  &__ornamento {
+    display: grid;
+    place-items: center;
+    width: 88px;
+    height: 88px;
+    margin-bottom: 1.75rem;
+    border: 1px solid rgba($oraculum-ouro, 0.65);
+    border-radius: 50%;
+    outline: 1px solid rgba($oraculum-ouro, 0.25);
+    outline-offset: 7px;
+    color: $oraculum-ouro;
+
+    svg {
+      width: 52px;
+      height: 52px;
+    }
+  }
+
+  &__sobretitulo {
+    margin-bottom: 0.75rem;
+    font-family: $fonte-titulo;
+    font-size: 0.63rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    color: $oraculum-cobre-claro;
+  }
+
+  &__titulo {
+    margin: 0;
+    font-family: $fonte-titulo;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 500;
+    line-height: 1.2;
+    color: $oraculum-pergaminho-claro;
+  }
+
+  &__subtitulo {
+    max-width: 640px;
+    margin: 1.25rem 0 0;
+    font-family: $fonte-corpo;
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    line-height: 1.5;
+    color: $oraculum-pergaminho-escuro;
+  }
+
+  &__secao-cabecalho {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid rgba($oraculum-ouro, 0.35);
+
+    > div {
+      min-width: 0;
+
+      > span {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-family: $fonte-titulo;
+        font-size: 0.6rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        color: $oraculum-cobre-claro;
+      }
+
+      h4 {
+        margin: 0;
+        font-family: $fonte-titulo;
+        font-size: clamp(1.05rem, 2.3vw, 1.55rem);
+        font-weight: 500;
+        color: $oraculum-pergaminho-claro;
+      }
+    }
+
+    &--planetas {
+      margin-top: 3rem;
+    }
+  }
+
+  &__secao-indice {
+    flex-shrink: 0;
+    padding-bottom: 0.2rem;
+    font-family: $fonte-titulo;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: $oraculum-pergaminho-escuro;
+  }
+
+  &__destaques {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  &__destaque {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 1.5rem;
+    border: 1px solid $oraculum-cobre;
+    background:
+      radial-gradient(
+        ellipse at 85% 15%,
+        rgba($oraculum-ouro, 0.16),
+        transparent 55%
+      ),
+      $oraculum-pergaminho-claro;
+    color: $oraculum-tinta;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 7px;
+      border: 1px solid rgba($oraculum-cobre, 0.32);
+      pointer-events: none;
+    }
+  }
+
+  &__destaque-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba($oraculum-cobre, 0.45);
+
+    span {
+      font-family: $fonte-titulo;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: $oraculum-cobre;
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
+      color: $oraculum-vinho;
+    }
+  }
+
+  &__destaque-corpo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 155px;
+    padding: 1.5rem 0;
   }
 
   &__destaque-info {
     display: flex;
     flex-direction: column;
-    gap: 0.2rem;
+    align-items: flex-start;
+    min-width: 0;
   }
 
   &__destaque-rotulo {
+    margin-bottom: 0.6rem;
     font-family: $fonte-titulo;
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: $cor-secundaria;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: $oraculum-tinta-suave;
   }
 
   &__destaque-signo {
     font-family: $fonte-titulo;
-    font-size: 1.15rem;
-    color: $cor-texto;
+    font-size: clamp(1.25rem, 2.5vw, 2rem);
+    font-weight: 600;
     line-height: 1.2;
+    overflow-wrap: anywhere;
+    color: $oraculum-vinho;
   }
 
   &__destaque-grau {
-    font-family: $fonte-mono;
-    font-size: 0.78rem;
-    color: $cor-texto-suave;
-    opacity: 0.75;
+    margin-top: 0.75rem;
+    font-family: $fonte-titulo;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    font-variant-numeric: tabular-nums;
+    color: $oraculum-cobre;
   }
 
   &__destaque-icone {
     display: grid;
     place-items: center;
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.04);
-    color: $cor-primaria;
     flex-shrink: 0;
+    width: 100px;
+    height: 100px;
+    border: 1px solid rgba($oraculum-cobre, 0.6);
+    border-radius: 50%;
+    outline: 1px solid rgba($oraculum-cobre, 0.25);
+    outline-offset: 5px;
+    color: $oraculum-vinho;
+
+    svg {
+      max-width: 70%;
+      max-height: 70%;
+    }
+  }
+
+  &__destaque-rodape {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba($oraculum-cobre, 0.45);
+    font-family: $fonte-corpo;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: $oraculum-tinta-suave;
+
+    svg {
+      flex-shrink: 0;
+      width: 13px;
+      height: 13px;
+      color: $oraculum-cobre;
+    }
   }
 
   &__grade {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.7rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.85rem;
   }
 
   &__card {
     display: flex;
     align-items: center;
-    gap: 0.8rem;
-    padding: 0.7rem 0.9rem;
-    border-radius: 12px;
-    background: rgba(40, 32, 70, 0.5);
-    border: 1px solid rgba(167, 139, 250, 0.18);
-    transition: all $transicao-rapida;
-
-    &:hover {
-      border-color: rgba(167, 139, 250, 0.45);
-      background: rgba(167, 139, 250, 0.08);
-    }
+    gap: 1rem;
+    min-width: 0;
+    min-height: 112px;
+    padding: 1.15rem;
+    border: 1px solid rgba($oraculum-ouro, 0.4);
+    background: $oraculum-noite-profunda;
   }
 
   &__card-icone {
     display: grid;
     place-items: center;
-    width: 42px;
-    height: 42px;
     flex-shrink: 0;
-    border-radius: 10px;
-    background: rgba(167, 139, 250, 0.1);
-    color: $cor-primaria;
+    width: 64px;
+    height: 64px;
+    border: 1px solid rgba($oraculum-ouro, 0.45);
+    border-radius: 50%;
+    color: $oraculum-ouro;
   }
 
   &__card-info {
     display: flex;
     flex-direction: column;
-    gap: 0.15rem;
-    min-width: 0;
+    justify-content: center;
+    gap: 0.35rem;
     flex: 1;
+    min-width: 0;
+  }
+
+  &__card-numero {
+    font-family: $fonte-titulo;
+    font-size: 0.55rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: $oraculum-cobre-claro;
   }
 
   &__card-nome {
+    margin: 0;
     font-family: $fonte-titulo;
-    font-size: 0.9rem;
-    color: $cor-texto;
-    line-height: 1.1;
-    text-align: left;
+    font-size: clamp(0.9rem, 1.6vw, 1.15rem);
+    font-weight: 500;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+    color: $oraculum-pergaminho-claro;
   }
 
   &__card-posicao {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 0.4rem;
-    font-size: 0.78rem;
-  }
+    color: $oraculum-cobre-claro;
 
-  &__card-grau {
-    font-family: $fonte-mono;
-    color: $cor-secundaria;
+    svg {
+      flex-shrink: 0;
+    }
   }
 
   &__card-signo {
-    color: $cor-texto-suave;
-    opacity: 0.85;
+    font-family: $fonte-corpo;
+    font-size: 1.15rem;
+    color: $oraculum-pergaminho-escuro;
+  }
+
+  &__card-coordenada {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+    flex-shrink: 0;
+    padding-left: 1rem;
+    border-left: 1px solid rgba($oraculum-ouro, 0.3);
+    text-align: right;
+
+    span {
+      font-family: $fonte-titulo;
+      font-size: 0.55rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: $oraculum-pergaminho-escuro;
+    }
+
+    strong {
+      font-family: $fonte-titulo;
+      font-size: 0.9rem;
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      color: $oraculum-ouro-claro;
+    }
+  }
+
+  &__rodape {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba($oraculum-ouro, 0.3);
+    text-align: center;
+
+    svg {
+      flex-shrink: 0;
+      width: 12px;
+      height: 12px;
+      color: $oraculum-ouro;
+    }
+
+    p {
+      max-width: 600px;
+      margin: 0;
+      font-family: $fonte-corpo;
+      font-size: 1.1rem;
+      font-style: italic;
+      line-height: 1.4;
+      color: $oraculum-pergaminho-escuro;
+    }
   }
 }
 
-@media (max-width: $breakpoint-mobile) {
-  .resumo-planetas {
-    &__destaques {
-      grid-template-columns: 1fr;
+.resumo-planetas {
+  &__destaque-icone {
+    color: #392b2d;
+
+    .icone-signo,
+    .icone-planeta {
+      color: #392b2d;
+      opacity: 1;
     }
 
+    svg {
+      color: inherit;
+      opacity: 1;
+    }
+  }
+
+  &__card-icone {
+    color: #efd29b;
+
+    .icone-planeta,
+    .icone-signo {
+      color: #efd29b;
+      opacity: 1;
+    }
+
+    svg {
+      color: inherit;
+      opacity: 1;
+    }
+  }
+
+  &__card-posicao {
+    color: #efd29b;
+
+    .icone-signo {
+      color: #efd29b;
+      opacity: 1;
+    }
+
+    svg {
+      color: inherit;
+      opacity: 1;
+    }
+  }
+
+  &__card-signo {
+    color: #f4e8cd;
+  }
+}
+
+@media (max-width: 850px) {
+  .resumo-planetas {
+    &__destaque {
+      padding: 1.2rem;
+    }
+
+    &__destaque-corpo {
+      min-height: 130px;
+    }
+
+    &__destaque-icone {
+      width: 75px;
+      height: 75px;
+    }
+
+    &__card {
+      gap: 0.75rem;
+      padding: 0.9rem;
+    }
+
+    &__card-icone {
+      width: 52px;
+      height: 52px;
+    }
+
+    &__card-coordenada {
+      padding-left: 0.65rem;
+    }
+  }
+}
+
+@media (max-width: 650px) {
+  .resumo-planetas {
+    &__introducao {
+      padding: 2.5rem 0.5rem 0;
+    }
+
+    &__destaques,
     &__grade {
       grid-template-columns: 1fr;
     }
 
+    &__destaque-corpo {
+      min-height: 120px;
+    }
+
+    &__card {
+      min-height: 100px;
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .resumo-planetas {
+    &__identificacao {
+      font-size: 0.5rem;
+      letter-spacing: 0.04em;
+    }
+
+    &__secao-cabecalho {
+      gap: 0.75rem;
+    }
+
+    &__secao-indice {
+      font-size: 0.5rem;
+    }
+
+    &__destaque {
+      padding: 1rem;
+    }
+
     &__destaque-icone {
-      width: 52px;
-      height: 52px;
+      width: 65px;
+      height: 65px;
+    }
+
+    &__card {
+      gap: 0.65rem;
+      padding: 0.85rem;
+    }
+
+    &__card-icone {
+      width: 46px;
+      height: 46px;
+    }
+
+    &__card-info {
+      gap: 0.25rem;
+    }
+
+    &__card-numero {
+      font-size: 0.48rem;
+    }
+
+    &__card-nome {
+      font-size: 0.85rem;
+    }
+
+    &__card-coordenada {
+      padding-left: 0.55rem;
+
+      strong {
+        font-size: 0.72rem;
+      }
+
+      span {
+        font-size: 0.48rem;
+      }
     }
   }
 }

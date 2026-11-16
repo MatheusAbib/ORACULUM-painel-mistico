@@ -3,331 +3,662 @@
 .modal-como-funciona {
   position: fixed;
   inset: 0;
-  z-index: 9999;
-   backdrop-filter: blur(8px);
+  z-index: 2147483647;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem;
-  animation: aparecer 0.3s ease;
+  padding: clamp(0.75rem, 3vw, 1.5rem);
+  overflow: hidden;
+  isolation: isolate;
+   -webkit-backdrop-filter: 5px;
+  backdrop-filter: blur(5px);
+  animation: modal-como-funciona-aparecer 220ms ease;
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
 
   &__caixa {
     position: relative;
-    width: 100%;
-    max-width: 780px;
-    max-height: 80vh;
+    width: min(100%, 780px);
+    max-height: min(90dvh, 900px);
+    min-width: 0;
+    overflow-x: hidden;
     overflow-y: auto;
-    background: linear-gradient(160deg, rgba(26, 19, 48, 0.99), rgba(14, 9, 28, 0.99));
-    border: 1px solid rgba(167, 139, 250, 0.35);
-    border-radius: 24px;
-    padding: 2rem 2.5rem 2rem;
-    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    overscroll-behavior: contain;
+    border: 1px solid $oraculum-pergaminho-escuro;
+    border-radius: 0;
+    background: $oraculum-pergaminho-claro;
+    color: $oraculum-tinta;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
     scrollbar-width: thin;
-    scrollbar-color: rgba(167, 139, 250, 0.4) transparent;
+    scrollbar-color: $oraculum-cobre $oraculum-pergaminho;
 
-    &::-webkit-scrollbar { width: 8px; }
+    &::-webkit-scrollbar {
+      width: 7px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: $oraculum-pergaminho;
+    }
+
     &::-webkit-scrollbar-thumb {
-      background: rgba(167, 139, 250, 0.35);
-      border-radius: 4px;
+      background: $oraculum-cobre;
     }
   }
-
-  
 
   &__fechar {
     position: absolute;
-    top: 1.2rem;
-    right: 1.2rem;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: rgba(167, 139, 250, 0.15);
-    border: 1px solid rgba(167, 139, 250, 0.35);
-    color: #f5f3ff;
+    top: 1.25rem;
+    right: 1.25rem;
+    z-index: 5;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 1px solid rgba($oraculum-vinho, 0.45);
+    border-radius: 0;
+    background: $oraculum-pergaminho;
+    color: $oraculum-vinho;
     cursor: pointer;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 50;
+    transition:
+      background 180ms ease,
+      border-color 180ms ease;
+
+    svg {
+      width: 21px;
+      height: 21px;
+    }
 
     &:hover {
-      background: rgba(167, 139, 250, 0.35);
-      transform: rotate(90deg);
+      border-color: $oraculum-vinho;
+      background: $oraculum-pergaminho-escuro;
     }
+
+    &:focus-visible {
+      outline: 2px solid $oraculum-vinho;
+      outline-offset: 3px;
+    }
+  }
+
+  &__cabecalho {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3.5rem clamp(1.25rem, 4vw, 3rem) 2.5rem;
+    border-bottom: 1px solid rgba($oraculum-vinho, 0.25);
+    background:
+      radial-gradient(
+        ellipse at top center,
+        rgba($oraculum-ouro, 0.16),
+        transparent 75%
+      ),
+      $oraculum-pergaminho;
+    text-align: center;
+  }
+
+  &__emblema {
+    display: grid;
+    place-items: center;
+    width: 88px;
+    height: 88px;
+    margin-bottom: 2rem;
+    border: 1px solid rgba($oraculum-vinho, 0.6);
+    border-radius: 50%;
+    outline: 1px solid rgba($oraculum-vinho, 0.25);
+    outline-offset: 6px;
+    color: $oraculum-vinho;
+
+    svg {
+      width: 46px;
+      height: 46px;
+    }
+  }
+
+  &__rotulo {
+    display: block;
+    margin-bottom: 0.8rem;
+    font-family: $fonte-titulo;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    line-height: 1.5;
+    color: $oraculum-cobre;
   }
 
   &__titulo {
+    margin: 0;
     font-family: $fonte-titulo;
-    font-size: 1.7rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    margin-bottom: 1rem;
-    background: $gradiente-primario;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 500;
+    line-height: 1.25;
+    color: $oraculum-vinho;
+    overflow-wrap: break-word;
+  }
+
+  &__divisor {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    width: min(100%, 220px);
+    margin: 1.5rem 0;
+    color: $oraculum-cobre;
+
+    span {
+      flex: 1;
+      height: 1px;
+      background: rgba($oraculum-vinho, 0.35);
+    }
+
+    svg {
+      flex-shrink: 0;
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  &__introducao {
+    max-width: 560px;
+    margin: 0;
+    font-family: $fonte-corpo;
+    font-size: clamp(1.2rem, 2vw, 1.45rem);
+    font-weight: 400;
+    line-height: 1.55;
+    color: $oraculum-tinta-suave;
+
+    strong {
+      font-weight: 700;
+      color: $oraculum-vinho;
+    }
+  }
+
+  &__corpo {
+    padding: clamp(1.5rem, 4vw, 3rem);
   }
 
   &__secao {
-    margin-top: 2rem;
-    padding-top: 1.8rem;
-    border-top: 1px solid rgba(167, 139, 250, 0.15);
+    width: 100%;
+    min-width: 0;
 
-    &:first-of-type {
-      margin-top: 1rem;
-      padding-top: 0;
-      border-top: none;
+    & + & {
+      margin-top: 3rem;
     }
   }
 
-  &__subtitulo {
-    font-family: $fonte-titulo;
-    font-size: 1.1rem;
-    color: $cor-secundaria;
-    letter-spacing: 0.03em;
-    margin-bottom: 0.9rem;
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
+  &__secao-cabecalho {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba($oraculum-vinho, 0.25);
 
-    &::before {
-      content: "";
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: $gradiente-primario;
-      flex-shrink: 0;
+    span {
+      display: block;
+      margin-bottom: 0.65rem;
+      font-family: $fonte-titulo;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      line-height: 1.5;
+      color: $oraculum-cobre;
     }
-  }
 
-  &__subtitulo-menor {
-    font-family: $fonte-titulo;
-    font-size: 0.95rem;
-    color: $cor-primaria;
-    margin: 1.3rem 0 0.6rem;
-    letter-spacing: 0.02em;
+    h3 {
+      margin: 0;
+      font-family: $fonte-titulo;
+      font-size: clamp(1.15rem, 2.5vw, 1.65rem);
+      font-weight: 500;
+      line-height: 1.4;
+      color: $oraculum-vinho;
+    }
   }
 
   &__texto {
-    font-size: 0.93rem;
-    line-height: 1.7;
-    color: $cor-texto-suave;
-    margin-bottom: 0.9rem;
+    width: 100%;
+    min-width: 0;
+    margin: 0 0 1.25rem;
+    font-family: $fonte-corpo;
+    font-size: clamp(1.15rem, 2vw, 1.35rem);
+    font-weight: 400;
+    line-height: 1.65;
+    text-align: left;
+    color: $oraculum-tinta;
 
-    strong { color: $cor-secundaria; }
+    strong {
+      font-weight: 700;
+      color: $oraculum-vinho;
+    }
 
     code {
+      display: inline-block;
       padding: 0.1rem 0.35rem;
-      border-radius: 4px;
-      background: rgba(167, 139, 250, 0.15);
-      color: $cor-secundaria;
-      font-family: $fonte-mono;
-      font-size: 0.85em;
+      border: 1px solid rgba($oraculum-cobre, 0.35);
+      border-radius: 0;
+      background: $oraculum-pergaminho;
+      font-family: monospace;
+      font-size: 0.8em;
+      color: $oraculum-vinho;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
     }
   }
 
-  /* Tabela pitagórica */
   &__tabela {
     display: flex;
     flex-direction: column;
     gap: 0.35rem;
-    padding: 1rem;
-    background: rgba(167, 139, 250, 0.06);
-    border: 1px solid rgba(167, 139, 250, 0.2);
-    border-radius: 14px;
+    width: 100%;
+    min-width: 0;
+    margin-top: 1.5rem;
+    padding: clamp(0.6rem, 2vw, 1.25rem);
+    border: 1px solid rgba($oraculum-vinho, 0.35);
+    background: rgba($oraculum-pergaminho, 0.5);
   }
 
   &__linha {
     display: grid;
-    grid-template-columns: repeat(9, 1fr);
+    grid-template-columns: repeat(9, minmax(0, 1fr));
     gap: 0.35rem;
-  }
+    width: 100%;
 
-  &__celula {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.45rem 0.2rem;
-    font-family: $fonte-mono;
-    font-size: 0.82rem;
-    color: $cor-texto;
-    background: rgba(255, 255, 255, 0.04);
-    border-radius: 8px;
-    min-height: 30px;
+    &--letras {
+      .modal-como-funciona__celula {
+        border-color: $oraculum-vinho;
+        background: $oraculum-vinho;
+        color: $oraculum-pergaminho-claro;
+      }
+    }
 
-    &:nth-child(even) {
-      color: $cor-secundaria;
-      background: rgba(240, 164, 184, 0.06);
+    &--valores {
+      .modal-como-funciona__celula {
+        background: rgba($oraculum-pergaminho-claro, 0.8);
+        color: $oraculum-vinho;
+      }
     }
   }
 
-  /* Grid dos números */
+  &__celula {
+    display: grid;
+    place-items: center;
+    min-width: 0;
+    min-height: 38px;
+    padding: 0.35rem 0.1rem;
+    border: 1px solid rgba($oraculum-cobre, 0.3);
+    font-family: $fonte-titulo;
+    font-size: clamp(0.7rem, 1.5vw, 0.95rem);
+    font-weight: 600;
+    line-height: 1.2;
+    text-align: center;
+  }
+
   &__numeros {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-    gap: 0.6rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    width: 100%;
+    margin-top: 1.5rem;
   }
 
   &__numero-card {
     display: flex;
     align-items: center;
-    gap: 0.7rem;
-    padding: 0.65rem 0.8rem;
-    background: rgba(167, 139, 250, 0.05);
-    border: 1px solid rgba(167, 139, 250, 0.18);
-    border-radius: 12px;
-    transition: border-color $transicao-rapida, background $transicao-rapida;
-
-    &:hover {
-      border-color: rgba(167, 139, 250, 0.4);
-      background: rgba(167, 139, 250, 0.09);
-    }
+    gap: 1rem;
+    min-width: 0;
+    min-height: 90px;
+    padding: 1.15rem;
+    border: 1px solid rgba($oraculum-vinho, 0.25);
+    background: rgba($oraculum-pergaminho, 0.5);
   }
 
   &__numero-destaque {
     display: grid;
     place-items: center;
-    width: 38px;
-    height: 38px;
     flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border: 1px solid rgba($oraculum-vinho, 0.55);
     border-radius: 50%;
-    background: $gradiente-primario;
-    color: #fff;
+    background: rgba($oraculum-cobre, 0.08);
     font-family: $fonte-titulo;
-    font-weight: 700;
-    font-size: 0.95rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: $oraculum-vinho;
   }
 
   &__numero-info {
     display: flex;
     flex-direction: column;
-    gap: 0.1rem;
+    gap: 0.4rem;
+    flex: 1;
     min-width: 0;
 
     strong {
       font-family: $fonte-titulo;
-      font-size: 0.82rem;
-      color: $cor-primaria;
-      letter-spacing: 0.02em;
-      text-align: left;
+      font-size: clamp(0.72rem, 1.4vw, 0.88rem);
+      font-weight: 600;
+      line-height: 1.4;
+      color: $oraculum-vinho;
     }
 
     span {
-      font-size: 0.76rem;
-      color: $cor-texto-suave;
-      opacity: 0.8;
-      line-height: 1.35;
+      font-family: $fonte-corpo;
+      font-size: 1.15rem;
+      line-height: 1.4;
+      color: $oraculum-tinta-suave;
     }
   }
 
-  /* Cards das áreas */
   &__areas {
     display: flex;
     flex-direction: column;
-    gap: 0.7rem;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
   }
 
   &__area {
-    padding: 0.9rem 1rem;
-    background: rgba(167, 139, 250, 0.04);
-    border-left: 3px solid $cor-primaria;
-    border-radius: 10px;
-    text-align: left;
-
-    h4 {
-      font-family: $fonte-titulo;
-      font-size: 0.92rem;
-      color: $cor-secundaria;
-      margin-bottom: 0.35rem;
-      letter-spacing: 0.02em;
-    }
+    padding: 1.25rem;
+    border: 1px solid rgba($oraculum-vinho, 0.25);
+    background: rgba($oraculum-pergaminho, 0.5);
 
     p {
-      font-size: 0.86rem;
+      margin: 0 0 0.75rem;
+      font-family: $fonte-corpo;
+      font-size: 1.2rem;
       line-height: 1.55;
-      color: $cor-texto-suave;
+      color: $oraculum-tinta;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &__area-cabecalho {
+    display: flex;
+    align-items: baseline;
+    gap: 0.85rem;
+    margin-bottom: 0.85rem;
+
+    span {
+      flex-shrink: 0;
+      font-family: $fonte-titulo;
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: $oraculum-cobre;
+    }
+
+    h4 {
+      margin: 0;
+      font-family: $fonte-titulo;
+      font-size: 0.95rem;
+      font-weight: 600;
+      line-height: 1.4;
+      color: $oraculum-vinho;
     }
   }
 
   &__area-exemplo {
-    margin-top: 0.4rem;
-    padding-top: 0.4rem;
-    border-top: 1px dashed rgba(167, 139, 250, 0.2);
+    margin-top: 1rem !important;
+    padding-top: 0.85rem;
+    border-top: 1px dashed rgba($oraculum-vinho, 0.3);
     font-style: italic;
-    color: $cor-primaria !important;
-    opacity: 0.85;
+    color: $oraculum-tinta-suave !important;
   }
 
   &__lista {
-    list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    margin: 0.4rem 0 1rem;
+    gap: 0.75rem;
+    margin: 1.5rem 0;
+    padding: 0;
+    list-style: none;
 
     li {
       position: relative;
-      padding: 0.5rem 0.9rem 0.5rem 2rem;
-      font-size: 0.88rem;
-      line-height: 1.55;
-      color: $cor-texto-suave;
-      background: rgba(167, 139, 250, 0.05);
-      border-radius: 8px;
-      border-left: 2px solid rgba(167, 139, 250, 0.4);
+      padding: 1rem 1.25rem 1rem 2rem;
+      border: 1px solid rgba($oraculum-vinho, 0.25);
+      background: rgba($oraculum-pergaminho, 0.5);
+      font-family: $fonte-corpo;
+      font-size: 1.2rem;
+      line-height: 1.5;
+      color: $oraculum-tinta;
 
       &::before {
-        content: "✦";
+        content: "";
         position: absolute;
-        left: 0.7rem;
-        top: 0.5rem;
-        color: $cor-primaria;
-        font-size: 0.8rem;
+        top: 1.45rem;
+        left: 0.9rem;
+        width: 6px;
+        height: 6px;
+        transform: rotate(45deg);
+        background: $oraculum-cobre;
       }
 
-      strong { color: $cor-secundaria; }
+      strong {
+        font-weight: 700;
+        color: $oraculum-vinho;
+      }
     }
+  }
+
+  &__subtitulo-menor {
+    margin: 2rem 0 1rem;
+    font-family: $fonte-titulo;
+    font-size: clamp(0.95rem, 1.7vw, 1.15rem);
+    font-weight: 600;
+    line-height: 1.4;
+    color: $oraculum-vinho;
   }
 
   &__exemplo {
-    font-family: $fonte-mono;
-    font-size: 0.9rem;
-    line-height: 1.9;
-    padding: 1rem 1.2rem;
-    background: rgba(167, 139, 250, 0.08);
-    border: 1px solid rgba(167, 139, 250, 0.2);
-    border-left: 3px solid $cor-secundaria;
-    border-radius: 10px;
-    margin: 0.7rem 0 1rem;
-    color: $cor-texto;
-    overflow-x: auto;
+    width: 100%;
+    min-width: 0;
+    margin: 1.25rem 0 1.5rem;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid rgba($oraculum-vinho, 0.25);
+    border-left: 3px solid $oraculum-cobre;
+    background: rgba($oraculum-pergaminho-escuro, 0.25);
+    font-family: $fonte-corpo;
+    font-size: clamp(1.1rem, 1.8vw, 1.3rem);
+    line-height: 1.75;
+    color: $oraculum-tinta;
+    overflow-wrap: anywhere;
 
-    strong { color: $cor-secundaria; }
-  }
-}
-
-@media (max-width: $breakpoint-mobile) {
-  .modal-como-funciona {
-    padding: 0.6rem;
-
-    &__caixa {
-      padding: 1.6rem 1.1rem 1.2rem;
-      max-height: 94vh;
-      border-radius: 18px;
+    > div + div {
+      margin-top: 0.5rem;
     }
 
-    &__titulo { font-size: 1.3rem; }
-    &__subtitulo { font-size: 0.98rem; }
-    &__texto { font-size: 0.87rem; }
+    strong {
+      font-weight: 700;
+      color: $oraculum-vinho;
+    }
+  }
 
-    &__numeros { grid-template-columns: 1fr; }
-    &__celula { font-size: 0.7rem; min-height: 26px; }
-    &__linha { gap: 0.2rem; }
-    &__tabela { padding: 0.6rem; gap: 0.2rem; }
-    &__exemplo { font-size: 0.78rem; padding: 0.8rem; }
+  &__rodape {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba($oraculum-vinho, 0.25);
+    text-align: center;
+
+    svg {
+      flex-shrink: 0;
+      width: 12px;
+      height: 12px;
+      color: $oraculum-cobre;
+    }
+
+    p {
+      margin: 0;
+      font-family: $fonte-corpo;
+      font-size: 1.15rem;
+      font-style: italic;
+      line-height: 1.5;
+      color: $oraculum-tinta-suave;
+    }
   }
 }
 
+@keyframes modal-como-funciona-aparecer {
+  from {
+    opacity: 0;
+  }
 
+  to {
+    opacity: 1;
+  }
+}
 
+@media (max-width: 700px) {
+  .modal-como-funciona {
+    padding: 0.75rem;
 
+    &__caixa {
+      max-height: 94dvh;
+    }
+
+    &__cabecalho {
+      padding: 3rem 1.5rem 2rem;
+    }
+
+    &__corpo {
+      padding: 1.5rem;
+    }
+
+    &__emblema {
+      width: 72px;
+      height: 72px;
+
+      svg {
+        width: 38px;
+        height: 38px;
+      }
+    }
+
+    &__numeros {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    &__numero-card {
+      min-height: 75px;
+    }
+
+    &__secao {
+      & + & {
+        margin-top: 2.5rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-como-funciona {
+    padding: 0;
+
+    &__caixa {
+      width: 100%;
+      max-height: 100dvh;
+      min-height: 100dvh;
+      border: 0;
+    }
+
+    &__fechar {
+      top: 0.85rem;
+      right: 0.85rem;
+      width: 36px;
+      height: 36px;
+
+      svg {
+        width: 19px;
+        height: 19px;
+      }
+    }
+
+    &__cabecalho {
+      padding: 3.5rem 1rem 1.75rem;
+    }
+
+    &__titulo {
+      font-size: 1.8rem;
+    }
+
+    &__introducao {
+      font-size: 1.15rem;
+    }
+
+    &__corpo {
+      padding: 1.25rem 1rem 2rem;
+    }
+
+    &__tabela {
+      gap: 0.2rem;
+      padding: 0.45rem;
+    }
+
+    &__linha {
+      gap: 0.2rem;
+    }
+
+    &__celula {
+      min-height: 29px;
+      padding: 0.25rem 0;
+      font-size: 0.65rem;
+    }
+
+    &__numero-card {
+      gap: 0.85rem;
+      padding: 0.85rem;
+    }
+
+    &__numero-destaque {
+      width: 40px;
+      height: 40px;
+      font-size: 0.9rem;
+    }
+
+    &__area {
+      padding: 1rem;
+    }
+
+    &__area-cabecalho {
+      gap: 0.6rem;
+    }
+
+    &__exemplo {
+      padding: 1rem;
+      font-size: 1.1rem;
+    }
+
+    &__lista li {
+      padding: 0.85rem 0.85rem 0.85rem 1.75rem;
+      font-size: 1.1rem;
+
+      &::before {
+        left: 0.75rem;
+        top: 1.3rem;
+      }
+    }
+
+    &__rodape {
+      gap: 0.5rem;
+
+      p {
+        font-size: 1rem;
+      }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-como-funciona,
+  .modal-como-funciona__fechar {
+    animation: none;
+    transition: none;
+  }
+}

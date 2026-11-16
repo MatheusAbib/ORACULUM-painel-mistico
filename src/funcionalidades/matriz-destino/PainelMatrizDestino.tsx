@@ -1,4 +1,5 @@
 ﻿import { useEffect, useState } from "react";
+import { Icon } from "@iconify/react";
 import { useMatrizDestino } from "./ganchos/useMatrizDestino";
 import { usePerfil } from "../../nucleo/contextos/PerfilContexto";
 import { AvisoPreencherPerfil } from "../../compartilhado/componentes/AvisoPreencherPerfil";
@@ -25,46 +26,102 @@ export function PainelMatrizDestino() {
       <div className="painel-matriz-destino">
         <AvisoPreencherPerfil
           titulo="Matriz do Destino"
-          descricao="Preciso do seu nome e data de nascimento para revelar sua matriz energética."
-          icone="fa-solid fa-diamond"
+          descricao="Informe seu nome e sua data de nascimento no perfil para calcular sua Matriz do Destino."
+          icone="mdi:shape-outline"
         />
       </div>
     );
   }
 
   return (
-    <div className="painel-matriz-destino">
+    <section className="painel-matriz-destino">
       <header className="painel-matriz-destino__cabecalho">
-        <div className="painel-matriz-destino__titulo-linha">
-          <h2 className="painel-matriz-destino__titulo">Sua Matriz do Destino</h2>
+        <div className="painel-matriz-destino__identificacao">
+          <span>ORACULVM · ESTUDO DOS ARCANOS</span>
+          <span>TRATADO IV</span>
+        </div>
+
+        <div className="painel-matriz-destino__apresentacao">
+          <div
+            className="painel-matriz-destino__emblema"
+            aria-hidden="true"
+          >
+            <span className="painel-matriz-destino__emblema-anel">
+              <Icon icon="mdi:shape-outline" />
+            </span>
+
+            <span className="painel-matriz-destino__emblema-numero">
+              XXII
+            </span>
+          </div>
+
+          <span className="painel-matriz-destino__rotulo">
+            OS VINTE E DOIS ARCANOS
+          </span>
+
+          <h2 className="painel-matriz-destino__titulo">
+            Matriz do Destino
+          </h2>
+
+          <div
+            className="painel-matriz-destino__divisor"
+            aria-hidden="true"
+          >
+            <span />
+            <Icon icon="mdi:star-four-points" />
+            <span />
+          </div>
+
+          <p className="painel-matriz-destino__descricao">
+            Uma representação numerológica baseada nos vinte e dois
+            arcanos maiores. Cada posição da matriz corresponde a
+            uma área da vida e recebe um número calculado a partir
+            da sua data de nascimento.
+          </p>
+
           <button
             type="button"
             className="painel-matriz-destino__info"
             onClick={() => setModalAberto(true)}
-            aria-label="Como funciona"
           >
-            <i className="fa-solid fa-circle-info" />
+            <Icon icon="mdi:information-outline" />
+            <span>Como funciona a Matriz do Destino?</span>
           </button>
         </div>
-        <p className="painel-matriz-destino__descricao">
-          Cada ponto é um arcano que fala sobre uma área da sua vida.
-        </p>
       </header>
 
       {erro && (
-        <div className="painel-matriz-destino__erro">
-          <i className="fa-solid fa-triangle-exclamation" />
+        <div className="painel-matriz-destino__erro" role="alert">
+          <Icon icon="mdi:alert-circle-outline" />
           <span>{erro}</span>
         </div>
       )}
 
       {resultado && (
-        <>
-          <DiagramaMatriz pontos={resultado} />
-          <div className="painel-matriz-destino__acoes">
-
+        <section className="painel-matriz-destino__conteudo">
+          <div className="painel-matriz-destino__conteudo-cabecalho">
+            <span>FIGURA I · DIAGRAMA DOS ARCANOS</span>
+            <span>MAPA PESSOAL</span>
           </div>
-        </>
+
+          <div className="painel-matriz-destino__conteudo-introducao">
+            <span className="painel-matriz-destino__conteudo-rotulo">
+              A CONFIGURAÇÃO DOS ARCANOS
+            </span>
+
+            <h3 className="painel-matriz-destino__conteudo-titulo">
+              Sua Matriz Pessoal
+            </h3>
+          </div>
+
+          <DiagramaMatriz pontos={resultado} />
+
+          <div className="painel-matriz-destino__conteudo-rodape">
+            <Icon icon="mdi:star-four-points" />
+            <span>ORACULVM · MATRIZ DO DESTINO</span>
+            <Icon icon="mdi:star-four-points" />
+          </div>
+        </section>
       )}
 
       <ModalMatriz
@@ -72,7 +129,6 @@ export function PainelMatrizDestino() {
         aoFechar={() => setModalAberto(false)}
         dataNascimento={perfil?.dataNascimento ?? ""}
       />
-    </div>
+    </section>
   );
 }
-

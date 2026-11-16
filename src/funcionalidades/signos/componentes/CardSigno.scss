@@ -3,51 +3,316 @@
 .card-signo {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 1.8rem 1.2rem;
+  align-items: stretch;
+  width: 100%;
+  min-width: 0;
+  min-height: 325px;
+  padding: 1.15rem;
+  border: 1px solid rgba($oraculum-ouro, 0.35);
+  border-radius: 0;
+  background: $oraculum-noite-profunda;
+  box-shadow: none;
+  color: $oraculum-pergaminho;
+  text-align: center;
   cursor: pointer;
-  transition: all $transicao-media;
-  color: $cor-texto;
-  border: 1px solid rgba(153, 105, 255, 0.25);
+  transition:
+    border-color 180ms ease,
+    background 180ms ease;
 
-  &:hover {
-    border-color: rgba(153, 105, 255, 0.6);
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
   }
 
-  &.ativo {
-    border-color: rgba(153, 105, 255, 0.8);
-    background: linear-gradient(135deg, rgba(153, 105, 255, 0.18), rgba(255, 105, 161, 0.18));
-    box-shadow: 0 0 25px rgba(153, 105, 255, 0.4);
+  &:hover {
+    border-color: $oraculum-ouro;
+    background: $oraculum-noite;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $oraculum-ouro-claro;
+    outline-offset: 4px;
+  }
+
+  &__topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  &__categoria {
+    font-family: $fonte-titulo;
+    font-size: 0.53rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    line-height: 1.4;
+    color: $oraculum-cobre-claro;
+  }
+
+  &__marcador {
+    display: block;
+    flex-shrink: 0;
+    width: 7px;
+    height: 7px;
+    border: 1px solid $oraculum-ouro;
+    transform: rotate(45deg);
   }
 
   &__simbolo {
-    color: $cor-primaria;
-    margin-bottom: 0.8rem;
-    transition: transform $transicao-media;
+    display: grid;
+    place-items: center;
+    flex: 1;
+    min-height: 125px;
+    padding: 1.4rem 0 1rem;
+    color: $oraculum-ouro;
   }
 
-  &:hover &__simbolo,
-  &.ativo &__simbolo {
-    color: $cor-secundaria;
+  &__simbolo-anel {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 100px;
+    height: 100px;
+    border: 1px solid rgba($oraculum-ouro, 0.55);
+    border-radius: 50%;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 8px;
+      border: 1px dashed rgba($oraculum-ouro, 0.3);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: -7px;
+      border: 1px solid rgba($oraculum-ouro, 0.15);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    svg {
+      position: relative;
+      z-index: 1;
+      display: block;
+      color: inherit;
+    }
+  }
+
+  &__informacoes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 0;
   }
 
   &__nome {
+    margin: 0;
     font-family: $fonte-titulo;
-    font-size: 1.2rem;
-    margin-bottom: 0.3rem;
-    color: $cor-texto;
+    font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+    font-weight: 500;
+    line-height: 1.3;
+    color: $oraculum-pergaminho-claro;
   }
 
   &__elemento {
-    font-size: 0.85rem;
-    color: $cor-secundaria;
-    margin-bottom: 0.5rem;
+    margin: 0.45rem 0 0;
+    font-family: $fonte-corpo;
+    font-size: 1.15rem;
     font-style: italic;
+    line-height: 1.3;
+    color: $oraculum-pergaminho-escuro;
+
+    span {
+      margin: 0 0.25rem;
+      color: $oraculum-cobre-claro;
+    }
+  }
+
+  &__separador {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    width: 75%;
+    margin: 1rem 0;
+
+    > span:not(.card-signo__losango) {
+      flex: 1;
+      height: 1px;
+      background: rgba($oraculum-ouro, 0.3);
+    }
+  }
+
+  &__losango {
+    display: block;
+    width: 5px;
+    height: 5px;
+    border: 1px solid $oraculum-cobre;
+    transform: rotate(45deg);
   }
 
   &__datas {
-    font-size: 0.8rem;
-    opacity: 0.6;
-    font-family: $fonte-mono;
+    margin: 0;
+    font-family: $fonte-corpo;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: $oraculum-pergaminho-escuro;
+  }
+
+  &__rodape {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid rgba($oraculum-ouro, 0.25);
+    font-family: $fonte-titulo;
+    font-size: 0.55rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    line-height: 1.5;
+    text-align: left;
+    color: $oraculum-ouro;
+  }
+
+  &__seta {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border: 1px solid rgba($oraculum-ouro, 0.5);
+    border-radius: 50%;
+    font-family: $fonte-corpo;
+    font-size: 1.2rem;
+    line-height: 1;
+    color: inherit;
+  }
+
+  &.ativo {
+    border-color: $oraculum-cobre;
+    background: $oraculum-pergaminho-claro;
+    color: $oraculum-tinta;
+
+    .card-signo__categoria {
+      color: $oraculum-vinho;
+    }
+
+    .card-signo__marcador {
+      border-color: $oraculum-vinho;
+      background: $oraculum-vinho;
+    }
+
+    .card-signo__simbolo {
+      color: $oraculum-vinho;
+    }
+
+    .card-signo__simbolo-anel {
+      border-color: rgba($oraculum-vinho, 0.5);
+
+      &::before {
+        border-color: rgba($oraculum-vinho, 0.3);
+      }
+
+      &::after {
+        border-color: rgba($oraculum-vinho, 0.15);
+      }
+    }
+
+    .card-signo__nome {
+      color: $oraculum-vinho;
+    }
+
+    .card-signo__elemento {
+      color: $oraculum-tinta-suave;
+
+      span {
+        color: $oraculum-cobre;
+      }
+    }
+
+    .card-signo__separador {
+      > span:not(.card-signo__losango) {
+        background: rgba($oraculum-vinho, 0.25);
+      }
+    }
+
+    .card-signo__losango {
+      border-color: $oraculum-vinho;
+    }
+
+    .card-signo__datas {
+      color: $oraculum-tinta-suave;
+    }
+
+    .card-signo__rodape {
+      border-top-color: rgba($oraculum-vinho, 0.25);
+      color: $oraculum-vinho;
+    }
+
+    .card-signo__seta {
+      border-color: rgba($oraculum-vinho, 0.45);
+    }
+
+    &:hover {
+      background: $oraculum-pergaminho;
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .card-signo {
+    min-height: 300px;
+    padding: 1rem;
+
+    &__simbolo {
+      min-height: 110px;
+    }
+
+    &__simbolo-anel {
+      width: 90px;
+      height: 90px;
+    }
+
+    &__nome {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .card-signo {
+    min-height: 0;
+    padding: 1.15rem;
+
+    &__simbolo {
+      min-height: 115px;
+    }
+
+    &__nome {
+      font-size: 1.35rem;
+    }
+
+    &__elemento {
+      font-size: 1.2rem;
+    }
+
+    &__datas {
+      font-size: 1.05rem;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-signo {
+    transition: none;
   }
 }

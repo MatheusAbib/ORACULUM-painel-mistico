@@ -1,4 +1,5 @@
-﻿import { useEffect, useState } from "react";
+﻿
+import { useEffect, useState } from "react";
 import { AbasInline } from "../../compartilhado/componentes/AbasInline";
 import type { AbaId } from "../../compartilhado/componentes/AbasInline";
 import { PainelInicio } from "./painel/PainelInicio";
@@ -19,8 +20,12 @@ export function PaginaInicio() {
       setAbaAtiva("inicio");
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
+
     window.addEventListener("oraculvm:ir-inicio", irInicio);
-    return () => window.removeEventListener("oraculvm:ir-inicio", irInicio);
+
+    return () => {
+      window.removeEventListener("oraculvm:ir-inicio", irInicio);
+    };
   }, []);
 
   useEffect(() => {
@@ -50,11 +55,11 @@ export function PaginaInicio() {
 
   return (
     <section className="pagina-inicio secao">
-      <div className="conteudo-secao">
-        {abaAtiva !== "inicio" && (
-          <AbasInline abaAtiva={abaAtiva} onMudar={setAbaAtiva} />
-        )}
+      {abaAtiva !== "inicio" && (
+        <AbasInline abaAtiva={abaAtiva} onMudar={setAbaAtiva} />
+      )}
 
+      <div className="conteudo-secao">
         <div className="pagina-inicio__painel" key={abaAtiva}>
           {renderizarPainel()}
         </div>
@@ -62,6 +67,3 @@ export function PaginaInicio() {
     </section>
   );
 }
-
-
-

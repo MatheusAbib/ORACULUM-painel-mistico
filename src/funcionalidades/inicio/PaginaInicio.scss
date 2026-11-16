@@ -1,19 +1,110 @@
-﻿@use "../../estilos/variaveis" as *;
+﻿
+@use "../../estilos/variaveis" as *;
 
 .pagina-inicio {
   min-height: 100vh;
-  padding-bottom: 4rem;
+  padding: 0 clamp(1rem, 4vw, 4rem) 5rem;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: visible;
+
+  .conteudo-secao {
+    width: 100%;
+    max-width: 1500px;
+    padding: 0;
+    margin: 0 auto;
+    text-align: left;
+  }
 
   &__painel {
-    animation: deslizar-lateral 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     width: 100%;
-    padding: 2.5rem 1rem 0;
-    flex: 1;
-    min-height: calc(100vh - 200px);
-    padding: 2rem 0;
+    min-width: 0;
     display: flex;
     flex-direction: column;
+    animation: deslizar-lateral 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  &__navegacao-interna {
+    margin: 1.5rem 0 2rem;
+    padding: 1rem 1.5rem;
+    border: $borda-ornamental-suave;
+    background: $oraculum-noite-profunda;
+  }
+
+  &__navegacao-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: $borda-ornamental-suave;
+  }
+
+  &__marca {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: $oraculum-ouro;
+    font-family: $fonte-titulo;
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+
+    svg {
+      font-size: 1.3rem;
+    }
+
+    &:hover {
+      color: $oraculum-ouro-claro;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $oraculum-ouro;
+      outline-offset: 6px;
+    }
+  }
+}
+
+.pagina-inicio:has(.abas-inline) {
+  padding-top: 170px;
+}
+
+@media (max-width: 768px) {
+  .pagina-inicio:has(.abas-inline) {
+    padding-top: 101px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pagina-inicio:has(.abas-inline) {
+    padding-top: 96px;
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .pagina-inicio {
+    padding: 0 1rem 3rem;
+
+    &__navegacao-interna {
+      margin-top: 1rem;
+      padding: 1rem;
+    }
+
+    &__navegacao-topo {
+      flex-wrap: wrap;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pagina-inicio__painel {
+    animation: none;
   }
 }

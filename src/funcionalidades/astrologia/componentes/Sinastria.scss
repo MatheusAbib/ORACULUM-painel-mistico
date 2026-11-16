@@ -1,231 +1,1134 @@
 ﻿@use "../../../estilos/variaveis" as *;
 
 .sinastria {
-  margin-top: 2rem;
+  width: 100%;
+  min-width: 0;
+  color: $oraculum-pergaminho;
 
   &__cabecalho {
-    margin-bottom: 1.2rem;
+    margin-bottom: 2.5rem;
+  }
+
+  &__cabecalho-superior {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba($oraculum-ouro, 0.4);
+    font-family: $fonte-titulo;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: $oraculum-pergaminho-escuro;
+
+    svg {
+      flex-shrink: 0;
+      color: $oraculum-ouro;
+    }
+  }
+
+  &__apresentacao {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 3rem 1rem 1rem;
+    text-align: center;
+  }
+
+  &__emblema {
+    display: grid;
+    place-items: center;
+    width: 105px;
+    height: 105px;
+    margin-bottom: 2rem;
+    border: 1px solid rgba($oraculum-ouro, 0.7);
+    border-radius: 50%;
+    outline: 1px solid rgba($oraculum-ouro, 0.3);
+    outline-offset: 8px;
+    color: $oraculum-ouro;
+
+    svg {
+      width: 62px;
+      height: 62px;
+    }
+  }
+
+  &__sobretitulo {
+    margin-bottom: 0.75rem;
+    font-family: $fonte-titulo;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: $oraculum-cobre-claro;
   }
 
   &__titulo {
+    margin: 0;
     font-family: $fonte-titulo;
-    font-size: 1.3rem;
-    color: $cor-primaria;
-    letter-spacing: 0.04em;
+    font-size: clamp(2rem, 4vw, 3.3rem);
+    font-weight: 500;
+    line-height: 1.2;
+    color: $oraculum-pergaminho-claro;
+  }
+
+  &__divisor {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    width: min(100%, 260px);
+    margin: 1.5rem 0;
+    color: $oraculum-ouro;
+
+    span {
+      flex: 1;
+      height: 1px;
+      background: rgba($oraculum-ouro, 0.5);
+    }
   }
 
   &__subtitulo {
-    margin-top: 0.3rem;
-    font-size: 0.88rem;
-    line-height: 1.55;
-    color: $cor-texto-suave;
-    opacity: 0.85;
+    max-width: 650px;
+    margin: 0;
+    font-family: $fonte-corpo;
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    line-height: 1.5;
+    color: $oraculum-pergaminho-escuro;
+  }
+
+  &__convite {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: clamp(2rem, 5vw, 4rem);
+    border: 1px solid $oraculum-cobre;
+    background:
+      radial-gradient(
+        ellipse at 50% 0%,
+        rgba($oraculum-ouro, 0.14),
+        transparent 65%
+      ),
+      $oraculum-pergaminho-claro;
+    text-align: center;
+    color: $oraculum-tinta;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 9px;
+      border: 1px solid rgba($oraculum-cobre, 0.4);
+      pointer-events: none;
+    }
+
+    > h3 {
+      margin: 0.75rem 0 1rem;
+      font-family: $fonte-titulo;
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      font-weight: 600;
+      color: $oraculum-tinta;
+    }
+
+    > p {
+      max-width: 610px;
+      margin: 0;
+      font-family: $fonte-corpo;
+      font-size: 1.35rem;
+      line-height: 1.5;
+      color: $oraculum-tinta-suave;
+    }
+  }
+
+  &__convite-ornamento {
+    display: grid;
+    place-items: center;
+    width: 45px;
+    height: 45px;
+    margin-bottom: 1.5rem;
+    border: 1px solid $oraculum-cobre;
+    transform: rotate(45deg);
+    color: $oraculum-vinho;
+
+    svg {
+      width: 22px;
+      height: 22px;
+      transform: rotate(-45deg);
+    }
+  }
+
+  &__convite-capitulo {
+    font-family: $fonte-titulo;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: $oraculum-cobre;
+  }
+
+  &__participantes {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(1rem, 3vw, 2.5rem);
+    width: 100%;
+    max-width: 650px;
+    margin: 2.5rem 0;
+  }
+
+  &__participante {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    min-width: 0;
+    padding: 1.75rem 1rem;
+    border: 1px solid rgba($oraculum-cobre, 0.6);
+    background: rgba($oraculum-pergaminho, 0.45);
+
+    > svg {
+      width: 32px;
+      height: 32px;
+      margin-bottom: 0.5rem;
+      color: $oraculum-vinho;
+    }
+
+    > span {
+      font-family: $fonte-titulo;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: $oraculum-cobre;
+    }
+
+    strong {
+      max-width: 100%;
+      font-family: $fonte-titulo;
+      font-size: clamp(0.9rem, 2vw, 1.25rem);
+      font-weight: 600;
+      overflow-wrap: anywhere;
+      color: $oraculum-tinta;
+    }
+
+    small {
+      font-family: $fonte-corpo;
+      font-size: 1.05rem;
+      font-style: italic;
+      color: $oraculum-tinta-suave;
+    }
+  }
+
+  &__participantes-simbolo {
+    display: grid;
+    place-items: center;
+    color: $oraculum-cobre;
+
+    svg {
+      width: 35px;
+      height: 35px;
+    }
   }
 
   &__btn {
     display: inline-flex;
     align-items: center;
-    padding: 0.7rem 1.4rem;
-    border-radius: 50px;
-    background: rgba(167, 139, 250, 0.08);
-    border: 1px solid rgba(167, 139, 250, 0.35);
-    color: $cor-primaria;
+    justify-content: center;
+    gap: 0.85rem;
+    min-height: 3.5rem;
+    padding: 0.9rem 1.5rem;
+    border: 1px solid $oraculum-vinho;
+    border-radius: 0;
+    background: $oraculum-vinho;
+    color: $oraculum-pergaminho-claro;
     font-family: $fonte-titulo;
-    font-size: 0.88rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
     cursor: pointer;
-    transition: all $transicao-rapida;
+    transition:
+      background $transicao-rapida,
+      border-color $transicao-rapida;
 
-    &:hover {
-      background: rgba(167, 139, 250, 0.18);
-      border-color: $cor-primaria;
+    svg {
+      flex-shrink: 0;
+      width: 21px;
+      height: 21px;
+      color: $oraculum-ouro-claro;
     }
 
-    &--secundario {
-      margin-top: 1rem;
-      background: none;
-      font-size: 0.82rem;
+    svg:last-child {
+      width: 17px;
+      height: 17px;
+    }
+
+    &:hover:not(:disabled) {
+      background: $oraculum-vinho-claro;
+      border-color: $oraculum-vinho-claro;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $oraculum-cobre;
+      outline-offset: 4px;
+    }
+
+    &:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
     }
   }
 
   &__formulario {
-    margin-top: 1rem;
-    padding: 1.2rem;
-    border-radius: 16px;
-    background: rgba(40, 32, 70, 0.55);
-    border: 1px solid rgba(167, 139, 250, 0.25);
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+    border: 2px solid $oraculum-cobre;
+    background: $oraculum-pergaminho-claro;
+    color: $oraculum-tinta;
   }
 
-  &__erro {
-    margin-top: 0.8rem;
-    font-size: 0.82rem;
-    color: #fca5a5;
+  &__formulario-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba($oraculum-cobre, 0.5);
+    font-family: $fonte-titulo;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: $oraculum-tinta-suave;
   }
 
-  &__resultado {
-    margin-top: 1rem;
-  }
+  &__voltar {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0;
+    border: 0;
+    background: transparent;
+    color: $oraculum-vinho;
+    font-family: $fonte-titulo;
+    font-size: 0.7rem;
+    font-weight: 600;
+    cursor: pointer;
 
-  &__resumo {
-    padding: 1.2rem;
-    border-radius: 16px;
-    background: rgba(40, 32, 70, 0.55);
-    border: 1px solid rgba(167, 139, 250, 0.25);
-    margin-bottom: 1.5rem;
+    svg {
+      width: 18px;
+      height: 18px;
+    }
 
-    h4 {
-      font-family: $fonte-titulo;
-      font-size: 1.05rem;
-      color: $cor-secundaria;
-      margin-bottom: 1rem;
+    &:hover {
+      color: $oraculum-cobre;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
   }
 
-  &__contadores {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1rem;
+  &__formulario-conteudo {
+    padding: clamp(1.5rem, 4vw, 3rem);
   }
 
-  &__contador {
-    flex: 1;
+  &__formulario-cabecalho {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0.8rem;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.03);
+    margin-bottom: 2.5rem;
+    text-align: center;
 
-    span {
+    > svg {
+      width: 65px;
+      height: 65px;
+      margin-bottom: 1.5rem;
+      color: $oraculum-vinho;
+    }
+
+    > span {
+      margin-bottom: 0.65rem;
       font-family: $fonte-titulo;
-      font-size: 1.6rem;
-      color: $cor-primaria;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      color: $oraculum-cobre;
+    }
+
+    h3 {
+      margin: 0 0 1rem;
+      font-family: $fonte-titulo;
+      font-size: clamp(1.5rem, 3vw, 2.3rem);
+      font-weight: 600;
+      color: $oraculum-tinta;
+    }
+
+    p {
+      max-width: 500px;
+      margin: 0;
+      font-family: $fonte-corpo;
+      font-size: 1.3rem;
+      line-height: 1.45;
+      color: $oraculum-tinta-suave;
+    }
+  }
+
+  &__linha {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  &__campo {
+    position: relative;
+    min-width: 0;
+    margin-bottom: 1.5rem;
+
+    label {
+      display: block;
+      margin-bottom: 0.65rem;
+      font-family: $fonte-titulo;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: $oraculum-tinta;
+    }
+  }
+
+  &__input {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-width: 0;
+
+    > svg:first-child {
+      position: absolute;
+      left: 1rem;
+      z-index: 1;
+      width: 20px;
+      height: 20px;
+      color: $oraculum-cobre;
+      pointer-events: none;
+    }
+
+    input {
+      display: block;
+      width: 100%;
+      min-width: 0;
+      height: 3.5rem;
+      padding: 0.75rem 1rem 0.75rem 3rem;
+      border: 1px solid rgba($oraculum-cobre, 0.7);
+      border-radius: 0;
+      outline: none;
+      background: rgba($oraculum-pergaminho, 0.45);
+      color: $oraculum-tinta;
+      font-family: $fonte-corpo;
+      font-size: 1.25rem;
+      font-weight: 600;
+      box-sizing: border-box;
+
+      &::placeholder {
+        color: rgba($oraculum-tinta-suave, 0.7);
+        font-style: italic;
+        font-weight: 400;
+      }
+
+      &:focus {
+        border-color: $oraculum-vinho;
+        outline: 1px solid $oraculum-vinho;
+        outline-offset: -4px;
+        background: $oraculum-pergaminho-claro;
+      }
+
+      &:disabled {
+        opacity: 0.6;
+      }
+    }
+
+    input[type="date"],
+    input[type="time"] {
+      color-scheme: light;
+    }
+  }
+
+  &__cidade {
+    z-index: 5;
+  }
+
+  &__cidade-confirmada {
+    position: absolute;
+    right: 1rem;
+    width: 20px;
+    height: 20px;
+    color: $oraculum-verde;
+    pointer-events: none;
+  }
+
+  &__sugestoes {
+    position: absolute;
+    top: calc(100% - 0.5rem);
+    left: 0;
+    right: 0;
+    z-index: 20;
+    max-height: 290px;
+    margin: 0;
+    padding: 0.4rem;
+    overflow-y: auto;
+    list-style: none;
+    border: 1px solid $oraculum-cobre;
+    background: $oraculum-pergaminho-claro;
+    box-shadow: 0 12px 25px rgba($oraculum-tinta, 0.15);
+
+    li + li {
+      border-top: 1px solid rgba($oraculum-cobre, 0.2);
+    }
+
+    li button {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      width: 100%;
+      padding: 0.85rem;
+      border: 0;
+      background: transparent;
+      color: $oraculum-tinta;
+      font-family: $fonte-corpo;
+      font-size: 1.2rem;
+      text-align: left;
+      cursor: pointer;
+
+      > svg {
+        flex-shrink: 0;
+        width: 18px;
+        height: 18px;
+        color: $oraculum-cobre;
+      }
+
+      > span {
+        flex: 1;
+      }
+
+      small {
+        padding: 0.2rem 0.4rem;
+        border: 1px solid rgba($oraculum-cobre, 0.5);
+        font-family: $fonte-titulo;
+        font-size: 0.65rem;
+        color: $oraculum-vinho;
+      }
+
+      &:hover,
+      &.sinastria__sugestao-ativa {
+        background: rgba($oraculum-cobre, 0.14);
+      }
+    }
+  }
+
+  &__ajuda {
+    margin: 0.6rem 0 0;
+    font-family: $fonte-corpo;
+    font-size: 1.05rem;
+    font-style: italic;
+    color: $oraculum-tinta-suave;
+  }
+
+  &__formulario-nota {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    border-top: 1px solid rgba($oraculum-cobre, 0.5);
+    border-bottom: 1px solid rgba($oraculum-cobre, 0.5);
+
+    svg {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      color: $oraculum-cobre;
+    }
+
+    p {
+      margin: 0;
+      font-family: $fonte-corpo;
+      font-size: 1.15rem;
+      font-style: italic;
+      line-height: 1.4;
+      color: $oraculum-tinta-suave;
+    }
+  }
+
+  &__erro {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    border: 1px solid $oraculum-cobre;
+    color: $oraculum-vinho;
+
+    svg {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  &__btn--formulario {
+    width: 100%;
+  }
+
+  &__girando {
+    animation: sinastria-girar 1.5s linear infinite;
+  }
+
+  &__resultado {
+    width: 100%;
+  }
+
+  &__resultado-topo {
+    padding: 1.5rem;
+    border: 1px solid rgba($oraculum-ouro, 0.5);
+    text-align: center;
+
+    > span {
+      font-family: $fonte-titulo;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      color: $oraculum-cobre-claro;
+    }
+  }
+
+  &__resultado-nomes {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: clamp(1rem, 3vw, 2rem);
+    margin-top: 1rem;
+
+    strong {
+      font-family: $fonte-titulo;
+      font-size: clamp(1rem, 2.5vw, 1.6rem);
+      font-weight: 500;
+      overflow-wrap: anywhere;
+      color: $oraculum-pergaminho-claro;
+    }
+
+    svg {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      color: $oraculum-ouro;
+    }
+  }
+
+  &__resumo {
+    margin: 1.5rem 0 3rem;
+    padding: clamp(1.5rem, 4vw, 3rem);
+    border: 1px solid $oraculum-cobre;
+    background: $oraculum-pergaminho-claro;
+    color: $oraculum-tinta;
+    text-align: center;
+
+    h3 {
+      margin: 0.75rem 0 2rem;
+      font-family: $fonte-titulo;
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      font-weight: 600;
+      color: $oraculum-tinta;
+    }
+  }
+
+  &__resumo-capitulo {
+    font-family: $fonte-titulo;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: $oraculum-cobre;
+  }
+
+  &__contadores {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  &__contador {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+    padding: 1.5rem 0.75rem;
+    border: 1px solid rgba($oraculum-cobre, 0.5);
+    background: rgba($oraculum-pergaminho, 0.5);
+
+    svg {
+      width: 24px;
+      height: 24px;
+      color: $oraculum-cobre;
+    }
+
+    > span {
+      font-family: $fonte-titulo;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      line-height: 1.2;
+      color: $oraculum-vinho;
     }
 
     small {
-      font-size: 0.72rem;
-      letter-spacing: 0.08em;
+      font-family: $fonte-titulo;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
-      color: $cor-texto-suave;
-      opacity: 0.8;
+      color: $oraculum-tinta-suave;
     }
 
-    &--total span { color: $cor-primaria; }
-    &--harmonico span { color: #86efac; }
-    &--tenso span { color: #fca5a5; }
+    &--harmonico {
+      svg,
+      > span {
+        color: $oraculum-verde;
+      }
+    }
+
+    &--tenso {
+      svg,
+      > span {
+        color: $oraculum-vinho;
+      }
+    }
   }
 
   &__resumo-texto {
-    font-size: 0.88rem;
-    line-height: 1.6;
-    color: $cor-texto-suave;
+    max-width: 700px;
+    margin: 0 auto;
+    font-family: $fonte-corpo;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    color: $oraculum-tinta-suave;
+  }
+
+  &__lista-cabecalho {
+    margin-bottom: 2rem;
+    text-align: center;
+
+    > span {
+      font-family: $fonte-titulo;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      color: $oraculum-cobre-claro;
+    }
+
+    h3 {
+      margin: 0.75rem 0;
+      font-family: $fonte-titulo;
+      font-size: clamp(1.6rem, 3vw, 2.5rem);
+      font-weight: 500;
+      color: $oraculum-pergaminho-claro;
+    }
+
+    p {
+      margin: 0;
+      font-family: $fonte-corpo;
+      font-size: 1.3rem;
+      color: $oraculum-pergaminho-escuro;
+    }
   }
 
   &__lista {
     display: flex;
     flex-direction: column;
-    gap: 0.9rem;
+    gap: 1.5rem;
   }
 
   &__item {
-    padding: 1rem 1.2rem;
-    border-radius: 14px;
-    background: rgba(40, 32, 70, 0.5);
-    border: 1px solid rgba(167, 139, 250, 0.2);
+    padding: clamp(1.25rem, 3vw, 2rem);
+    border: 1px solid rgba($oraculum-ouro, 0.45);
+    background: $oraculum-noite-profunda;
+
+    &--conjuncao {
+      border-top: 3px solid $oraculum-ouro;
+    }
+
+    &--sextil,
+    &--trigono {
+      border-top: 3px solid $oraculum-verde-claro;
+    }
+
+    &--quadratura,
+    &--oposicao {
+      border-top: 3px solid $oraculum-cobre;
+    }
   }
 
   &__item-cabecalho {
     display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    margin-bottom: 0.6rem;
+    align-items: flex-start;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba($oraculum-ouro, 0.25);
+  }
 
-    h5 {
-      font-family: $fonte-titulo;
-      font-size: 0.9rem;
-      color: $cor-primaria;
-      flex: 1;
-      line-height: 1.3;
+  &__item-simbolo {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    border: 1px solid rgba($oraculum-ouro, 0.5);
+    color: $oraculum-ouro;
+
+    svg {
+      width: 30px;
+      height: 30px;
     }
   }
 
-  &__item-cor {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    flex-shrink: 0;
+  &__item-titulo {
+    flex: 1;
+    min-width: 0;
+
+    > span {
+      display: block;
+      margin-bottom: 0.6rem;
+      font-family: $fonte-titulo;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: $oraculum-cobre-claro;
+    }
+
+    h4 {
+      margin: 0;
+      font-family: $fonte-titulo;
+      font-size: clamp(0.95rem, 2vw, 1.3rem);
+      font-weight: 500;
+      line-height: 1.5;
+      color: $oraculum-pergaminho-claro;
+    }
   }
 
   &__orbe {
-    font-size: 0.72rem;
-    color: $cor-texto-suave;
-    opacity: 0.6;
-    font-style: italic;
+    flex-shrink: 0;
+    padding: 0.45rem 0.6rem;
+    border: 1px solid rgba($oraculum-ouro, 0.35);
+    font-family: $fonte-titulo;
+    font-size: 0.6rem;
+    color: $oraculum-pergaminho-escuro;
   }
 
   &__descricao {
-    font-size: 0.88rem;
-    line-height: 1.6;
-    color: $cor-texto-suave;
-    margin-bottom: 0.7rem;
+    margin: 0 0 1.5rem;
+    font-family: $fonte-corpo;
+    font-size: 1.35rem;
+    line-height: 1.5;
+    color: $oraculum-pergaminho;
   }
 
   &__blocos {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.6rem;
-    margin-bottom: 0.7rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
   }
 
   &__bloco {
-    padding: 0.6rem 0.8rem;
-    border-radius: 8px;
-
-    strong {
-      display: block;
-      font-family: $fonte-titulo;
-      font-size: 0.72rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      margin-bottom: 0.3rem;
-    }
+    min-width: 0;
+    padding: 1.25rem;
+    border: 1px solid rgba($oraculum-ouro, 0.3);
 
     p {
-      font-size: 0.82rem;
+      margin: 0;
+      font-family: $fonte-corpo;
+      font-size: 1.2rem;
       line-height: 1.5;
-      color: $cor-texto-suave;
+      color: $oraculum-pergaminho-escuro;
     }
 
     &--bom {
-      background: rgba(134, 239, 172, 0.06);
-      border: 1px solid rgba(134, 239, 172, 0.25);
-      strong { color: #86efac; }
+      border-color: rgba($oraculum-verde-claro, 0.5);
+      background: rgba($oraculum-verde, 0.15);
+
+      .sinastria__bloco-titulo {
+        color: $oraculum-verde-claro;
+      }
     }
 
     &--atencao {
-      background: rgba(248, 113, 113, 0.05);
-      border: 1px solid rgba(248, 113, 113, 0.25);
-      strong { color: #fca5a5; }
+      border-color: rgba($oraculum-cobre, 0.5);
+      background: rgba($oraculum-vinho, 0.15);
+
+      .sinastria__bloco-titulo {
+        color: $oraculum-cobre-claro;
+      }
+    }
+  }
+
+  &__bloco-titulo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.85rem;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    strong {
+      font-family: $fonte-titulo;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
     }
   }
 
   &__conselho {
-    font-size: 0.85rem;
-    line-height: 1.5;
-    color: $cor-secundaria;
-    padding: 0.6rem 0.8rem;
-    background: rgba(240, 164, 184, 0.06);
-    border-left: 3px solid $cor-secundaria;
-    border-radius: 6px;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.25rem;
+    border-left: 2px solid $oraculum-ouro;
+    background: rgba($oraculum-ouro, 0.07);
 
-    strong { color: $cor-secundaria; }
+    > svg {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      color: $oraculum-ouro;
+    }
+
+    p {
+      margin: 0;
+      font-family: $fonte-corpo;
+      font-size: 1.25rem;
+      line-height: 1.5;
+      color: $oraculum-pergaminho;
+    }
+
+    strong {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-family: $fonte-titulo;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: $oraculum-ouro;
+    }
+  }
+
+  &__resultado-rodape {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba($oraculum-ouro, 0.4);
+    text-align: center;
+
+    p {
+      max-width: 650px;
+      margin: 0;
+      font-family: $fonte-corpo;
+      font-size: 1.2rem;
+      font-style: italic;
+      line-height: 1.5;
+      color: $oraculum-pergaminho-escuro;
+    }
+  }
+
+  &__btn--secundario {
+    border-color: $oraculum-ouro;
+    background: transparent;
+    color: $oraculum-ouro-claro;
+
+    &:hover:not(:disabled) {
+      background: rgba($oraculum-ouro, 0.1);
+      border-color: $oraculum-ouro-claro;
+    }
   }
 }
 
-@media (max-width: $breakpoint-mobile) {
-  .sinastria__blocos {
-    grid-template-columns: 1fr;
+@keyframes sinastria-girar {
+  to {
+    transform: rotate(360deg);
   }
-  .sinastria__contadores {
-    flex-direction: column;
+}
+
+@media (max-width: 768px) {
+  .sinastria {
+    &__apresentacao {
+      padding-top: 2.5rem;
+    }
+
+    &__participantes {
+      gap: 1rem;
+    }
+
+    &__participante {
+      padding: 1.25rem 0.75rem;
+    }
+
+    &__item-cabecalho {
+      flex-wrap: wrap;
+    }
+
+    &__orbe {
+      margin-left: 0;
+    }
+  }
+}
+
+@media (max-width: 550px) {
+  .sinastria {
+    &__cabecalho-superior {
+      font-size: 0.5rem;
+      letter-spacing: 0.05em;
+    }
+
+    &__apresentacao {
+      padding: 2rem 0.5rem;
+    }
+
+    &__emblema {
+      width: 85px;
+      height: 85px;
+
+      svg {
+        width: 50px;
+        height: 50px;
+      }
+    }
+
+    &__sobretitulo {
+      font-size: 0.52rem;
+      letter-spacing: 0.08em;
+    }
+
+    &__convite {
+      padding: 2rem 1.25rem;
+    }
+
+    &__convite > p {
+      font-size: 1.2rem;
+    }
+
+    &__participantes {
+      grid-template-columns: 1fr;
+      gap: 0.85rem;
+      margin: 2rem 0;
+    }
+
+    &__participantes-simbolo svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    &__participante {
+      width: 100%;
+    }
+
+    &__btn {
+      width: 100%;
+      gap: 0.5rem;
+      padding: 0.85rem;
+      font-size: 0.7rem;
+    }
+
+    &__formulario-topo {
+      padding: 1rem;
+      font-size: 0.52rem;
+    }
+
+    &__formulario-conteudo {
+      padding: 1.5rem 1rem;
+    }
+
+    &__linha {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    &__input input {
+      font-size: 1.15rem;
+    }
+
+    &__resultado-topo {
+      padding: 1.25rem;
+    }
+
+    &__resultado-nomes {
+      gap: 0.75rem;
+
+      svg {
+        width: 25px;
+        height: 25px;
+      }
+    }
+
+    &__resumo {
+      padding: 1.5rem 1rem;
+    }
+
+    &__contadores {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    &__contador {
+      padding: 1rem;
+    }
+
+    &__item {
+      padding: 1.25rem;
+    }
+
+    &__item-cabecalho {
+      gap: 0.85rem;
+    }
+
+    &__item-simbolo {
+      width: 44px;
+      height: 44px;
+
+      svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    &__item-titulo {
+      flex-basis: calc(100% - 60px);
+    }
+
+    &__orbe {
+      margin-left: 0;
+    }
+
+    &__blocos {
+      grid-template-columns: 1fr;
+    }
+
+    &__descricao {
+      font-size: 1.2rem;
+    }
+
+    &__bloco p,
+    &__conselho p {
+      font-size: 1.15rem;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sinastria__girando {
+    animation: none;
   }
 }

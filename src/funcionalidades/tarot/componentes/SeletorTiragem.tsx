@@ -1,4 +1,5 @@
 ﻿import { useEffect, useState } from "react";
+import { Icon } from "@iconify/react";
 import type { TipoTiragem, Tiragem } from "../../../nucleo/modelos/carta";
 import "./SeletorTiragem.scss";
 
@@ -10,11 +11,34 @@ interface Props {
   dataUso: (tipo: TipoTiragem) => string | null;
 }
 
+const ILUSTRACOES = [
+  "game-icons:all-seeing-eye",
+  "game-icons:two-coins",
+  "game-icons:triple-beak",
+  "game-icons:moon-sun",
+  "game-icons:crystal-ball",
+  "game-icons:pentacle",
+];
+
+const NUMEROS_ROMANOS = [
+  "I",
+  "II",
+  "III",
+  "IV",
+  "V",
+  "VI",
+  "VII",
+  "VIII",
+];
+
+const VINTE_E_QUATRO = 24 * 60 * 60 * 1000;
+
 function formatarTempo(ms: number): string {
   const total = Math.max(0, Math.floor(ms / 1000));
   const horas = Math.floor(total / 3600);
   const minutos = Math.floor((total % 3600) / 60);
   const segundos = total % 60;
+
   return `${String(horas).padStart(2, "0")}h ${String(minutos).padStart(2, "0")}m ${String(segundos).padStart(2, "0")}s`;
 }
 
@@ -25,75 +49,157 @@ export function SeletorTiragem({
   jaUsouHoje,
   dataUso,
 }: Props) {
-  const [, setTick] = useState(0);
+  const [agora, setAgora] = useState(() => Date.now());
 
   useEffect(() => {
-    const intervalo = setInterval(() => {
-      setTick((t) => t + 1);
+    const intervalo = window.setInterval(() => {
+      setAgora(Date.now());
     }, 1000);
-    return () => clearInterval(intervalo);
+
+    return () => window.clearInterval(intervalo);
   }, []);
 
-  const agora = Date.now();
-  const VINTE_E_QUATRO = 24 * 60 * 60 * 1000;
-
   return (
-    <div className="seletor-tiragem">
-      <h2 className="seletor-tiragem__titulo">Escolha sua tiragem</h2>
-      <p className="seletor-tiragem__subtitulo">
-        Cada tiragem pode ser feita uma vez por dia.
-      </p>
+    <section className="seletor-tiragem">
+      <div className="seletor-tiragem__identificacao">
+        <span>
+          <Icon icon="game-icons:scroll-unfurled" />
+          CATÁLOGO DE TIRAGENS
+        </span>
+
+        <span>
+          {String(tiragens.length).padStart(2, "0")} MÉTODOS
+        </span>
+      </div>
 
       <div className="seletor-tiragem__grade">
-        {tiragens.map((tiragem) => {
+        {tiragens.map((tiragem, indice) => {
           const bloqueada = jaUsouHoje(tiragem.id);
           const data = dataUso(tiragem.id);
+
           const tempoRestante = data
-            ? new Date(data).getTime() + VINTE_E_QUATRO - agora
+            ? Math.max(
+                0,
+                new Date(data).getTime() + VINTE_E_QUATRO - agora
+              )
             : 0;
 
-          return (
-            <div
-              key={tiragem.id}
-              className={`seletor-tiragem__cartao cartao-vidro ${bloqueada ? "bloqueada" : ""}`}
-            >
-              <div className="seletor-tiragem__icone">
-                <i className={tiragem.icone} />
-              </div>
-              <h3 className="seletor-tiragem__nome">{tiragem.nome}</h3>
-              <p className="seletor-tiragem__descricao">{tiragem.descricao}</p>
-              <span className="seletor-tiragem__quantidade">
-                {tiragem.quantidadeCartas}{" "}
-                {tiragem.quantidadeCartas === 1 ? "carta" : "cartas"}
-              </span>
+          const ilustracao =
+            ILUSTRACOES[indice % ILUSTRACOES.length];
 
-              {bloqueada ? (
-                <>
-                  <div className="seletor-tiragem__contador">
-                    <span>Nova leitura em</span>
-                    <strong>{formatarTempo(tempoRestante)}</strong>
-                  </div>
-                  <button
-                    type="button"
-                    className="seletor-tiragem__acao seletor-tiragem__acao--salva"
-                    onClick={() => aoVisualizar(tiragem.id)}
-                  >
-                    <i className="fa-solid fa-eye" /> Ver leitura salva
-                  </button>
-                </>
-              ) : (
-                <button
-                  type="button"
-                  className="seletor-tiragem__acao"
-                  onClick={() => aoEscolher(tiragem.id)}
+          const numero =
+            NUMEROS_ROMANOS[indice] ?? String(indice + 1);
+
+          return (
+            <article
+              key={tiragem.id}
+              className={`seletor-tiragem__cartao ${
+                bloqueada ? "bloqueada" : ""
+              }`}
+            >
+              <div
+                className="seletor-tiragem__cartao-moldura"
+                aria-hidden="true"
+              />
+
+              <div className="seletor-tiragem__cartao-topo">
+                <span>ARCANVM {numero}</span>
+
+                <Icon icon="mdi:star-four-points" />
+
+                <span>
+                  {String(tiragem.quantidadeCartas).padStart(2, "0")}{" "}
+                  {tiragem.quantidadeCartas === 1
+                    ? "CARTA"
+                    : "CARTAS"}
+                </span>
+              </div>
+
+              <div
+                className="seletor-tiragem__gravura"
+                aria-hidden="true"
+              >
+                <div className="seletor-tiragem__gravura-anel">
+                  <Icon icon={ilustracao} />
+                </div>
+
+                <span className="seletor-tiragem__gravura-estrela seletor-tiragem__gravura-estrela--esquerda">
+                  <Icon icon="mdi:star-four-points" />
+                </span>
+
+                <span className="seletor-tiragem__gravura-estrela seletor-tiragem__gravura-estrela--direita">
+                  <Icon icon="mdi:star-four-points" />
+                </span>
+              </div>
+
+              <div className="seletor-tiragem__cartao-conteudo">
+                <span className="seletor-tiragem__indice">
+                  MÉTODO {numero}
+                </span>
+
+                <h3 className="seletor-tiragem__nome">
+                  {tiragem.nome}
+                </h3>
+
+                <div
+                  className="seletor-tiragem__ornamento"
+                  aria-hidden="true"
                 >
-                  <i className="fa-solid fa-wand-sparkles" /> Tirar cartas
-                </button>
-              )}
-            </div>
+                  <span />
+                  <Icon icon="mdi:star-four-points" />
+                  <span />
+                </div>
+
+                <p className="seletor-tiragem__descricao">
+                  {tiragem.descricao}
+                </p>
+              </div>
+
+              <div className="seletor-tiragem__cartao-rodape">
+                {bloqueada ? (
+                  <>
+                    <div className="seletor-tiragem__contador">
+                      <span>
+                        <Icon icon="mdi:clock-outline" />
+                        PRÓXIMA CONSULTA
+                      </span>
+
+                      <strong>
+                        {formatarTempo(tempoRestante)}
+                      </strong>
+                    </div>
+
+                    <button
+                      type="button"
+                      className="seletor-tiragem__acao seletor-tiragem__acao--salva"
+                      onClick={() => aoVisualizar(tiragem.id)}
+                    >
+                      <span>Consultar leitura anterior</span>
+                      <Icon icon="mdi:book-open-page-variant-outline" />
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <span className="seletor-tiragem__disponivel">
+                      <Icon icon="mdi:star-four-points" />
+                      DISPONÍVEL PARA CONSULTA
+                    </span>
+
+                    <button
+                      type="button"
+                      className="seletor-tiragem__acao"
+                      onClick={() => aoEscolher(tiragem.id)}
+                    >
+                      <span>Iniciar tiragem</span>
+                      <Icon icon="mdi:arrow-right" />
+                    </button>
+                  </>
+                )}
+              </div>
+            </article>
           );
         })}
       </div>
-    </div>
+    </section>
   );
 }

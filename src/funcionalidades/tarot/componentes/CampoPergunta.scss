@@ -1,131 +1,487 @@
 ﻿@use "../../../estilos/variaveis" as *;
 
 .campo-pergunta {
-  max-width: 640px;
+  width: 100%;
+  max-width: 1000px;
+  min-width: 0;
   margin: 0 auto;
-  padding: 2.5rem;
-  border-radius: 20px;
-  background: rgba(40, 32, 70, 0.65);
-  border: 1px solid rgba(167, 139, 250, 0.3);
-  backdrop-filter: blur(8px);
-  animation: aparecer 0.5s ease;
+  padding: clamp(1rem, 3vw, 2rem) 0 5rem;
 
-  &__cabecalho {
-    text-align: center;
-    margin-bottom: 2rem;
+  &__topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba($oraculum-ouro, 0.35);
   }
 
-  &__badge {
+  &__voltar {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.4rem 1rem;
-    border-radius: 50px;
-    background: rgba(167, 139, 250, 0.15);
-    border: 1px solid rgba(167, 139, 250, 0.35);
+    gap: 0.65rem;
+    padding: 0.6rem 0;
+    border: 0;
+    background: transparent;
+    color: $oraculum-pergaminho-escuro;
     font-family: $fonte-titulo;
-    font-size: 0.85rem;
-    color: $cor-secundaria;
-    margin-bottom: 1.2rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: color $transicao-rapida;
 
-    i {
-      font-size: 0.75rem;
+    svg {
+      width: 17px;
+      height: 17px;
+      color: $oraculum-ouro;
+    }
+
+    &:hover {
+      color: $oraculum-ouro-claro;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $oraculum-ouro;
+      outline-offset: 5px;
     }
   }
 
-  &__titulo {
+  &__identificacao {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
     font-family: $fonte-titulo;
-    font-size: 1.8rem;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: $oraculum-ouro;
+
+    svg {
+      flex-shrink: 0;
+      font-size: 0.8rem;
+    }
+  }
+
+  &__pagina {
+    position: relative;
+    isolation: isolate;
+    width: 100%;
+    padding: clamp(1.5rem, 5vw, 4rem);
+    border: 2px solid $oraculum-cobre;
+    background:
+      radial-gradient(
+        ellipse at 50% 0%,
+        rgba($oraculum-ouro, 0.15),
+        transparent 65%
+      ),
+      repeating-linear-gradient(
+        0deg,
+        transparent 0,
+        transparent 3px,
+        rgba($oraculum-tinta, 0.015) 4px
+      ),
+      $oraculum-pergaminho-claro;
+    color: $oraculum-tinta;
+  }
+
+  &__moldura {
+    position: absolute;
+    inset: 9px;
+    z-index: -1;
+    border: 1px solid rgba($oraculum-tinta-suave, 0.35);
+    pointer-events: none;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      border-color: $oraculum-cobre;
+      border-style: solid;
+    }
+
+    &::before {
+      top: 8px;
+      left: 8px;
+      border-width: 1px 0 0 1px;
+    }
+
+    &::after {
+      right: 8px;
+      bottom: 8px;
+      border-width: 0 1px 1px 0;
+    }
+  }
+
+  &__cabecalho {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+
+  &__sobretitulo {
+    font-family: $fonte-titulo;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    color: $oraculum-cobre;
+  }
+
+  &__emblema {
+    display: grid;
+    place-items: center;
+    width: 110px;
+    height: 110px;
+    margin: 2.5rem 0 2rem;
+    border: 1px solid $oraculum-cobre;
+    border-radius: 50%;
+    outline: 1px solid rgba($oraculum-cobre, 0.45);
+    outline-offset: 8px;
+    color: $oraculum-vinho;
+
+    svg {
+      width: 65px;
+      height: 65px;
+    }
+  }
+
+  &__capitulo {
     margin-bottom: 0.8rem;
-    background: $gradiente-primario;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-family: $fonte-titulo;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    color: $oraculum-cobre;
+  }
+
+  &__titulo {
+    margin: 0;
+    font-family: $fonte-titulo;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 500;
+    line-height: 1.2;
+    color: $oraculum-tinta;
+  }
+
+  &__divisor {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    width: min(100%, 250px);
+    margin: 1.5rem 0;
+    color: $oraculum-cobre;
+
+    span {
+      flex: 1;
+      height: 1px;
+      background: rgba($oraculum-cobre, 0.6);
+    }
+
+    svg {
+      flex-shrink: 0;
+      font-size: 0.9rem;
+    }
   }
 
   &__descricao {
-    font-size: 1rem;
-    line-height: 1.6;
-    opacity: 0.85;
-    max-width: 500px;
+    max-width: 600px;
+    margin: 0;
+    font-family: $fonte-corpo;
+    font-size: clamp(1.25rem, 2vw, 1.55rem);
+    line-height: 1.5;
+    color: $oraculum-tinta-suave;
+  }
+
+  &__formulario {
+    width: 100%;
+    max-width: 720px;
     margin: 0 auto;
   }
 
   &__campo {
-    position: relative;
+    width: 100%;
     margin-bottom: 1.5rem;
   }
 
+  &__campo-cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 0.85rem;
+  }
+
   &__label {
-    display: block;
     font-family: $fonte-titulo;
-    font-size: 0.95rem;
-    color: $cor-texto-suave;
-    margin-bottom: 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: $oraculum-vinho;
+  }
+
+  &__opcional {
+    font-family: $fonte-titulo;
+    font-size: 0.55rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: $oraculum-tinta-suave;
+  }
+
+  &__area-escrita {
+    position: relative;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid $oraculum-cobre;
+    background: rgba($oraculum-pergaminho, 0.5);
   }
 
   &__textarea {
+    display: block;
     width: 100%;
-    padding: 1rem 1.2rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(167, 139, 250, 0.3);
-    border-radius: 12px;
-    color: $cor-texto;
+    min-height: 170px;
+    padding: 1.25rem;
+    border: 1px solid rgba($oraculum-cobre, 0.45);
+    border-radius: 0;
+    outline: none;
+    background: rgba($oraculum-pergaminho-claro, 0.65);
+    color: $oraculum-tinta;
     font-family: $fonte-corpo;
-    font-size: 1.05rem;
-    line-height: 1.6;
+    font-size: 1.5rem;
+    line-height: 1.5;
     resize: vertical;
-    min-height: 100px;
-    transition: all $transicao-rapida;
-
-    &:focus {
-      outline: none;
-      border-color: $cor-primaria;
-      background: rgba(167, 139, 250, 0.08);
-      box-shadow: 0 0 15px rgba(167, 139, 250, 0.25);
-    }
+    transition:
+      border-color $transicao-rapida,
+      background $transicao-rapida;
 
     &::placeholder {
-      color: rgba(255, 255, 255, 0.4);
+      color: rgba($oraculum-tinta-suave, 0.7);
       font-style: italic;
+    }
+
+    &:focus {
+      border-color: $oraculum-vinho;
+      background: $oraculum-pergaminho-claro;
+    }
+
+    &:focus-visible {
+      outline: 1px solid $oraculum-vinho;
+      outline-offset: -4px;
+    }
+  }
+
+  &__campo-rodape {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem 0.5rem 0.15rem;
+    color: $oraculum-cobre;
+
+    svg {
+      width: 18px;
+      height: 18px;
     }
   }
 
   &__contador {
-    position: absolute;
-    bottom: -1.3rem;
-    right: 0;
-    font-size: 0.75rem;
-    color: $cor-texto-apagado;
-    opacity: 0.6;
-    font-family: $fonte-mono;
+    font-family: $fonte-titulo;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: $oraculum-tinta-suave;
+  }
+
+  &__observacao {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba($oraculum-cobre, 0.4);
+
+    svg {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      margin-top: 0.15rem;
+      color: $oraculum-cobre;
+    }
+
+    p {
+      margin: 0;
+      font-family: $fonte-corpo;
+      font-size: 1.2rem;
+      font-style: italic;
+      line-height: 1.45;
+      color: $oraculum-tinta-suave;
+    }
   }
 
   &__acoes {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    gap: 1rem;
-    margin-top: 1rem;
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+    text-align: center;
   }
 
-  &__cancelar {
-    background: none;
-    border: none;
-    color: $cor-texto-suave;
+  &__acoes-legenda {
     font-family: $fonte-titulo;
-    font-size: 0.9rem;
-    cursor: pointer;
-    padding: 0.5rem 1rem;
-    border-radius: 50px;
-    transition: all $transicao-rapida;
-    opacity: 0.7;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: $oraculum-tinta-suave;
+  }
 
-    &:hover {
-      opacity: 1;
-      color: $cor-secundaria;
-      background: rgba(167, 139, 250, 0.1);
+  &__rodape {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 3.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba($oraculum-tinta-suave, 0.35);
+    font-family: $fonte-titulo;
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: $oraculum-tinta-suave;
+
+    svg {
+      flex-shrink: 0;
+      font-size: 0.8rem;
+      color: $oraculum-cobre;
     }
   }
 }
 
+@media (max-width: 768px) {
+  .campo-pergunta {
+    &__topo {
+      margin-bottom: 1.5rem;
+    }
+
+    &__pagina {
+      padding: 2rem;
+    }
+
+    &__cabecalho {
+      margin-bottom: 2rem;
+    }
+
+    &__emblema {
+      width: 90px;
+      height: 90px;
+      margin: 2rem 0 1.75rem;
+
+      svg {
+        width: 55px;
+        height: 55px;
+      }
+    }
+
+    &__textarea {
+      min-height: 150px;
+      font-size: 1.35rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .campo-pergunta {
+    padding-top: 1rem;
+    padding-bottom: 3rem;
+
+    &__topo {
+      gap: 0.75rem;
+    }
+
+    &__voltar {
+      font-size: 0.62rem;
+    }
+
+    &__identificacao {
+      font-size: 0.55rem;
+      letter-spacing: 0.05em;
+    }
+
+    &__pagina {
+      padding: 1.5rem 1.15rem;
+    }
+
+    &__moldura {
+      inset: 6px;
+    }
+
+    &__sobretitulo {
+      font-size: 0.5rem;
+      letter-spacing: 0.08em;
+    }
+
+    &__emblema {
+      width: 75px;
+      height: 75px;
+
+      svg {
+        width: 45px;
+        height: 45px;
+      }
+    }
+
+    &__capitulo {
+      font-size: 0.55rem;
+      letter-spacing: 0.08em;
+    }
+
+    &__titulo {
+      font-size: 2rem;
+    }
+
+    &__descricao {
+      font-size: 1.2rem;
+    }
+
+    &__campo-cabecalho {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    &__area-escrita {
+      padding: 6px;
+    }
+
+    &__textarea {
+      min-height: 140px;
+      padding: 1rem;
+      font-size: 1.2rem;
+    }
+
+    &__observacao p {
+      font-size: 1.1rem;
+    }
+
+    &__acoes {
+      margin-top: 2rem;
+    }
+
+    &__acoes-legenda {
+      font-size: 0.5rem;
+      letter-spacing: 0.05em;
+    }
+
+    &__rodape {
+      margin-top: 2.5rem;
+      font-size: 0.48rem;
+      letter-spacing: 0.06em;
+    }
+  }
+}

@@ -2,89 +2,389 @@
 
 .mandala-numeros {
   width: 100%;
-  max-width: 600px;
-  margin: 2rem auto 4rem;
+  min-width: 0;
+  padding: clamp(0.75rem, 2vw, 1.5rem);
+  border: 1px solid rgba($oraculum-ouro, 0.4);
+  background:
+    radial-gradient(
+      circle at center,
+      rgba($oraculum-ouro, 0.07),
+      transparent 65%
+    ),
+    rgba($oraculum-noite-profunda, 0.35);
+  box-sizing: border-box;
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  &__cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba($oraculum-ouro, 0.3);
+    font-family: $fonte-titulo;
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    line-height: 1.5;
+    color: $oraculum-pergaminho-escuro;
+
+    svg {
+      flex-shrink: 0;
+      width: 13px;
+      height: 13px;
+      color: $oraculum-ouro;
+    }
+  }
 
   &__svg-wrapper {
     position: relative;
     width: 100%;
-    aspect-ratio: 1 / 1;
+    max-width: 590px;
+    aspect-ratio: 1;
+    margin: 1.25rem auto;
+    isolation: isolate;
   }
 
   &__svg {
+    position: absolute;
+    inset: 0;
+    display: block;
     width: 100%;
     height: 100%;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  &__circulo-externo {
+    fill: none;
+    stroke: rgba($oraculum-ouro, 0.65);
+    stroke-width: 0.2;
+  }
+
+  &__circulo-intermediario {
+    fill: none;
+    stroke: rgba($oraculum-ouro, 0.35);
+    stroke-width: 0.12;
+    stroke-dasharray: 0.5 0.8;
+  }
+
+  &__circulo-principal {
+    fill: none;
+    stroke: rgba($oraculum-cobre-claro, 0.65);
+    stroke-width: 0.25;
+  }
+
+  &__circulo-interno {
+    fill: none;
+    stroke: rgba($oraculum-ouro, 0.3);
+    stroke-width: 0.18;
+  }
+
+  &__circulo-central {
+    fill: none;
+    stroke: rgba($oraculum-ouro, 0.35);
+    stroke-width: 0.2;
+    stroke-dasharray: 0.8 0.7;
+  }
+
+  &__linha-radial {
+    stroke: rgba($oraculum-ouro, 0.38);
+    stroke-width: 0.18;
+  }
+
+  &__linha-hexagono {
+    stroke: rgba($oraculum-cobre-claro, 0.6);
+    stroke-width: 0.22;
+  }
+
+  &__linha-geometrica {
+    stroke: rgba($oraculum-ouro, 0.18);
+    stroke-width: 0.14;
+    stroke-dasharray: 0.8 0.8;
+  }
+
+  &__marca-principal {
+    stroke: rgba($oraculum-ouro, 0.8);
+    stroke-width: 0.25;
+  }
+
+  &__marca-secundaria {
+    stroke: rgba($oraculum-ouro, 0.4);
+    stroke-width: 0.15;
+  }
+
+  &__ornamento {
+    fill: $oraculum-ouro;
+    opacity: 0.85;
+  }
+
+  &__centro-decoracao {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: grid;
+    place-items: center;
+    width: 31%;
+    height: 31%;
+    transform: translate(-50%, -50%);
+    border: 1px solid rgba($oraculum-ouro, 0.25);
+    border-radius: 50%;
+    pointer-events: none;
+
+    svg {
+      width: 85%;
+      height: 85%;
+      color: rgba($oraculum-ouro, 0.12);
+    }
   }
 
   &__no {
     position: absolute;
-    transform: translate(-50%, -50%);
+    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.15rem;
-    width: 90px;
-    height: 90px;
+    gap: 0.25rem;
+    width: clamp(70px, 16%, 95px);
+    aspect-ratio: 1;
+    padding: 0.45rem;
+    transform: translate(-50%, -50%);
+    border: 1px solid $oraculum-cobre;
     border-radius: 50%;
-    background: rgba(30, 25, 50, 0.9);
-    border: 1px solid rgba(167, 139, 250, 0.4);
-    color: $cor-texto;
+    outline: 1px solid rgba($oraculum-ouro, 0.25);
+    outline-offset: 3px;
+    background: $oraculum-pergaminho;
+    box-shadow: none;
+    color: $oraculum-tinta;
+    text-align: center;
     cursor: pointer;
-    transition: all $transicao-media;
-    backdrop-filter: blur(4px);
-    padding: 0;
+    transition:
+      background 180ms ease,
+      border-color 180ms ease,
+      color 180ms ease;
 
-    i {
-      font-size: 0.85rem;
-      color: $cor-primaria;
-      transition: color $transicao-rapida;
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 5px;
+      border: 1px solid rgba($oraculum-cobre, 0.3);
+      border-radius: 50%;
+      pointer-events: none;
     }
 
     &:hover {
-      border-color: $cor-secundaria;
-      transform: translate(-50%, -50%) scale(1.03);
+      border-color: $oraculum-ouro;
+      background: $oraculum-pergaminho-claro;
+    }
 
-      i { color: $cor-secundaria; }
+    &:focus-visible {
+      outline: 2px solid $oraculum-ouro-claro;
+      outline-offset: 5px;
     }
 
     &.ativo {
-      background: linear-gradient(135deg, rgba(167, 139, 250, 0.35), rgba(240, 164, 184, 0.35));
-      border-color: $cor-secundaria;
-      box-shadow: 0 0 30px rgba(167, 139, 250, 0.6);
+      z-index: 3;
+      border-color: $oraculum-ouro-claro;
+      background: $oraculum-vinho;
+      outline-color: rgba($oraculum-ouro, 0.6);
 
-      i { color: $cor-secundaria; }
+      &::before {
+        border-color: rgba($oraculum-ouro, 0.45);
+      }
+
+      .mandala-numeros__valor {
+        color: $oraculum-ouro-claro;
+      }
+
+      .mandala-numeros__rotulo {
+        color: $oraculum-pergaminho-claro;
+      }
+
+      .mandala-numeros__no-ornamento {
+        color: $oraculum-ouro;
+      }
     }
 
     &--centro {
-      width: 105px;
-      height: 105px;
-      background: linear-gradient(135deg, rgba(167, 139, 250, 0.5), rgba(240, 164, 184, 0.4));
-      border: 2px solid $cor-secundaria;
       z-index: 2;
+      width: clamp(90px, 21%, 125px);
+      border-width: 2px;
+      background: $oraculum-pergaminho-claro;
 
-      .mandala-numeros__valor { font-size: 1.8rem; }
-      .mandala-numeros__rotulo { font-size: 0.7rem; }
+      .mandala-numeros__valor {
+        font-size: clamp(1.4rem, 3vw, 2rem);
+      }
+
+      .mandala-numeros__rotulo {
+        font-size: clamp(0.45rem, 1vw, 0.6rem);
+      }
+
+      &.ativo {
+        background: $oraculum-vinho;
+      }
+    }
+  }
+
+  &__no-ornamento {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    color: $oraculum-cobre;
+
+    svg {
+      display: block;
+      width: clamp(11px, 2vw, 16px);
+      height: clamp(11px, 2vw, 16px);
     }
   }
 
   &__valor {
+    display: block;
     font-family: $fonte-titulo;
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: $cor-texto;
-    line-height: 1;
+    font-size: clamp(1.1rem, 2.6vw, 1.6rem);
+    font-weight: 600;
+    line-height: 1.1;
+    color: $oraculum-vinho;
   }
 
   &__rotulo {
+    display: block;
+    width: 100%;
+    padding: 0 0.15rem;
     font-family: $fonte-titulo;
-    font-size: 0.6rem;
-    color: $cor-texto-suave;
+    font-size: clamp(0.4rem, 0.9vw, 0.55rem);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0;
     text-align: center;
-    line-height: 1.1;
-    padding: 0 0.3rem;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
+    overflow-wrap: break-word;
+    color: $oraculum-tinta-suave;
+  }
+
+  &__rodape {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba($oraculum-ouro, 0.3);
+    font-family: $fonte-titulo;
+    font-size: 0.56rem;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    line-height: 1.6;
+    text-align: center;
+    color: $oraculum-pergaminho-escuro;
+
+    svg {
+      flex-shrink: 0;
+      width: 12px;
+      height: 12px;
+      color: $oraculum-ouro;
+    }
   }
 }
 
+@media (max-width: 700px) {
+  .mandala-numeros {
+    max-width: 550px;
+    padding: 0.85rem;
+
+    &__svg-wrapper {
+      margin: 1rem auto;
+    }
+
+    &__no {
+      width: 17%;
+
+      &--centro {
+        width: 22%;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .mandala-numeros {
+    margin: 1rem auto 3rem;
+    padding: 0.65rem;
+
+    &__cabecalho {
+      gap: 0.4rem;
+      font-size: 0.46rem;
+      letter-spacing: 0.03em;
+    }
+
+    &__svg-wrapper {
+      width: 100%;
+      margin: 1rem auto;
+    }
+
+    &__no {
+      gap: 0.1rem;
+      width: 19%;
+      min-width: 0;
+      padding: 0.2rem;
+      outline-offset: 2px;
+
+      &::before {
+        inset: 3px;
+      }
+
+      &--centro {
+        width: 24%;
+      }
+    }
+
+    &__no-ornamento {
+      svg {
+        width: 10px;
+        height: 10px;
+      }
+    }
+
+    &__valor {
+      font-size: clamp(0.9rem, 4vw, 1.2rem);
+    }
+
+    &__rotulo {
+      font-size: clamp(0.34rem, 1.55vw, 0.46rem);
+      line-height: 1.1;
+    }
+
+    &__rodape {
+      gap: 0.35rem;
+      font-size: 0.44rem;
+      letter-spacing: 0.02em;
+    }
+  }
+}
+
+@media (max-width: 350px) {
+  .mandala-numeros {
+    &__no {
+      width: 20%;
+
+      &--centro {
+        width: 25%;
+      }
+    }
+
+    &__rotulo {
+      font-size: 0.32rem;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mandala-numeros__no {
+    transition: none;
+  }
+}

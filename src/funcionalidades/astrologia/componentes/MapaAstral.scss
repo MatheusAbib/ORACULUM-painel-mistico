@@ -1,16 +1,128 @@
 ﻿@use "../../../estilos/variaveis" as *;
 
 .mapa-astral {
-  position: relative;
   width: 100%;
-  max-width: 700px;
-  margin: 2rem auto;
-  aspect-ratio: 1 / 1;
+  min-width: 0;
+  color: $oraculum-pergaminho;
+
+  &__cabecalho {
+    margin-bottom: 2rem;
+  }
+
+  &__identificacao {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba($oraculum-ouro, 0.4);
+    font-family: $fonte-titulo;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: $oraculum-pergaminho-escuro;
+
+    svg {
+      flex-shrink: 0;
+      color: $oraculum-ouro;
+    }
+  }
+
+  &__introducao {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2.5rem 1rem 0;
+    text-align: center;
+
+    h3 {
+      margin: 0.7rem 0 1rem;
+      font-family: $fonte-titulo;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 500;
+      color: $oraculum-pergaminho-claro;
+    }
+
+    p {
+      margin: 0;
+      font-family: $fonte-corpo;
+      font-size: clamp(1.2rem, 2vw, 1.45rem);
+      line-height: 1.5;
+      color: $oraculum-pergaminho-escuro;
+    }
+  }
+
+  &__sobretitulo {
+    font-family: $fonte-titulo;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: $oraculum-cobre-claro;
+  }
+
+  &__moldura {
+    padding: clamp(0.85rem, 2.5vw, 1.75rem);
+    border: 1px solid $oraculum-cobre;
+    background:
+      radial-gradient(
+        ellipse at center,
+        rgba($oraculum-vinho, 0.2),
+        transparent 75%
+      ),
+      $oraculum-noite-profunda;
+  }
+
+  &__moldura-topo,
+  &__moldura-rodape {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-family: $fonte-titulo;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: $oraculum-ouro;
+
+    svg {
+      flex-shrink: 0;
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  &__moldura-topo {
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid rgba($oraculum-ouro, 0.25);
+  }
+
+  &__moldura-rodape {
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba($oraculum-ouro, 0.25);
+  }
+
+  &__area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 0;
+    padding: clamp(0.75rem, 3vw, 2rem) 0;
+  }
+
+  &__roda {
+    position: relative;
+    width: min(100%, 760px);
+    aspect-ratio: 1;
+    flex-shrink: 0;
+  }
 
   &__svg {
+    display: block;
     width: 100%;
     height: 100%;
-    display: block;
+    overflow: visible;
   }
 
   &__sobreposicao {
@@ -19,81 +131,418 @@
     pointer-events: none;
   }
 
-  &__signo {
-    position: absolute;
-    transform: translate(-50%, -50%);
-    color: $cor-secundaria;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+&__signo {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translate(-50%, -50%);
+  color: #392b2d;
+  opacity: 1;
+  pointer-events: none;
 
-    svg {
-      width: 100%;
-      height: 100%;
-    }
+  .icone-signo {
+    color: #392b2d;
+    opacity: 1;
   }
+
+  svg {
+    display: block;
+    color: #392b2d;
+    opacity: 1;
+  }
+
+  svg path,
+  svg circle,
+  svg line,
+  svg polyline {
+    stroke: currentColor;
+  }
+}
 
   &__planeta {
     position: absolute;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 6%;
+    height: 6%;
+    min-width: 0;
+    min-height: 0;
+    padding: 0;
     transform: translate(-50%, -50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.15rem;
-    color: $cor-primaria;
-    background: rgba(30, 25, 50, 0.85);
-    border: 1px solid rgba(153, 105, 255, 0.5);
+    border: 1px solid $oraculum-cobre;
     border-radius: 50%;
-    width: 38px;
-    height: 38px;
-    justify-content: center;
-    backdrop-filter: blur(4px);
-    box-shadow: 0 0 12px rgba(153, 105, 255, 0.4);
+    background: $oraculum-pergaminho-claro;
+    color: $oraculum-vinho;
+    cursor: pointer;
     pointer-events: auto;
-    cursor: help;
-    transition: all $transicao-rapida;
+    transition:
+      background $transicao-rapida,
+      border-color $transicao-rapida,
+      opacity $transicao-rapida;
 
     svg {
-      width: 18px;
-      height: 18px;
+      display: block;
+      width: 70%;
+      height: 70%;
+    }
+
+    &:hover,
+    &:focus-visible {
+      z-index: 5;
+      border-color: $oraculum-vinho;
+      background: $oraculum-ouro-claro;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $oraculum-vinho;
+      outline-offset: 3px;
+    }
+
+    &--selecionado {
+      z-index: 6;
+      border: 2px solid $oraculum-vinho;
+      background: $oraculum-ouro-claro;
+    }
+
+    &--esmaecido {
+      opacity: 0.45;
     }
   }
 
-  &__planeta-grau {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    margin-top: 0.2rem;
+  &__controles {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+    padding: 1.25rem;
+    border: 1px solid rgba($oraculum-ouro, 0.35);
+    background: $oraculum-noite-profunda;
+  }
+
+  &__controles-titulo {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
     font-family: $fonte-titulo;
     font-size: 0.7rem;
-    color: $cor-texto;
-    background: rgba(30, 25, 50, 0.9);
-    padding: 0.1rem 0.35rem;
-    border-radius: 50px;
-    border: 1px solid rgba(153, 105, 255, 0.3);
-    white-space: nowrap;
-    opacity: 0;
-    transition: opacity $transicao-rapida;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    color: $oraculum-pergaminho-claro;
+
+    svg {
+      width: 21px;
+      height: 21px;
+      color: $oraculum-ouro;
+    }
   }
 
-  &__planeta:hover &__planeta-grau {
-    opacity: 1;
+  &__controles-acoes {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.65rem;
   }
-}
 
-.icone-astro {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1em;
-  height: 1em;
-  line-height: 1;
+  &__controle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    min-height: 2.65rem;
+    padding: 0.65rem 0.9rem;
+    border: 1px solid rgba($oraculum-ouro, 0.35);
+    border-radius: 0;
+    background: transparent;
+    color: $oraculum-pergaminho-escuro;
+    font-family: $fonte-titulo;
+    font-size: 0.65rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+      background $transicao-rapida,
+      border-color $transicao-rapida;
 
-  svg {
-    width: 100%;
-    height: 100%;
+    svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    &:hover {
+      border-color: $oraculum-ouro;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $oraculum-ouro;
+      outline-offset: 3px;
+    }
+
+    &--ativo {
+      border-color: $oraculum-cobre;
+      background: rgba($oraculum-cobre, 0.15);
+      color: $oraculum-ouro-claro;
+    }
+
+    &--limpar {
+      color: $oraculum-cobre-claro;
+    }
+  }
+
+  &__detalhe {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-top: 1rem;
+    padding: 1.25rem;
+    border: 1px solid $oraculum-cobre;
+    background: $oraculum-pergaminho-claro;
+    color: $oraculum-tinta;
+  }
+
+  &__detalhe-icone {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 65px;
+    height: 65px;
+    border: 1px solid $oraculum-cobre;
+    border-radius: 50%;
+    color: $oraculum-vinho;
+  }
+
+  &__detalhe-info {
+    flex: 1;
+    min-width: 0;
+
+    > span {
+      font-family: $fonte-titulo;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: $oraculum-cobre;
+    }
+
+    h4 {
+      margin: 0.4rem 0;
+      font-family: $fonte-titulo;
+      font-size: clamp(1rem, 2vw, 1.4rem);
+      font-weight: 600;
+      color: $oraculum-tinta;
+    }
+
+    p {
+      margin: 0;
+      font-family: $fonte-corpo;
+      font-size: 1.2rem;
+      color: $oraculum-tinta-suave;
+    }
+  }
+
+  &__detalhe-aspectos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    padding-left: 1.25rem;
+    border-left: 1px solid rgba($oraculum-cobre, 0.45);
+
+    strong {
+      font-family: $fonte-titulo;
+      font-size: 1.8rem;
+      font-weight: 500;
+      color: $oraculum-vinho;
+    }
+
+    span {
+      font-family: $fonte-titulo;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      color: $oraculum-tinta-suave;
+    }
+  }
+
+  &__legenda {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-top: 1rem;
+    padding: 1.5rem;
+    border: 1px solid rgba($oraculum-ouro, 0.35);
+  }
+
+  &__legenda-cabecalho {
+    > span {
+      font-family: $fonte-titulo;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: $oraculum-cobre-claro;
+    }
+
+    h4 {
+      margin: 0.5rem 0 0;
+      font-family: $fonte-titulo;
+      font-size: 1rem;
+      font-weight: 500;
+      color: $oraculum-pergaminho-claro;
+    }
+  }
+
+  &__legenda-itens {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 1.5rem;
+  }
+
+  &__legenda-item {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-family: $fonte-corpo;
+    font-size: 1.15rem;
+    color: $oraculum-pergaminho-escuro;
+  }
+
+  &__legenda-linha {
     display: block;
+    flex-shrink: 0;
+    width: 25px;
+    height: 3px;
+  }
+
+  &__instrucao {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    margin: 1.5rem 0 0;
+    font-family: $fonte-corpo;
+    font-size: 1.15rem;
+    font-style: italic;
+    line-height: 1.4;
+    text-align: center;
+    color: $oraculum-pergaminho-escuro;
+
+    svg {
+      flex-shrink: 0;
+      width: 19px;
+      height: 19px;
+      color: $oraculum-ouro;
+    }
   }
 }
 
+@media (max-width: 768px) {
+  .mapa-astral {
+    &__moldura {
+      padding: 0.85rem;
+    }
+
+    &__moldura-topo,
+    &__moldura-rodape {
+      font-size: 0.52rem;
+      letter-spacing: 0.06em;
+    }
+
+    &__area {
+      padding: 1rem 0;
+    }
+
+    &__controles {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    &__legenda {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .mapa-astral {
+    &__identificacao {
+      font-size: 0.5rem;
+      letter-spacing: 0.05em;
+    }
+
+    &__introducao {
+      padding: 2rem 0.5rem 0;
+    }
+
+    &__moldura {
+      padding: 0.5rem;
+    }
+
+    &__moldura-topo,
+    &__moldura-rodape {
+      font-size: 0.45rem;
+      letter-spacing: 0.02em;
+    }
+
+    &__area {
+      padding: 0.5rem 0;
+    }
+
+    &__roda {
+      width: 100%;
+    }
+
+    &__planeta {
+      width: 7.5%;
+      height: 7.5%;
+    }
+
+    &__signo {
+      width: 5.8%;
+      height: 5.8%;
+    }
+
+    &__controles {
+      padding: 1rem;
+    }
+
+    &__controles-acoes {
+      width: 100%;
+    }
+
+    &__controle {
+      flex: 1;
+    }
+
+    &__detalhe {
+      gap: 0.85rem;
+      padding: 1rem;
+    }
+
+    &__detalhe-icone {
+      width: 48px;
+      height: 48px;
+    }
+
+    &__detalhe-aspectos {
+      padding-left: 0.75rem;
+    }
+
+    &__legenda {
+      padding: 1rem;
+    }
+
+    &__legenda-itens {
+      gap: 0.85rem 1.2rem;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mapa-astral__planeta,
+  .mapa-astral__controle {
+    transition: none;
+  }
+}

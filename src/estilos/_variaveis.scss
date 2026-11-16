@@ -1,25 +1,94 @@
-﻿$cor-fundo: #1a1533;
-$cor-fundo-secundaria: #251a45;
-$cor-primaria: #a78bfa;
-$cor-secundaria: #f0a4b8;
-$cor-azul: #93c5fd;
-$cor-laranja: #fbbf9d;
-$cor-texto: #f5f3ff;
-$cor-texto-suave: rgba(245, 243, 255, 0.9);
-$cor-texto-apagado: rgba(245, 243, 255, 0.7);
+﻿
+$oraculum-noite: #201827;
+$oraculum-noite-profunda: #17111d;
+$oraculum-vinho: #673c46;
+$oraculum-vinho-claro: #89535d;
+$oraculum-cobre: #b9764e;
+$oraculum-cobre-claro: #d69a70;
+$oraculum-ouro: #d7ad68;
+$oraculum-ouro-claro: #efd29b;
+$oraculum-pergaminho: #e9d8b4;
+$oraculum-pergaminho-claro: #f4e8cd;
+$oraculum-pergaminho-escuro: #cbb48b;
+$oraculum-verde: #315b5a;
+$oraculum-verde-claro: #56827b;
+$oraculum-azul: #294f59;
+$oraculum-azul-claro: #86a9b2;
+$oraculum-tinta: #392b2d;
+$oraculum-tinta-suave: #70564d;
 
-$gradiente-mistico: linear-gradient(45deg, #f472b6, #a78bfa, #60a5fa, #c084fc);
-$gradiente-primario: linear-gradient(to right, $cor-primaria, $cor-secundaria);
-$gradiente-carta-costas: linear-gradient(45deg, #5b21b6, #7e22ce);
-$gradiente-carta-frente: linear-gradient(135deg, #3b3566, #2a2452);
+$cor-fundo: $oraculum-noite;
+$cor-fundo-secundaria: #2c2233;
+$cor-primaria: $oraculum-ouro;
+$cor-secundaria: $oraculum-cobre-claro;
+$cor-azul: $oraculum-azul-claro;
+$cor-laranja: $oraculum-cobre;
+$cor-texto: $oraculum-pergaminho-claro;
+$cor-texto-suave: rgba(244, 232, 205, 0.88);
+$cor-texto-apagado: rgba(244, 232, 205, 0.62);
 
-$vidro-fundo: rgba(255, 255, 255, 0.08);
-$vidro-fundo-escuro: rgba(40, 32, 70, 0.65);
-$vidro-borda: 1px solid rgba(167, 139, 250, 0.4);
-$vidro-borda-roxa: 1px solid rgba(167, 139, 250, 0.4);
-$sombra-vidro: 0 8px 32px 0 rgba(90, 60, 160, 0.25);
-$sombra-carta: 0 10px 25px rgba(0, 0, 0, 0.25);
-$sombra-profunda: 0 25px 50px rgba(0, 0, 0, 0.4);
+$gradiente-mistico: linear-gradient(
+  125deg,
+  $oraculum-vinho,
+  $oraculum-cobre,
+  $oraculum-ouro,
+  $oraculum-verde
+);
+
+$gradiente-primario: linear-gradient(
+  110deg,
+  $oraculum-ouro,
+  $oraculum-cobre-claro
+);
+
+$gradiente-carta-costas: linear-gradient(
+  145deg,
+  $oraculum-vinho,
+  $oraculum-noite,
+  $oraculum-verde
+);
+
+$gradiente-carta-frente: linear-gradient(
+  145deg,
+  $oraculum-pergaminho-claro,
+  $oraculum-pergaminho,
+  $oraculum-pergaminho-escuro
+);
+
+$gradiente-noite: radial-gradient(
+  ellipse at 50% 30%,
+  #443044 0%,
+  $oraculum-noite 60%,
+  $oraculum-noite-profunda 100%
+);
+
+$gradiente-pergaminho: linear-gradient(
+  135deg,
+  $oraculum-pergaminho-claro,
+  $oraculum-pergaminho,
+  $oraculum-pergaminho-escuro
+);
+
+$gradiente-metal: linear-gradient(
+  135deg,
+  $oraculum-cobre,
+  $oraculum-ouro-claro,
+  $oraculum-ouro,
+  $oraculum-cobre
+);
+
+$vidro-fundo: rgba(233, 216, 180, 0.06);
+$vidro-fundo-escuro: rgba(32, 24, 39, 0.88);
+$vidro-borda: 1px solid rgba(215, 173, 104, 0.35);
+$vidro-borda-roxa: 1px solid rgba(215, 173, 104, 0.35);
+
+$borda-ornamental: 1px solid $oraculum-ouro;
+$borda-ornamental-suave: 1px solid rgba(215, 173, 104, 0.35);
+$borda-pergaminho: 1px solid $oraculum-pergaminho-escuro;
+
+$sombra-vidro: 0 8px 24px rgba(10, 7, 14, 0.2);
+$sombra-carta: 0 12px 28px rgba(10, 7, 14, 0.28);
+$sombra-profunda: 0 24px 50px rgba(10, 7, 14, 0.42);
 
 $fonte-titulo: "Cinzel", serif;
 $fonte-corpo: "Cormorant Garamond", serif;

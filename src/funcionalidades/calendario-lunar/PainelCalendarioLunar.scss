@@ -1,52 +1,253 @@
 ﻿@use "../../estilos/variaveis" as *;
 
 .painel-calendario {
-  max-width: 900px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  width: 100%;
+  min-width: 0;
+  padding: clamp(1rem, 3vw, 2rem) 0 5rem;
+  color: $oraculum-pergaminho;
 
-  &__cabecalho { text-align: center; }
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  &__cabecalho {
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  &__identificacao {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba($oraculum-ouro, 0.35);
+    font-family: $fonte-titulo;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    line-height: 1.5;
+    color: $oraculum-ouro;
+  }
+
+  &__apresentacao {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: clamp(2rem, 4vw, 3rem) 0;
+    text-align: center;
+  }
+
+  &__emblema {
+    position: relative;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 140px;
+    height: 140px;
+    margin-bottom: 2.5rem;
+    border: 1px solid rgba($oraculum-ouro, 0.7);
+    border-radius: 50%;
+    outline: 1px solid rgba($oraculum-ouro, 0.3);
+    outline-offset: 9px;
+    color: $oraculum-ouro;
+  }
+
+  &__emblema-anel {
+    position: absolute;
+    inset: 14px;
+    display: grid;
+    place-items: center;
+    border: 1px dashed rgba($oraculum-ouro, 0.55);
+    border-radius: 50%;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 13px;
+      border: 1px solid rgba($oraculum-ouro, 0.25);
+      border-radius: 50%;
+    }
+
+    svg {
+      width: 86px;
+      height: 86px;
+      color: rgba($oraculum-ouro, 0.2);
+    }
+  }
+
+  &__emblema > span {
+    position: relative;
+    z-index: 1;
+    font-family: $fonte-titulo;
+    font-size: 4rem;
+    font-weight: 400;
+    line-height: 1;
+    color: $oraculum-ouro-claro;
+  }
+
+  &__sobretitulo {
+    display: block;
+    margin-bottom: 0.9rem;
+    font-family: $fonte-titulo;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    line-height: 1.5;
+    color: $oraculum-cobre-claro;
+  }
 
   &__titulo {
+    margin: 0;
     font-family: $fonte-titulo;
-    font-size: 1.8rem;
-    color: $cor-primaria;
-    letter-spacing: 0.05em;
+    font-size: clamp(2.6rem, 6vw, 4.8rem);
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: 0;
+    overflow-wrap: break-word;
+    color: $oraculum-pergaminho-claro;
+    background: none;
+    -webkit-text-fill-color: currentColor;
+  }
+
+  &__divisor {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.9rem;
+    width: min(100%, 280px);
+    margin: 1.75rem 0;
+    color: $oraculum-ouro;
+
+    span {
+      flex: 1;
+      height: 1px;
+      background: rgba($oraculum-ouro, 0.5);
+    }
+
+    svg {
+      flex-shrink: 0;
+      width: 15px;
+      height: 15px;
+    }
   }
 
   &__subtitulo {
-    margin-top: 0.4rem;
-    color: $cor-texto-suave;
-    font-size: 0.9rem;
-    opacity: 0.85;
+    max-width: 670px;
+    margin: 0;
+    font-family: $fonte-corpo;
+    font-size: clamp(1.25rem, 2vw, 1.6rem);
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    color: $oraculum-pergaminho-escuro;
+  }
+
+  &__conteudo {
+    width: 100%;
+    min-width: 0;
+  }
+
+  &__secao-cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba($oraculum-ouro, 0.35);
+    font-family: $fonte-titulo;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    line-height: 1.5;
+    color: $oraculum-ouro;
+  }
+
+  &__secao-introducao {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 2rem 0 2.5rem;
+  }
+
+  &__secao-rotulo {
+    display: block;
+    margin-bottom: 0.7rem;
+    font-family: $fonte-titulo;
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    line-height: 1.5;
+    color: $oraculum-cobre-claro;
+  }
+
+  &__secao-titulo {
+    margin: 0;
+    font-family: $fonte-titulo;
+    font-size: clamp(1.4rem, 3vw, 2.1rem);
+    font-weight: 500;
+    line-height: 1.3;
+    color: $oraculum-pergaminho-claro;
+  }
+
+  &__secao-descricao {
+    max-width: 420px;
+    margin: 0;
+    font-family: $fonte-corpo;
+    font-size: clamp(1.1rem, 1.8vw, 1.3rem);
+    line-height: 1.55;
+    color: $oraculum-pergaminho-escuro;
   }
 
   &__detalhe {
-    padding: 1.3rem 1.4rem;
-    border-radius: 18px;
-    background: rgba(40, 32, 70, 0.6);
-    border: 1px solid rgba(167, 139, 250, 0.3);
+    min-width: 0;
+    padding: clamp(1.25rem, 3vw, 2.5rem);
+    border: 1px solid rgba($oraculum-ouro, 0.45);
+    background: $oraculum-noite-profunda;
   }
 
   &__detalhe-topo {
     display: flex;
-    gap: 1.2rem;
-    align-items: flex-start;
-    margin-bottom: 1.2rem;
-    padding-bottom: 1.2rem;
-    border-bottom: 1px solid rgba(167, 139, 250, 0.15);
+    align-items: center;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba($oraculum-ouro, 0.3);
   }
 
   &__detalhe-icone {
-    flex-shrink: 0;
     display: grid;
     place-items: center;
-    width: 96px;
-    height: 96px;
+    flex-shrink: 0;
+    width: 160px;
+    height: 160px;
+  }
+
+  &__detalhe-icone-anel {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 140px;
+    height: 140px;
+    border: 1px solid rgba($oraculum-ouro, 0.55);
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(167,139,250,0.18), transparent 70%);
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 9px;
+      border: 1px dashed rgba($oraculum-ouro, 0.3);
+      border-radius: 50%;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: -8px;
+      border: 1px solid rgba($oraculum-ouro, 0.15);
+      border-radius: 50%;
+    }
   }
 
   &__detalhe-info {
@@ -55,134 +256,500 @@
   }
 
   &__detalhe-rotulo {
+    display: block;
+    margin-bottom: 0.65rem;
     font-family: $fonte-titulo;
-    font-size: 0.72rem;
-    letter-spacing: 0.15em;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    line-height: 1.5;
     text-transform: uppercase;
-    color: $cor-secundaria;
+    color: $oraculum-cobre-claro;
   }
 
   &__detalhe-fase {
+    margin: 0 0 0.65rem;
     font-family: $fonte-titulo;
-    font-size: 1.4rem;
-    color: $cor-primaria;
-    margin: 0.2rem 0 0.5rem;
+    font-size: clamp(1.6rem, 3vw, 2.5rem);
+    font-weight: 500;
+    line-height: 1.3;
+    color: $oraculum-pergaminho-claro;
   }
 
   &__detalhe-desc {
-    color: $cor-texto-suave;
-    font-size: 0.9rem;
-    line-height: 1.6;
+    max-width: 700px;
+    margin: 0;
+    font-family: $fonte-corpo;
+    font-size: clamp(1.15rem, 1.8vw, 1.4rem);
+    line-height: 1.55;
+    color: $oraculum-pergaminho-escuro;
   }
 
   &__detalhe-metricas {
     display: flex;
-    gap: 1rem;
-    margin-top: 0.6rem;
-    font-size: 0.76rem;
-    color: $cor-secundaria;
-    opacity: 0.9;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    margin-top: 1.5rem;
+  }
+
+  &__metrica {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    min-width: 150px;
+    padding: 0.9rem 1.15rem;
+    border: 1px solid rgba($oraculum-ouro, 0.3);
+    background: rgba($oraculum-vinho, 0.15);
+
+    > svg {
+      flex-shrink: 0;
+      width: 23px;
+      height: 23px;
+      color: $oraculum-ouro;
+    }
+
+    > div {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    span {
+      font-family: $fonte-titulo;
+      font-size: 0.52rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: $oraculum-cobre-claro;
+    }
+
+    strong {
+      font-family: $fonte-corpo;
+      font-size: 1.35rem;
+      font-weight: 600;
+      line-height: 1.2;
+      color: $oraculum-pergaminho-claro;
+    }
   }
 
   &__blocos {
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
+    gap: 0.85rem;
+    padding-top: 2rem;
   }
 
   &__bloco {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-    padding: 0.75rem 0.95rem;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(167, 139, 250, 0.12);
+    min-width: 0;
+    padding: 1.35rem 1.5rem;
+    border: 1px solid rgba($oraculum-ouro, 0.25);
+    background: rgba($oraculum-pergaminho, 0.035);
 
     p {
-      font-size: 0.87rem;
-      line-height: 1.6;
-      color: $cor-texto-suave;
+      margin: 0;
+      font-family: $fonte-corpo;
+      font-size: clamp(1.15rem, 1.8vw, 1.35rem);
+      line-height: 1.65;
+      color: $oraculum-pergaminho;
     }
 
     &--fazer {
-      background: rgba(134, 239, 172, 0.06);
-      border: 1px solid rgba(134, 239, 172, 0.22);
+      border-color: rgba($oraculum-verde-claro, 0.45);
+      background: rgba($oraculum-verde, 0.14);
+
+      .painel-calendario__bloco-cabecalho svg {
+        color: $oraculum-verde-claro;
+      }
     }
 
     &--evitar {
-      background: rgba(248, 113, 113, 0.05);
-      border: 1px solid rgba(248, 113, 113, 0.22);
+      border-color: rgba($oraculum-cobre, 0.45);
+      background: rgba($oraculum-vinho, 0.2);
+
+      .painel-calendario__bloco-cabecalho svg {
+        color: $oraculum-cobre-claro;
+      }
     }
+  }
+
+  &__bloco-cabecalho {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.85rem;
+
+    svg {
+      flex-shrink: 0;
+      width: 19px;
+      height: 19px;
+      color: $oraculum-ouro;
+    }
+  }
+
+  &__bloco-numero {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 27px;
+    height: 27px;
+    border: 1px solid rgba($oraculum-ouro, 0.45);
+    border-radius: 50%;
+    font-family: $fonte-titulo;
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: $oraculum-ouro;
   }
 
   &__rotulo {
     font-family: $fonte-titulo;
-    font-size: 0.68rem;
-    letter-spacing: 0.08em;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    line-height: 1.5;
     text-transform: uppercase;
-    color: $cor-secundaria;
-    opacity: 0.85;
+    color: $oraculum-ouro-claro;
   }
 
   &__dois-blocos {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.6rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.85rem;
   }
 
-  &__proximas-titulo {
-    font-family: $fonte-titulo;
-    font-size: 1.1rem;
-    color: $cor-primaria;
-    margin-bottom: 0.8rem;
+  &__calendario-secao {
+    margin-top: clamp(3rem, 6vw, 5rem);
+    min-width: 0;
+  }
+
+  &__proximas {
+    margin-top: clamp(3rem, 6vw, 5rem);
+    min-width: 0;
   }
 
   &__proximas-grade {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 0.8rem;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(0.75rem, 1.5vw, 1.25rem);
   }
 
   &__proxima {
     display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 1.15rem;
+    border: 1px solid rgba($oraculum-ouro, 0.35);
+    background: $oraculum-noite-profunda;
+  }
+
+  &__proxima-topo {
+    display: flex;
     align-items: center;
-    gap: 0.8rem;
-    padding: 0.8rem 1rem;
-    border-radius: 14px;
-    background: rgba(40, 32, 70, 0.55);
-    border: 1px solid rgba(167, 139, 250, 0.2);
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid rgba($oraculum-ouro, 0.2);
+    font-family: $fonte-titulo;
+    font-size: 0.52rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: $oraculum-cobre-claro;
+
+    svg {
+      width: 12px;
+      height: 12px;
+      color: $oraculum-ouro;
+    }
+  }
+
+  &__proxima-conteudo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    gap: 1rem;
+    padding: 1.5rem 0 0.5rem;
+    text-align: center;
+  }
+
+  &__proxima-icone {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 85px;
+    height: 85px;
+    border: 1px solid rgba($oraculum-ouro, 0.4);
+    border-radius: 50%;
+  }
+
+  &__proxima-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
 
     strong {
-      display: block;
       font-family: $fonte-titulo;
       font-size: 0.85rem;
-      color: $cor-primaria;
+      font-weight: 600;
+      line-height: 1.4;
+      color: $oraculum-pergaminho-claro;
     }
 
     span {
-      font-size: 0.75rem;
-      color: $cor-texto-suave;
-      opacity: 0.75;
+      font-family: $fonte-corpo;
+      font-size: 1.1rem;
+      line-height: 1.4;
+      color: $oraculum-pergaminho-escuro;
+    }
+  }
+
+  &__rodape {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.85rem;
+    margin-top: clamp(3rem, 6vw, 5rem);
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba($oraculum-ouro, 0.35);
+    font-family: $fonte-titulo;
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    line-height: 1.5;
+    text-align: center;
+    color: $oraculum-ouro;
+
+    svg {
+      flex-shrink: 0;
+      width: 13px;
+      height: 13px;
     }
   }
 }
 
-@media (max-width: $breakpoint-mobile) {
+@media (max-width: 1100px) {
   .painel-calendario {
+    &__proximas-grade {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+}
 
-    &__titulo { font-size: 1.5rem; }
+@media (max-width: 800px) {
+  .painel-calendario {
+    &__secao-introducao {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    &__secao-descricao {
+      max-width: 100%;
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .painel-calendario {
+    padding: 1rem 0 3rem;
+
+    &__cabecalho {
+      margin-bottom: 2.5rem;
+    }
+
+    &__identificacao {
+      font-size: 0.52rem;
+      letter-spacing: 0.07em;
+    }
+
+    &__apresentacao {
+      padding: 2.25rem 0;
+    }
+
+    &__emblema {
+      width: 110px;
+      height: 110px;
+      margin-bottom: 2rem;
+    }
+
+    &__emblema-anel {
+      inset: 11px;
+
+      &::before {
+        inset: 10px;
+      }
+
+      svg {
+        width: 65px;
+        height: 65px;
+      }
+    }
+
+    &__emblema > span {
+      font-size: 3.2rem;
+    }
+
+    &__sobretitulo {
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+    }
+
+    &__titulo {
+      font-size: clamp(2rem, 7vw, 3.25rem);
+    }
+
+    &__subtitulo {
+      font-size: 1.2rem;
+    }
 
     &__detalhe-topo {
       flex-direction: column;
       align-items: center;
+      gap: 1.5rem;
       text-align: center;
     }
 
-    &__detalhe-metricas { justify-content: center; }
+    &__detalhe-icone {
+      width: 130px;
+      height: 130px;
+    }
 
-    &__dois-blocos { grid-template-columns: 1fr; }
+    &__detalhe-icone-anel {
+      width: 115px;
+      height: 115px;
+    }
 
-    &__proximas-grade { grid-template-columns: 1fr 1fr; }
+    &__detalhe-info {
+      width: 100%;
+    }
+
+    &__detalhe-metricas {
+      justify-content: center;
+    }
+
+    &__secao-cabecalho {
+      font-size: 0.52rem;
+      letter-spacing: 0.06em;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .painel-calendario {
+    &__identificacao {
+      gap: 0.5rem;
+      font-size: 0.43rem;
+      letter-spacing: 0.03em;
+    }
+
+    &__apresentacao {
+      padding: 5rem 0;
+    }
+
+    &__emblema {
+      width: 90px;
+      height: 90px;
+    }
+
+    &__emblema-anel {
+      inset: 9px;
+
+      &::before {
+        inset: 8px;
+      }
+
+      svg {
+        width: 53px;
+        height: 53px;
+      }
+    }
+
+    &__emblema > span {
+      font-size: 2.7rem;
+    }
+
+    &__sobretitulo {
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+    }
+
+    &__titulo {
+      font-size: clamp(1.8rem, 8vw, 2.5rem);
+    }
+
+    &__subtitulo {
+      font-size: 1.15rem;
+    }
+
+    &__secao-cabecalho {
+      gap: 0.5rem;
+      font-size: 0.43rem;
+      letter-spacing: 0.02em;
+    }
+
+    &__secao-introducao {
+      padding: 1.5rem 0 2rem;
+    }
+
+    &__detalhe {
+      padding: 1.15rem;
+    }
+
+    &__detalhe-icone {
+      width: 115px;
+      height: 115px;
+    }
+
+    &__detalhe-icone-anel {
+      width: 105px;
+      height: 105px;
+    }
+
+    &__detalhe-fase {
+      font-size: 1.7rem;
+    }
+
+    &__detalhe-metricas {
+      gap: 0.6rem;
+    }
+
+    &__metrica {
+      flex: 1 1 130px;
+      min-width: 0;
+      padding: 0.8rem;
+    }
+
+    &__bloco {
+      padding: 1.15rem;
+    }
+
+    &__dois-blocos {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    &__proximas-grade {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    &__proxima-conteudo {
+      flex-direction: row;
+      justify-content: flex-start;
+      text-align: left;
+    }
+
+    &__proxima-icone {
+      width: 75px;
+      height: 75px;
+    }
+
+    &__proxima-info {
+      align-items: flex-start;
+    }
+
+    &__rodape {
+      gap: 0.5rem;
+      font-size: 0.48rem;
+      letter-spacing: 0.04em;
+    }
   }
 }

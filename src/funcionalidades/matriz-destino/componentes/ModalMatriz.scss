@@ -3,143 +3,531 @@
 .modal-matriz {
   position: fixed;
   inset: 0;
-  z-index: 9999;
-   backdrop-filter: blur(8px);
+  z-index: 2147483647;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem;
-  animation: aparecer 0.3s ease;
+  padding: clamp(0.75rem, 3vw, 1.5rem);
+  overflow: hidden;
+  isolation: isolate;
+    -webkit-backdrop-filter: 5px;
+  backdrop-filter: blur(5px);
+  animation: modal-matriz-aparecer 220ms ease;
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
 
   &__caixa {
     position: relative;
-    width: 100%;
-    max-width: 750px;
-    max-height: 80vh;
+    width: min(100%, 780px);
+    max-height: min(90dvh, 900px);
     overflow-y: auto;
-    background: linear-gradient(135deg, rgba(20, 15, 40, 0.98), rgba(15, 10, 30, 0.98));
-    border: 1px solid rgba(167, 139, 250, 0.4);
-    border-radius: 24px;
-    padding: 2.5rem;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 60px rgba(167, 139, 250, 0.15);
-  }
-.modal-matriz__calculo-linha{
-text-align: left;
-}
-  
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: $oraculum-cobre $oraculum-pergaminho;
+    border: 1px solid $oraculum-pergaminho-escuro;
+    border-radius: 0;
+    background: $oraculum-pergaminho-claro;
+    color: $oraculum-tinta;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
 
-  &__fechar {
-    position: absolute;
-    top: 1.2rem;
-    right: 1.2rem;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: rgba(167, 139, 250, 0.15);
-    border: 1px solid rgba(167, 139, 250, 0.35);
-    color: #f5f3ff;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 50;
+    &::-webkit-scrollbar {
+      width: 7px;
+    }
 
-    &:hover {
-      background: rgba(167, 139, 250, 0.35);
-      transform: rotate(90deg);
+    &::-webkit-scrollbar-track {
+      background: $oraculum-pergaminho;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: $oraculum-cobre;
     }
   }
 
-  &__titulo {
-    font-family: $fonte-titulo;
-    font-size: 1.6rem;
-    margin-bottom: 1.5rem;
-    background: $gradiente-primario;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+  &__fechar {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    z-index: 5;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 1px solid rgba($oraculum-vinho, 0.45);
+    border-radius: 0;
+    background: $oraculum-pergaminho;
+    color: $oraculum-vinho;
+    cursor: pointer;
+    transition:
+      background 180ms ease,
+      border-color 180ms ease;
+
+    svg {
+      width: 21px;
+      height: 21px;
+    }
+
+    &:hover {
+      border-color: $oraculum-vinho;
+      background: $oraculum-pergaminho-escuro;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $oraculum-vinho;
+      outline-offset: 3px;
+    }
   }
 
-  &__subtitulo {
+  &__cabecalho {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3.5rem clamp(1.25rem, 4vw, 3rem) 2.5rem;
+    border-bottom: 1px solid rgba($oraculum-vinho, 0.25);
+    background:
+      radial-gradient(
+        ellipse at top center,
+        rgba($oraculum-ouro, 0.16),
+        transparent 75%
+      ),
+      $oraculum-pergaminho;
+    text-align: center;
+  }
+
+  &__emblema {
+    display: grid;
+    place-items: center;
+    width: 88px;
+    height: 88px;
+    margin-bottom: 2rem;
+    border: 1px solid rgba($oraculum-vinho, 0.6);
+    border-radius: 50%;
+    outline: 1px solid rgba($oraculum-vinho, 0.25);
+    outline-offset: 6px;
+    color: $oraculum-vinho;
+
+    svg {
+      width: 46px;
+      height: 46px;
+    }
+  }
+
+  &__rotulo {
+    margin-bottom: 0.8rem;
     font-family: $fonte-titulo;
-    font-size: 1.1rem;
-    color: $cor-secundaria;
-    margin: 1.8rem 0 0.8rem;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    line-height: 1.5;
+    color: $oraculum-cobre;
+  }
+
+  &__titulo {
+    margin: 0;
+    font-family: $fonte-titulo;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 500;
+    line-height: 1.25;
+    color: $oraculum-vinho;
+  }
+
+  &__divisor {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    width: min(100%, 220px);
+    margin: 1.5rem 0;
+    color: $oraculum-cobre;
+
+    span {
+      flex: 1;
+      height: 1px;
+      background: rgba($oraculum-vinho, 0.35);
+    }
+
+    svg {
+      flex-shrink: 0;
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  &__introducao {
+    max-width: 560px;
+    margin: 0;
+    font-family: $fonte-corpo;
+    font-size: clamp(1.2rem, 2vw, 1.45rem);
+    line-height: 1.55;
+    color: $oraculum-tinta-suave;
+  }
+
+  &__corpo {
+    padding: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  &__secao {
+    & + & {
+      margin-top: 3rem;
+    }
+  }
+
+  &__secao-cabecalho {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba($oraculum-vinho, 0.25);
+
+    span {
+      display: block;
+      margin-bottom: 0.65rem;
+      font-family: $fonte-titulo;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      color: $oraculum-cobre;
+    }
+
+    h3 {
+      margin: 0;
+      font-family: $fonte-titulo;
+      font-size: clamp(1.15rem, 2.5vw, 1.65rem);
+      font-weight: 500;
+      line-height: 1.4;
+      color: $oraculum-vinho;
+    }
   }
 
   &__texto {
-    font-size: 1rem;
-    line-height: 1.7;
-    opacity: 0.9;
-    margin-bottom: 1rem;
-    text-align: justify;
+    margin: 0 0 1.25rem;
+    font-family: $fonte-corpo;
+    font-size: clamp(1.15rem, 2vw, 1.35rem);
+    font-weight: 400;
+    line-height: 1.65;
+    text-align: left;
+    color: $oraculum-tinta;
 
+    strong {
+      font-weight: 700;
+      color: $oraculum-vinho;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__nota {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin: 1.5rem 0;
+    padding: 1.25rem;
+    border: 1px solid rgba($oraculum-vinho, 0.2);
+    border-left: 3px solid $oraculum-cobre;
+    background: rgba($oraculum-pergaminho-escuro, 0.25);
+
+    svg {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      margin-top: 0.2rem;
+      color: $oraculum-cobre;
+    }
+
+    p {
+      margin: 0;
+      font-family: $fonte-corpo;
+      font-size: 1.2rem;
+      line-height: 1.5;
+      color: $oraculum-tinta;
+
+      strong {
+        color: $oraculum-vinho;
+      }
+    }
+  }
+
+  &__calculo {
+    display: flex;
+    flex-direction: column;
+    margin: 1.5rem 0 2rem;
+    border: 1px solid rgba($oraculum-vinho, 0.35);
+  }
+
+  &__calculo-linha {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    min-width: 0;
+    padding: 1rem 1.25rem;
+    text-align: left;
+
+    & + & {
+      border-top: 1px solid rgba($oraculum-vinho, 0.18);
+    }
+
+    &:nth-child(even) {
+      background: rgba($oraculum-pergaminho-escuro, 0.22);
+    }
+  }
+
+  &__calculo-letra {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgba($oraculum-vinho, 0.55);
+    border-radius: 50%;
+    font-family: $fonte-titulo;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: $oraculum-vinho;
+  }
+
+  &__calculo-conteudo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: 0;
+  }
+
+  &__calculo-formula {
+    font-family: $fonte-corpo;
+    font-size: 1.2rem;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+    color: $oraculum-tinta;
+  }
+
+  &__calculo-arcano {
+    font-family: $fonte-titulo;
+    font-size: 0.7rem;
+    font-weight: 600;
+    line-height: 1.5;
+    color: $oraculum-vinho;
   }
 
   &__lista {
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
-    margin-bottom: 1rem;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
   }
 
   &__item {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 1rem;
-    padding: 0.9rem 1.1rem;
-    border-radius: 12px;
-    background: rgba(167, 139, 250, 0.05);
-    border: 1px solid rgba(167, 139, 250, 0.15);
-    transition: all $transicao-rapida;
-
-    &:hover {
-      background: rgba(167, 139, 250, 0.12);
-      border-color: rgba(167, 139, 250, 0.3);
-    }
+    min-width: 0;
+    padding: 1.15rem;
+    border: 1px solid rgba($oraculum-vinho, 0.25);
+    background: rgba($oraculum-pergaminho, 0.5);
   }
 
   &__item-letra {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, rgba(167, 139, 250, 0.35), rgba(240, 164, 184, 0.25));
-    border: 1px solid rgba(167, 139, 250, 0.5);
-    font-family: $fonte-titulo;
-    font-size: 1rem;
-    font-weight: 700;
-    color: $cor-texto;
+    display: grid;
+    place-items: center;
     flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba($oraculum-vinho, 0.55);
+    border-radius: 50%;
+    background: rgba($oraculum-cobre, 0.08);
+    font-family: $fonte-titulo;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: $oraculum-vinho;
   }
 
   &__item-info {
     display: flex;
     flex-direction: column;
-    gap: 0.15rem;
+    gap: 0.4rem;
+    min-width: 0;
   }
 
   &__item-nome {
     font-family: $fonte-titulo;
-    font-size: 0.95rem;
-    color: $cor-secundaria;
+    font-size: 0.85rem;
+    font-weight: 600;
+    line-height: 1.5;
     text-align: left;
+    color: $oraculum-vinho;
   }
 
   &__item-descricao {
-    font-size: 0.88rem;
-    color: $cor-texto-suave;
-    text-align: left;
-    opacity: 0.85;
+    margin: 0;
+    font-family: $fonte-corpo;
+    font-size: 1.2rem;
     line-height: 1.5;
+    text-align: left;
+    color: $oraculum-tinta-suave;
+  }
+
+  &__rodape {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba($oraculum-vinho, 0.25);
+    text-align: center;
+
+    svg {
+      flex-shrink: 0;
+      width: 12px;
+      height: 12px;
+      color: $oraculum-cobre;
+    }
+
+    p {
+      max-width: 500px;
+      margin: 0;
+      font-family: $fonte-corpo;
+      font-size: 1.15rem;
+      font-style: italic;
+      line-height: 1.5;
+      color: $oraculum-tinta-suave;
+    }
   }
 }
 
+@keyframes modal-matriz-aparecer {
+  from {
+    opacity: 0;
+  }
 
+  to {
+    opacity: 1;
+  }
+}
 
+@media (max-width: 700px) {
+  .modal-matriz {
+    padding: 0.75rem;
 
+    &__caixa {
+      max-height: 94dvh;
+    }
 
+    &__cabecalho {
+      padding: 3rem 1.5rem 2rem;
+    }
 
+    &__corpo {
+      padding: 1.5rem;
+    }
+
+    &__emblema {
+      width: 72px;
+      height: 72px;
+
+      svg {
+        width: 38px;
+        height: 38px;
+      }
+    }
+
+    &__secao {
+      & + & {
+        margin-top: 2.5rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-matriz {
+    padding: 0;
+
+    &__caixa {
+      width: 100%;
+      max-height: 100dvh;
+      min-height: 100dvh;
+      border: 0;
+    }
+
+    &__fechar {
+      top: 0.85rem;
+      right: 0.85rem;
+      width: 36px;
+      height: 36px;
+
+      svg {
+        width: 19px;
+        height: 19px;
+      }
+    }
+
+    &__cabecalho {
+      padding: 3.5rem 1rem 1.75rem;
+    }
+
+    &__titulo {
+      font-size: 1.8rem;
+    }
+
+    &__introducao {
+      font-size: 1.15rem;
+    }
+
+    &__corpo {
+      padding: 1.25rem 1rem 2rem;
+    }
+
+    &__calculo-linha {
+      gap: 0.85rem;
+      padding: 0.85rem;
+    }
+
+    &__calculo-letra {
+      width: 34px;
+      height: 34px;
+      font-size: 0.8rem;
+    }
+
+    &__calculo-formula {
+      font-size: 1.1rem;
+    }
+
+    &__item {
+      gap: 0.85rem;
+      padding: 0.85rem;
+    }
+
+    &__item-letra {
+      width: 36px;
+      height: 36px;
+      font-size: 0.85rem;
+    }
+
+    &__item-nome {
+      font-size: 0.75rem;
+    }
+
+    &__item-descricao {
+      font-size: 1.1rem;
+    }
+
+    &__rodape {
+      gap: 0.5rem;
+
+      p {
+        font-size: 1rem;
+      }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-matriz,
+  .modal-matriz__fechar {
+    animation: none;
+    transition: none;
+  }
+}

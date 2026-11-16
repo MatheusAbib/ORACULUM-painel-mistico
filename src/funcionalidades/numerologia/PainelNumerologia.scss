@@ -1,167 +1,778 @@
 ﻿@use "../../estilos/variaveis" as *;
 
 .painel-numerologia {
-  
-  &__cabecalho {
-    text-align: center;
-    margin-bottom: 2rem;
+  width: 100%;
+  min-width: 0;
+  padding: clamp(1rem, 3vw, 2rem) 0 5rem;
+  color: $oraculum-pergaminho;
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
   }
 
-  &__titulo-linha {
+  &__cabecalho {
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  &__identificacao {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 0.7rem;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba($oraculum-ouro, 0.35);
+    font-family: $fonte-titulo;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    line-height: 1.5;
+    color: $oraculum-ouro;
+  }
+
+  &__introducao {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: clamp(2rem, 4vw, 3rem) 0;
+    text-align: center;
+  }
+
+  &__emblema {
+    position: relative;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 140px;
+    height: 140px;
+    margin-bottom: 2.5rem;
+    border: 1px solid rgba($oraculum-ouro, 0.7);
+    border-radius: 50%;
+    outline: 1px solid rgba($oraculum-ouro, 0.3);
+    outline-offset: 9px;
+    color: $oraculum-ouro;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 14px;
+      border: 1px dashed rgba($oraculum-ouro, 0.55);
+      border-radius: 50%;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 27px;
+      border: 1px solid rgba($oraculum-ouro, 0.25);
+      border-radius: 50%;
+    }
+  }
+
+  &__emblema-anel {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    color: $oraculum-ouro;
+
+    svg {
+      display: block;
+      width: 112px;
+      height: 112px;
+      opacity: 0.22;
+    }
+  }
+
+  &__emblema-numero {
+    position: relative;
+    z-index: 1;
+    font-family: $fonte-titulo;
+    font-size: 2.5rem;
+    font-weight: 500;
+    color: $oraculum-ouro-claro;
+  }
+
+  &__sobretitulo {
+    display: block;
+    margin-bottom: 0.9rem;
+    font-family: $fonte-titulo;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    line-height: 1.5;
+    color: $oraculum-cobre-claro;
   }
 
   &__titulo {
+    margin: 0;
     font-family: $fonte-titulo;
-    font-size: 1.8rem;
-    color: $cor-primaria;
-    letter-spacing: 0.04em;
+    font-size: clamp(2.6rem, 6vw, 4.8rem);
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: 0;
+    overflow-wrap: break-word;
+    color: $oraculum-pergaminho-claro;
+  }
+
+  &__divisor {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    width: min(100%, 280px);
+    margin: 1.75rem 0;
+    color: $oraculum-ouro;
+
+    span {
+      flex: 1;
+      height: 1px;
+      background: rgba($oraculum-ouro, 0.5);
+    }
+
+    svg {
+      flex-shrink: 0;
+      width: 15px;
+      height: 15px;
+    }
   }
 
   &__descricao {
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
-    line-height: 1.6;
-    color: $cor-texto-suave;
-    opacity: 0.85;
+    max-width: 670px;
+    margin: 0;
+    font-family: $fonte-corpo;
+    font-size: clamp(1.25rem, 2vw, 1.6rem);
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    overflow-wrap: break-word;
+    color: $oraculum-pergaminho-escuro;
   }
 
   &__info {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background: rgba(167, 139, 250, 0.15);
-    border: 1px solid rgba(167, 139, 250, 0.35);
-    color: $cor-secundaria;
+    gap: 0.8rem;
+    min-height: 48px;
+    margin-top: 2rem;
+    padding: 0.85rem 1.25rem;
+    border: 1px solid rgba($oraculum-ouro, 0.65);
+    border-radius: 0;
+    background: rgba($oraculum-vinho, 0.35);
+    box-shadow: none;
+    font-family: $fonte-titulo;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    line-height: 1.4;
+    text-align: center;
+    color: $oraculum-ouro-claro;
     cursor: pointer;
-    transition: all $transicao-rapida;
+    transition:
+      background 180ms ease,
+      border-color 180ms ease;
+
+    svg {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      color: inherit;
+    }
+
+    span {
+      font: inherit;
+      line-height: inherit;
+      color: inherit;
+    }
 
     &:hover {
-      background: rgba(167, 139, 250, 0.35);
-      transform: scale(1.08);
+      border-color: $oraculum-ouro;
+      background: $oraculum-vinho;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $oraculum-ouro-claro;
+      outline-offset: 3px;
     }
   }
 
   &__erro {
     display: flex;
     align-items: center;
-    gap: 0.7rem;
     justify-content: center;
-    margin-top: 2rem;
-    padding: 1rem 1.5rem;
-    border-radius: 12px;
-    background: rgba(255, 105, 105, 0.1);
-    border: 1px solid rgba(255, 105, 105, 0.4);
-    color: #ff9f9f;
-    font-size: 0.95rem;
+    gap: 0.85rem;
+    margin: 2rem 0;
+    padding: 1.15rem 1.5rem;
+    border: 1px solid $oraculum-cobre;
+    background: rgba($oraculum-vinho, 0.3);
+    font-family: $fonte-corpo;
+    font-size: 1.2rem;
+    color: $oraculum-pergaminho-claro;
+
+    svg {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      color: $oraculum-cobre-claro;
+    }
+  }
+
+  &__secao {
+    width: 100%;
+    min-width: 0;
+
+    &--leitura,
+    &--ciclos,
+    &--compatibilidade {
+      margin-top: clamp(3.5rem, 7vw, 5rem);
+    }
+  }
+
+  &__secao-cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-width: 0;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba($oraculum-ouro, 0.35);
+    font-family: $fonte-titulo;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    line-height: 1.5;
+    color: $oraculum-ouro;
+
+    span {
+      min-width: 0;
+    }
+
+    span:last-child {
+      flex-shrink: 0;
+    }
+  }
+
+  &__secao-introducao {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem 0 2.5rem;
+    text-align: left;
+  }
+
+  &__secao-rotulo {
+    display: block;
+    margin-bottom: 0.7rem;
+    font-family: $fonte-titulo;
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    line-height: 1.5;
+    color: $oraculum-cobre-claro;
+  }
+
+  &__secao-titulo {
+    margin: 0;
+    font-family: $fonte-titulo;
+    font-size: clamp(1.4rem, 3vw, 2.1rem);
+    font-weight: 500;
+    line-height: 1.3;
+    color: $oraculum-pergaminho-claro;
   }
 
   &__layout {
     display: grid;
-    grid-template-columns: 220px 1fr;
-    gap: 1.5rem;
+    grid-template-columns: 255px minmax(0, 1fr);
     align-items: start;
-    margin-top: 2rem;
+    gap: 1.5rem;
+    min-width: 0;
+  }
+
+  &__navegacao {
+    position: sticky;
+    top: 170px;
+    min-width: 0;
+    border: 1px solid rgba($oraculum-ouro, 0.45);
+    background: $oraculum-noite-profunda;
+  }
+
+  &__menu-cabecalho {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 1.35rem 1.15rem;
+    border-bottom: 1px solid rgba($oraculum-ouro, 0.3);
+
+    > svg {
+      flex-shrink: 0;
+      width: 27px;
+      height: 27px;
+      color: $oraculum-ouro;
+    }
+
+    > div {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      min-width: 0;
+    }
+
+    span {
+      font-family: $fonte-titulo;
+      font-size: 0.52rem;
+      font-weight: 600;
+      letter-spacing: 0.09em;
+      color: $oraculum-cobre-claro;
+    }
+
+    strong {
+      font-family: $fonte-titulo;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: $oraculum-pergaminho-claro;
+    }
   }
 
   &__menu {
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
-    position: sticky;
-    top: 90px;
+    gap: 0;
+    padding: 0.5rem;
   }
 
   &__aba {
     display: flex;
     align-items: center;
-    gap: 0.7rem;
-    padding: 0.6rem 0.8rem;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(167, 139, 250, 0.15);
-    color: $cor-texto-suave;
-    font-family: $fonte-titulo;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: all $transicao-rapida;
+    gap: 0.65rem;
+    width: 100%;
+    min-width: 0;
+    min-height: 69px;
+    padding: 0.7rem 0.6rem;
+    border: 1px solid transparent;
+    border-bottom-color: rgba($oraculum-ouro, 0.16);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
     text-align: left;
+    cursor: pointer;
+    transition:
+      background 180ms ease,
+      border-color 180ms ease,
+      color 180ms ease;
+
+    &:last-child {
+      border-bottom-color: transparent;
+    }
 
     &:hover {
-      border-color: rgba(167, 139, 250, 0.45);
-      background: rgba(167, 139, 250, 0.08);
-      color: $cor-texto;
+      background: rgba($oraculum-ouro, 0.07);
+    }
+
+    &:focus-visible {
+      outline: 2px solid $oraculum-ouro;
+      outline-offset: -2px;
     }
 
     &.ativa {
-      color: $cor-texto;
-      background: linear-gradient(135deg, rgba(167, 139, 250, 0.22), rgba(240, 164, 184, 0.15));
-      border-color: rgba(167, 139, 250, 0.55);
+      border-color: $oraculum-cobre;
+      background: $oraculum-pergaminho-claro;
+
+      .painel-numerologia__aba-indice {
+        color: $oraculum-cobre;
+      }
+
+      .painel-numerologia__aba-icone {
+        color: $oraculum-vinho;
+      }
+
+      .painel-numerologia__aba-textos {
+        strong {
+          color: $oraculum-vinho;
+        }
+
+        small {
+          color: $oraculum-tinta-suave;
+        }
+      }
 
       .painel-numerologia__aba-numero {
-        background: linear-gradient(135deg, $cor-primaria, $cor-secundaria);
-        border-color: transparent;
-        color: #fff;
+        border-color: $oraculum-vinho;
+        background: $oraculum-vinho;
+        color: $oraculum-pergaminho-claro;
       }
     }
   }
 
-  &__aba-numero {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: rgba(167, 139, 250, 0.15);
-    border: 1px solid rgba(167, 139, 250, 0.3);
-    font-family: $fonte-titulo;
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: $cor-primaria;
+  &__aba-indice {
+    align-self: flex-start;
     flex-shrink: 0;
-    transition: all $transicao-rapida;
+    width: 17px;
+    padding-top: 0.2rem;
+    font-family: $fonte-titulo;
+    font-size: 0.6rem;
+    color: $oraculum-cobre-claro;
   }
 
-  &__aba-titulo {
+  &__aba-icone {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    color: $oraculum-ouro;
+
+    svg {
+      display: block;
+      width: 23px;
+      height: 23px;
+    }
+  }
+
+  &__aba-textos {
+    display: flex;
     flex: 1;
+    flex-direction: column;
+    gap: 0.3rem;
+    min-width: 0;
+
+    strong {
+      font-family: $fonte-titulo;
+      font-size: 0.73rem;
+      font-weight: 500;
+      line-height: 1.3;
+      color: $oraculum-pergaminho-claro;
+    }
+
+    small {
+      font-family: $fonte-corpo;
+      font-size: 0.95rem;
+      line-height: 1.2;
+      color: $oraculum-pergaminho-escuro;
+    }
+  }
+
+  &__aba-numero {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 31px;
+    height: 31px;
+    border: 1px solid rgba($oraculum-ouro, 0.5);
+    border-radius: 50%;
+    font-family: $fonte-titulo;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: $oraculum-ouro-claro;
+  }
+
+  &__menu-rodape {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 1rem;
+    border-top: 1px solid rgba($oraculum-ouro, 0.3);
+    font-family: $fonte-titulo;
+    font-size: 0.55rem;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    color: $oraculum-pergaminho-escuro;
+
+    svg {
+      width: 12px;
+      height: 12px;
+      color: $oraculum-ouro;
+    }
   }
 
   &__conteudo {
     min-width: 0;
   }
+
+  &__conteudo-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid rgba($oraculum-ouro, 0.4);
+    font-family: $fonte-titulo;
+    font-size: 0.55rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: $oraculum-pergaminho-escuro;
+
+    svg {
+      flex-shrink: 0;
+      width: 13px;
+      height: 13px;
+      color: $oraculum-ouro;
+    }
+  }
+
+  &__rodape {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba($oraculum-ouro, 0.3);
+    text-align: center;
+
+    svg {
+      flex-shrink: 0;
+      width: 12px;
+      height: 12px;
+      color: $oraculum-ouro;
+    }
+
+    p {
+      max-width: 600px;
+      margin: 0;
+      font-family: $fonte-corpo;
+      font-size: 1.1rem;
+      font-style: italic;
+      line-height: 1.4;
+      color: $oraculum-pergaminho-escuro;
+    }
+  }
 }
 
-@media (max-width: $breakpoint-mobile) {
+@media (max-width: 950px) {
   .painel-numerologia {
-    &__titulo { font-size: 1.5rem; }
-
     &__layout {
-      grid-template-columns: 1fr;
+      grid-template-columns: 220px minmax(0, 1fr);
       gap: 1rem;
     }
 
-    &__menu {
-      position: static;
-      overflow-x: auto;
-      padding-bottom: 0.4rem;
+    &__aba {
+      gap: 0.45rem;
+      padding: 0.65rem 0.45rem;
+    }
 
-      &::-webkit-scrollbar { height: 4px; }
-      &::-webkit-scrollbar-thumb {
-        background: rgba(167, 139, 250, 0.3);
-        border-radius: 4px;
+    &__aba-indice {
+      width: 13px;
+    }
+
+    &__aba-icone {
+      width: 20px;
+      height: 20px;
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .painel-numerologia {
+    padding: 1rem 0 3rem;
+
+    &__cabecalho {
+      margin-bottom: 2.5rem;
+    }
+
+    &__identificacao {
+      font-size: 0.52rem;
+      letter-spacing: 0.07em;
+    }
+
+    &__introducao {
+      padding: 2.25rem 0;
+    }
+
+    &__emblema {
+      width: 110px;
+      height: 110px;
+      margin-bottom: 2rem;
+
+      &::before {
+        inset: 11px;
+      }
+
+      &::after {
+        inset: 22px;
       }
     }
 
-    &__aba {
-      flex-shrink: 0;
-      white-space: nowrap;
+    &__emblema-anel svg {
+      width: 86px;
+      height: 86px;
     }
+
+    &__emblema-numero {
+      font-size: 2rem;
+    }
+
+    &__sobretitulo {
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+    }
+
+    &__titulo {
+      font-size: clamp(2rem, 7vw, 3.25rem);
+    }
+
+    &__descricao {
+      font-size: 1.2rem;
+    }
+
+    &__secao-cabecalho {
+      font-size: 0.52rem;
+      letter-spacing: 0.06em;
+    }
+
+    &__secao-introducao {
+      padding: 1.75rem 0 2rem;
+    }
+
+    &__layout {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1rem;
+    }
+
+    &__navegacao {
+      position: static;
+    }
+
+    &__menu {
+      flex-direction: row;
+      gap: 0.5rem;
+      overflow-x: auto;
+      padding: 0.65rem;
+      scrollbar-width: thin;
+      scrollbar-color: $oraculum-cobre transparent;
+    }
+
+    &__aba {
+      flex: 0 0 auto;
+      width: 155px;
+      min-height: 72px;
+      border: 1px solid rgba($oraculum-ouro, 0.25);
+
+      &:last-child {
+        border-bottom-color: rgba($oraculum-ouro, 0.25);
+      }
+
+      &.ativa {
+        border-color: $oraculum-cobre;
+      }
+    }
+
+    &__aba-indice {
+      display: none;
+    }
+
+    &__menu-rodape {
+      padding: 0.75rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .painel-numerologia {
+    &__identificacao {
+      gap: 0.5rem;
+      font-size: 0.43rem;
+      letter-spacing: 0.03em;
+    }
+
+    &__introducao {
+      padding: 5rem 0;
+    }
+
+    &__emblema {
+      width: 90px;
+      height: 90px;
+
+      &::before {
+        inset: 9px;
+      }
+
+      &::after {
+        inset: 19px;
+      }
+    }
+
+    &__emblema-anel svg {
+      width: 70px;
+      height: 70px;
+    }
+
+    &__emblema-numero {
+      font-size: 1.75rem;
+    }
+
+    &__sobretitulo {
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+    }
+
+    &__titulo {
+      font-size: clamp(1.8rem, 8vw, 2.5rem);
+    }
+
+    &__divisor {
+      margin: 1.5rem 0;
+    }
+
+    &__descricao {
+      font-size: 1.15rem;
+    }
+
+    &__info {
+      width: 100%;
+      max-width: 100%;
+      gap: 0.6rem;
+      padding: 0.85rem 0.75rem;
+      font-size: 0.62rem;
+      white-space: normal;
+
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      span {
+        white-space: normal;
+      }
+    }
+
+    &__secao-cabecalho {
+      gap: 0.5rem;
+      font-size: 0.43rem;
+      letter-spacing: 0.02em;
+    }
+
+    &__secao-introducao {
+      padding: 1.5rem 0 2rem;
+    }
+
+    &__aba {
+      width: 145px;
+    }
+
+    &__conteudo-topo {
+      gap: 0.5rem;
+      padding: 0.75rem;
+      font-size: 0.48rem;
+      letter-spacing: 0.04em;
+    }
+
+    &__rodape {
+      gap: 0.5rem;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .painel-numerologia__aba,
+  .painel-numerologia__info {
+    transition: none;
   }
 }

@@ -1,4 +1,5 @@
 ﻿import { useEffect } from "react";
+import { Icon } from "@iconify/react";
 import { useTarot } from "./ganchos/useTarot";
 import { SeletorTiragem } from "./componentes/SeletorTiragem";
 import { CampoPergunta } from "./componentes/CampoPergunta";
@@ -34,59 +35,105 @@ export function PainelTarot() {
     }
   }, [leituraCompleta, finalizar]);
 
-  if (mostrandoCampoPergunta && tiragemPendente) {
-    return (
-      <div className="painel-tarot">
-        <CampoPergunta
-          tiragem={tiragemPendente}
-          aoConfirmar={confirmarPergunta}
-          aoCancelar={cancelarPergunta}
-        />
-      </div>
-    );
-  }
-
-  if (!tiragemAtiva) {
-    return (
-      <div className="painel-tarot">
-        <SeletorTiragem
-          tiragens={tiragens}
-          aoEscolher={escolherTiragem}
-          aoVisualizar={visualizarSalva}
-          jaUsouHoje={jaUsouHoje}
-          dataUso={dataUso}
-        />
-      </div>
-    );
-  }
-
-  if (leituraCompleta) {
-    return (
-      <div className="painel-tarot">
-        <MensagemRevelada
-          tiragem={tiragemAtiva}
-          leitura={leitura}
-          pergunta={pergunta}
-          aoReiniciar={reiniciar}
-        />
-      </div>
-    );
-  }
+  const mostrandoCatalogo = !mostrandoCampoPergunta && !tiragemAtiva;
 
   return (
-    <div className="painel-tarot">
-      <MesaCartas
-        aoVoltar={reiniciar}
-        tiragem={tiragemAtiva}
-        cartasDisponiveis={cartasDisponiveis}
-        leitura={leitura}
-        aoRevelarNaPosicao={revelarCartaNaPosicao}
-        aoEscolherProxima={escolherProximaCarta}
-      />
-    </div>
+    <section className="painel-tarot">
+      {mostrandoCatalogo && (
+        <header className="painel-tarot__cabecalho">
+          <div className="painel-tarot__identificacao">
+            <span>ORACULVM · ARCANOS</span>
+            <span>LIVRO PRIMEIRO</span>
+          </div>
+
+          <div className="painel-tarot__apresentacao">
+            <div className="painel-tarot__emblema" aria-hidden="true">
+              <Icon icon="game-icons:card-pick" />
+            </div>
+
+            <span className="painel-tarot__rotulo">
+              O LIVRO DAS CARTAS
+            </span>
+
+            <h2 className="painel-tarot__titulo">O Tarô</h2>
+
+            <div className="painel-tarot__ornamento" aria-hidden="true">
+              <span />
+              <Icon icon="mdi:star-four-points" />
+              <span />
+            </div>
+
+            <p className="painel-tarot__descricao">
+              Escolha uma disposição de cartas para iniciar sua leitura.
+              Cada tiragem possui uma estrutura própria e pode ser
+              realizada uma vez a cada 24 horas.
+            </p>
+          </div>
+        </header>
+      )}
+
+      <div className="painel-tarot__conteudo">
+        {mostrandoCampoPergunta && tiragemPendente ? (
+          <CampoPergunta
+            tiragem={tiragemPendente}
+            aoConfirmar={confirmarPergunta}
+            aoCancelar={cancelarPergunta}
+          />
+        ) : !tiragemAtiva ? (
+          <section className="painel-tarot__secao">
+            <div className="painel-tarot__secao-cabecalho">
+              <span>FIGURA I · CONSULTA AOS ARCANOS</span>
+              <span>CATÁLOGO DE TIRAGENS</span>
+            </div>
+
+            <div className="painel-tarot__secao-introducao">
+              <span className="painel-tarot__secao-rotulo">
+                OS MÉTODOS DE LEITURA
+              </span>
+
+              <h3 className="painel-tarot__secao-titulo">
+                Escolha sua Tiragem
+              </h3>
+            </div>
+
+            <SeletorTiragem
+              tiragens={tiragens}
+              aoEscolher={escolherTiragem}
+              aoVisualizar={visualizarSalva}
+              jaUsouHoje={jaUsouHoje}
+              dataUso={dataUso}
+            />
+          </section>
+        ) : leituraCompleta ? (
+          <MensagemRevelada
+            tiragem={tiragemAtiva}
+            leitura={leitura}
+            pergunta={pergunta}
+            aoReiniciar={reiniciar}
+          />
+        ) : (
+          <MesaCartas
+            aoVoltar={reiniciar}
+            tiragem={tiragemAtiva}
+            cartasDisponiveis={cartasDisponiveis}
+            leitura={leitura}
+            aoRevelarNaPosicao={revelarCartaNaPosicao}
+            aoEscolherProxima={escolherProximaCarta}
+          />
+        )}
+      </div>
+
+      {mostrandoCatalogo && (
+        <footer className="painel-tarot__rodape">
+          <Icon icon="game-icons:quill-ink" />
+          <p>
+            As cartas oferecem interpretações simbólicas. A leitura
+            não determina acontecimentos futuros nem substitui suas
+            próprias decisões.
+          </p>
+          <Icon icon="game-icons:quill-ink" />
+        </footer>
+      )}
+    </section>
   );
 }
-
-
-
-

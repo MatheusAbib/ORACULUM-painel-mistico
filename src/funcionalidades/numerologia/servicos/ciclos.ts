@@ -1,5 +1,4 @@
-﻿import { reduzir } from "./numerologia";
-
+﻿
 export interface CiclosPessoais {
   anoPessoal: number;
   mesPessoal: number;
@@ -9,14 +8,21 @@ export interface CiclosPessoais {
   diaAtual: number;
 }
 
-/** Redução teosófica pura: sempre até 1 dígito (ciclos não usam números mestres). */
-function reduzirCiclo(n: number): number {
-  let r = reduzir(n);
-  while (r > 9) r = reduzir(r);
-  return r;
+function reduzirCiclo(numero: number): number {
+  while (numero > 9) {
+    numero = String(numero)
+      .split("")
+      .reduce((soma, digito) => soma + Number(digito), 0);
+  }
+
+  return numero;
 }
 
-function partesData(dataISO: string): { dia: number; mes: number; ano: number } {
+function partesData(dataISO: string): {
+  dia: number;
+  mes: number;
+  ano: number;
+} {
   const [ano, mes, dia] = dataISO.split("-").map(Number);
   return { dia, mes, ano };
 }
@@ -38,8 +44,20 @@ export function calcularCiclos(
       reduzirCiclo(anoAtual)
   );
 
-  const mesPessoal = reduzirCiclo(anoPessoal + reduzirCiclo(mesAtual));
-  const diaPessoal = reduzirCiclo(mesPessoal + reduzirCiclo(diaAtual));
+  const mesPessoal = reduzirCiclo(
+    anoPessoal + reduzirCiclo(mesAtual)
+  );
 
-  return { anoPessoal, mesPessoal, diaPessoal, anoAtual, mesAtual, diaAtual };
+  const diaPessoal = reduzirCiclo(
+    mesPessoal + reduzirCiclo(diaAtual)
+  );
+
+  return {
+    anoPessoal,
+    mesPessoal,
+    diaPessoal,
+    anoAtual,
+    mesAtual,
+    diaAtual,
+  };
 }

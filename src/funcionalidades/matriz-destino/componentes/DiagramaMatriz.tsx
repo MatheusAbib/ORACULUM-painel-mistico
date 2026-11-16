@@ -1,4 +1,5 @@
-﻿import { useState } from "react";
+﻿import { useId, useRef, useState } from "react";
+import { Icon } from "@iconify/react";
 import type { PontosMatriz } from "../servicos/matrizDestino";
 import { ARCANOS } from "../dados/arcanos";
 import "./DiagramaMatriz.scss";
@@ -9,7 +10,14 @@ interface Props {
 
 type ChavePonto = keyof PontosMatriz;
 
-const PONTOS_POSICAO: { chave: ChavePonto; x: number; y: number; rotulo: string }[] = [
+interface PosicaoPonto {
+  chave: ChavePonto;
+  x: number;
+  y: number;
+  rotulo: string;
+}
+
+const PONTOS_POSICAO: PosicaoPonto[] = [
   { chave: "C", x: 50, y: 10, rotulo: "Céu (Talento)" },
   { chave: "L", x: 50, y: 28, rotulo: "Dharma" },
   { chave: "D", x: 85, y: 22, rotulo: "Direita (Mãe)" },
@@ -27,115 +35,353 @@ const PONTOS_POSICAO: { chave: ChavePonto; x: number; y: number; rotulo: string 
 
 export function DiagramaMatriz({ pontos }: Props) {
   const [selecionado, setSelecionado] = useState<ChavePonto | null>(null);
+  const detalheRef = useRef<HTMLElement>(null);
+  const rolagemPendenteRef = useRef(false);
+  const idBase = useId().replace(/:/g, "");
+
+  const idGradiente = `${idBase}-gradiente`;
+  const idCentro = `${idBase}-centro`;
 
   const pontoSelecionado = selecionado
-    ? PONTOS_POSICAO.find((p) => p.chave === selecionado)
+    ? PONTOS_POSICAO.find((ponto) => ponto.chave === selecionado)
     : null;
-  const arcanoSelecionado = selecionado ? ARCANOS[pontos[selecionado]] : null;
+
+  const arcanoSelecionado = selecionado
+    ? ARCANOS[pontos[selecionado]]
+    : null;
+
+  const rolarParaInterpretacao = (elemento: HTMLElement | null) => {
+    detalheRef.current = elemento;
+
+    if (!elemento || !rolagemPendenteRef.current) {
+      return;
+    }
+
+    rolagemPendenteRef.current = false;
+
+    requestAnimationFrame(() => {
+      const movimentoReduzido = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+
+      elemento.scrollIntoView({
+        behavior: movimentoReduzido ? "auto" : "smooth",
+        block: "start",
+      });
+    });
+  };
+
+  const selecionarPonto = (chave: ChavePonto) => {
+    if (selecionado === chave && detalheRef.current) {
+      const movimentoReduzido = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+
+      detalheRef.current.scrollIntoView({
+        behavior: movimentoReduzido ? "auto" : "smooth",
+        block: "start",
+      });
+
+      return;
+    }
+
+    rolagemPendenteRef.current = true;
+    setSelecionado(chave);
+  };
 
   return (
-    <div className="diagrama-matriz">
-      <div className="diagrama-matriz__svg-wrapper">
-        <svg viewBox="0 0 100 100" className="diagrama-matriz__svg" preserveAspectRatio="xMidYMid meet">
-          <defs>
-            <radialGradient id="centro-grad" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="rgba(167, 139, 250, 0.4)" />
-              <stop offset="100%" stopColor="rgba(167, 139, 250, 0.05)" />
-            </radialGradient>
-            <linearGradient id="linha-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#a78bfa" />
-              <stop offset="100%" stopColor="#f0a4b8" />
-            </linearGradient>
-          </defs>
+    <section className="diagrama-matriz">
+      <div className="diagrama-matriz__quadro">
+        <div className="diagrama-matriz__quadro-cabecalho">
+          <span>FIGURA GEOMÉTRICA</span>
+          <Icon icon="mdi:rhombus-outline" />
+          <span>XIII POSIÇÕES</span>
+        </div>
 
-          <rect x="18" y="18" width="64" height="64" fill="none" stroke="rgba(167,139,250,0.2)" strokeWidth="0.3" />
-          <rect x="18" y="18" width="64" height="64" fill="none" stroke="rgba(167,139,250,0.2)" strokeWidth="0.3" transform="rotate(45 50 50)" />
+        <div className="diagrama-matriz__svg-wrapper">
+          <svg
+            viewBox="0 0 100 100"
+            className="diagrama-matriz__svg"
+            preserveAspectRatio="xMidYMid meet"
+            role="group"
+            aria-label="Diagrama interativo da Matriz do Destino com treze pontos"
+          >
+            <defs>
+              <radialGradient id={idCentro} cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor="#D7AD68" stopOpacity="0.18" />
+                <stop offset="100%" stopColor="#D7AD68" stopOpacity="0" />
+              </radialGradient>
 
-          <line x1="50" y1="18" x2="50" y2="82" stroke="rgba(167,139,250,0.15)" strokeWidth="0.3" />
-          <line x1="18" y1="50" x2="82" y2="50" stroke="rgba(167,139,250,0.15)" strokeWidth="0.3" />
-
-          <circle cx="50" cy="50" r="11" fill="url(#centro-grad)" />
-
-          {PONTOS_POSICAO.map((p) => {
-            const ativo = selecionado === p.chave;
-            const valor = pontos[p.chave];
-            const raio = p.chave === "A" ? 7 : 6;
-
-            return (
-              <g
-                key={p.chave}
-                className={`diagrama-matriz__ponto ${ativo ? "ativo" : ""}`}
-                onClick={() => setSelecionado(p.chave)}
-                style={{ cursor: "pointer" }}
+              <linearGradient
+                id={idGradiente}
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="100%"
               >
-                <circle
-                  cx={p.x}
-                  cy={p.y}
-                  r={raio}
-                  fill={ativo ? "url(#linha-grad)" : "rgba(30, 25, 50, 0.95)"}
-                  stroke={ativo ? "#f0a4b8" : "rgba(167, 139, 250, 0.6)"}
-                  strokeWidth="0.4"
-                />
-                <text
-                  x={p.x}
-                  y={p.y - 1}
-                  textAnchor="middle"
-                  dominantBaseline="middle"
-                  fontSize={p.chave === "A" ? "4.2" : "3.8"}
-                  fill="#f0a4b8"
-                  fontFamily="Cinzel, serif"
-                  fontWeight="700"
-                  pointerEvents="none"
+                <stop offset="0%" stopColor="#D7AD68" />
+                <stop offset="100%" stopColor="#B9764E" />
+              </linearGradient>
+            </defs>
+
+            <circle
+              cx="50"
+              cy="50"
+              r="47"
+              className="diagrama-matriz__circulo-externo"
+            />
+
+            <circle
+              cx="50"
+              cy="50"
+              r="44"
+              className="diagrama-matriz__circulo-interno"
+            />
+
+            <circle
+              cx="50"
+              cy="50"
+              r="39"
+              className="diagrama-matriz__circulo-guia"
+            />
+
+            <rect
+              x="18"
+              y="18"
+              width="64"
+              height="64"
+              className="diagrama-matriz__geometria"
+            />
+
+            <rect
+              x="18"
+              y="18"
+              width="64"
+              height="64"
+              transform="rotate(45 50 50)"
+              className="diagrama-matriz__geometria"
+            />
+
+            <line
+              x1="50"
+              y1="5"
+              x2="50"
+              y2="95"
+              className="diagrama-matriz__eixo"
+            />
+
+            <line
+              x1="5"
+              y1="50"
+              x2="95"
+              y2="50"
+              className="diagrama-matriz__eixo"
+            />
+
+            <line
+              x1="15"
+              y1="22"
+              x2="85"
+              y2="78"
+              className="diagrama-matriz__eixo-secundario"
+            />
+
+            <line
+              x1="85"
+              y1="22"
+              x2="15"
+              y2="78"
+              className="diagrama-matriz__eixo-secundario"
+            />
+
+            <circle
+              cx="50"
+              cy="50"
+              r="16"
+              fill={`url(#${idCentro})`}
+            />
+
+            <circle
+              cx="50"
+              cy="50"
+              r="9"
+              className="diagrama-matriz__centro-anel"
+            />
+
+            <text
+              x="50"
+              y="4"
+              textAnchor="middle"
+              className="diagrama-matriz__marcacao"
+            >
+              N
+            </text>
+
+            <text
+              x="96"
+              y="51"
+              textAnchor="middle"
+              className="diagrama-matriz__marcacao"
+            >
+              L
+            </text>
+
+            <text
+              x="50"
+              y="98"
+              textAnchor="middle"
+              className="diagrama-matriz__marcacao"
+            >
+              S
+            </text>
+
+            <text
+              x="4"
+              y="51"
+              textAnchor="middle"
+              className="diagrama-matriz__marcacao"
+            >
+              O
+            </text>
+
+            {PONTOS_POSICAO.map((ponto) => {
+              const ativo = selecionado === ponto.chave;
+              const valor = pontos[ponto.chave];
+              const central = ponto.chave === "A";
+              const raio = central ? 7 : 6;
+
+              return (
+                <g
+                  key={ponto.chave}
+                  className={`diagrama-matriz__ponto ${
+                    ativo ? "ativo" : ""
+                  } ${central ? "central" : ""}`}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Ponto ${ponto.chave}, ${ponto.rotulo}, arcano ${valor}`}
+                  aria-pressed={ativo}
+                  onClick={() => selecionarPonto(ponto.chave)}
+                  onKeyDown={(evento) => {
+                    if (evento.key === "Enter" || evento.key === " ") {
+                      evento.preventDefault();
+                      selecionarPonto(ponto.chave);
+                    }
+                  }}
                 >
-                  {p.chave}
-                </text>
-                <text
-                  x={p.x}
-                  y={p.y + 2.4}
-                  textAnchor="middle"
-                  dominantBaseline="middle"
-                  fontSize={p.chave === "A" ? "4.2" : "3.5"}
-                  fill="#ffffff"
-                  fontFamily="Cinzel, serif"
-                  fontWeight="700"
-                  pointerEvents="none"
-                >
-                  {valor}
-                </text>
-              </g>
-            );
-          })}
-        </svg>
+                  <title>
+                    {`Ponto ${ponto.chave} — ${ponto.rotulo}: arcano ${valor}`}
+                  </title>
+
+                  <circle
+                    cx={ponto.x}
+                    cy={ponto.y}
+                    r={raio + 0.9}
+                    className="diagrama-matriz__ponto-anel"
+                  />
+
+                  <circle
+                    cx={ponto.x}
+                    cy={ponto.y}
+                    r={raio}
+                    className="diagrama-matriz__ponto-fundo"
+                    fill={ativo ? `url(#${idGradiente})` : undefined}
+                  />
+
+                  <text
+                    x={ponto.x}
+                    y={ponto.y - 1.1}
+                    textAnchor="middle"
+                    dominantBaseline="middle"
+                    className="diagrama-matriz__ponto-letra"
+                    pointerEvents="none"
+                  >
+                    {ponto.chave}
+                  </text>
+
+                  <text
+                    x={ponto.x}
+                    y={ponto.y + 2.6}
+                    textAnchor="middle"
+                    dominantBaseline="middle"
+                    className="diagrama-matriz__ponto-valor"
+                    pointerEvents="none"
+                  >
+                    {valor}
+                  </text>
+                </g>
+              );
+            })}
+          </svg>
+        </div>
+
+        <div className="diagrama-matriz__quadro-rodape">
+          <span>ORACULVM</span>
+          <span>MATRIZ DOS XXII ARCANOS</span>
+        </div>
       </div>
 
+      <p className="diagrama-matriz__instrucao">
+        <Icon icon="mdi:cursor-default-click-outline" />
+        <span>
+          Selecione um dos treze pontos para consultar sua interpretação.
+        </span>
+      </p>
+
       {arcanoSelecionado && pontoSelecionado && (
-        <div className="diagrama-matriz__detalhe cartao-vidro">
-          <header className="diagrama-matriz__detalhe-cabecalho">
-            <div className="diagrama-matriz__detalhe-numero">{arcanoSelecionado.numero}</div>
-            <div>
-              <h3 className="diagrama-matriz__detalhe-titulo">{arcanoSelecionado.nome}</h3>
-              <p className="diagrama-matriz__detalhe-rotulo">
-                Ponto {pontoSelecionado.chave} — {pontoSelecionado.rotulo}
+        <article
+          ref={rolarParaInterpretacao}
+          className="diagrama-matriz__detalhe"
+          style={{ scrollMarginTop: "110px" }}
+          aria-live="polite"
+        >
+          <div className="diagrama-matriz__detalhe-moldura">
+            <div className="diagrama-matriz__detalhe-identificacao">
+              <span>INTERPRETAÇÃO · PONTO {pontoSelecionado.chave}</span>
+              <span>ARCANO {arcanoSelecionado.numero}</span>
+            </div>
+
+            <header className="diagrama-matriz__detalhe-cabecalho">
+              <div className="diagrama-matriz__detalhe-numero">
+                {arcanoSelecionado.numero}
+              </div>
+
+              <div className="diagrama-matriz__detalhe-titulos">
+                <span className="diagrama-matriz__detalhe-posicao">
+                  {pontoSelecionado.rotulo}
+                </span>
+
+                <h3 className="diagrama-matriz__detalhe-titulo">
+                  {arcanoSelecionado.nome}
+                </h3>
+              </div>
+            </header>
+
+            <div className="diagrama-matriz__destaque">
+              <h4 className="diagrama-matriz__destaque-titulo">
+                {arcanoSelecionado.titulo}
+              </h4>
+
+              <p className="diagrama-matriz__destaque-subtitulo">
+                {arcanoSelecionado.subtitulo}
               </p>
             </div>
-          </header>
 
-          <div className="diagrama-matriz__destaque">
-            <h4 className="diagrama-matriz__destaque-titulo">{arcanoSelecionado.titulo}</h4>
-            <p className="diagrama-matriz__destaque-subtitulo">{arcanoSelecionado.subtitulo}</p>
-          </div>
+            <div className="diagrama-matriz__texto">
+              {arcanoSelecionado.texto.map((paragrafo, indice) => (
+                <p key={indice} className="diagrama-matriz__paragrafo">
+                  {paragrafo}
+                </p>
+              ))}
+            </div>
 
-          <div className="diagrama-matriz__texto">
-            {arcanoSelecionado.texto.map((p, i) => (
-              <p key={i} className="diagrama-matriz__paragrafo">{p}</p>
-            ))}
+            <footer className="diagrama-matriz__detalhe-rodape">
+              <span />
+              <Icon icon="mdi:star-four-points" />
+              <span />
+            </footer>
           </div>
-        </div>
+        </article>
       )}
-
-      <p className="diagrama-matriz__instrucao">
-        <i className="fa-solid fa-hand-pointer" /> Toque em cada ponto para revelar sua interpretação
-      </p>
-    </div>
+    </section>
   );
 }

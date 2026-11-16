@@ -1,75 +1,459 @@
 ﻿@use "../../estilos/variaveis" as *;
 
 .painel-matriz-destino {
+  width: 100%;
+  min-width: 0;
+  padding: clamp(1rem, 3vw, 2rem) 0 5rem;
+  color: $oraculum-pergaminho;
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
 
   &__cabecalho {
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  &__identificacao {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba($oraculum-ouro, 0.35);
+    font-family: $fonte-titulo;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    line-height: 1.5;
+    color: $oraculum-ouro;
+  }
+
+  &__apresentacao {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: clamp(2rem, 4vw, 3rem) 0;
     text-align: center;
-    max-width: 700px;
-    margin: 0 auto 3rem;
+  }
+
+  &__emblema {
+    position: relative;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 140px;
+    height: 140px;
+    margin-bottom: 2.5rem;
+    border: 1px solid rgba($oraculum-ouro, 0.7);
+    border-radius: 50%;
+    outline: 1px solid rgba($oraculum-ouro, 0.3);
+    outline-offset: 9px;
+    color: $oraculum-ouro;
+  }
+
+  &__emblema-anel {
+    position: absolute;
+    inset: 14px;
+    display: grid;
+    place-items: center;
+    border: 1px dashed rgba($oraculum-ouro, 0.55);
+    border-radius: 50%;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 13px;
+      border: 1px solid rgba($oraculum-ouro, 0.25);
+      border-radius: 50%;
+    }
+
+    svg {
+      width: 86px;
+      height: 86px;
+      color: rgba($oraculum-ouro, 0.22);
+    }
+  }
+
+  &__emblema-numero {
+    position: relative;
+    z-index: 1;
+    font-family: $fonte-titulo;
+    font-size: 2.5rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    color: $oraculum-ouro-claro;
+  }
+
+  &__rotulo {
+    display: block;
+    margin-bottom: 0.9rem;
+    font-family: $fonte-titulo;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    line-height: 1.5;
+    color: $oraculum-cobre-claro;
   }
 
   &__titulo {
+    margin: 0;
     font-family: $fonte-titulo;
-    font-size: 2.2rem;
-    margin-bottom: 1rem;
-    background: $gradiente-primario;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-size: clamp(2.6rem, 6vw, 4.8rem);
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: 0;
+    overflow-wrap: break-word;
+    color: $oraculum-pergaminho-claro;
+    background: none;
+    -webkit-text-fill-color: currentColor;
+  }
+
+  &__divisor {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    width: min(100%, 280px);
+    margin: 1.75rem 0;
+    color: $oraculum-ouro;
+
+    span {
+      flex: 1;
+      height: 1px;
+      background: rgba($oraculum-ouro, 0.5);
+    }
+
+    svg {
+      flex-shrink: 0;
+      width: 15px;
+      height: 15px;
+    }
   }
 
   &__descricao {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    opacity: 0.85;
+    max-width: 670px;
+    margin: 0;
+    font-family: $fonte-corpo;
+    font-size: clamp(1.25rem, 2vw, 1.6rem);
+    font-weight: 400;
+    line-height: 1.5;
+    color: $oraculum-pergaminho-escuro;
+  }
+
+  &__info {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    min-height: 48px;
+    margin-top: 2rem;
+    padding: 0.85rem 1.25rem;
+    border: 1px solid rgba($oraculum-ouro, 0.65);
+    border-radius: 0;
+    background: rgba($oraculum-vinho, 0.35);
+    box-shadow: none;
+    font-family: $fonte-titulo;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    line-height: 1.4;
+    text-align: center;
+    color: $oraculum-ouro-claro;
+    cursor: pointer;
+    transition:
+      background 180ms ease,
+      border-color 180ms ease;
+
+    svg {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      color: inherit;
+    }
+
+    span {
+      font: inherit;
+      line-height: inherit;
+      color: inherit;
+    }
+
+    &:hover {
+      border-color: $oraculum-ouro;
+      background: $oraculum-vinho;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $oraculum-ouro-claro;
+      outline-offset: 3px;
+    }
   }
 
   &__erro {
     display: flex;
     align-items: center;
-    gap: 0.7rem;
     justify-content: center;
-    margin-top: 2rem;
-    padding: 1rem 2rem;
-    border-radius: 12px;
-    background: rgba(255, 105, 105, 0.1);
-    border: 1px solid rgba(255, 105, 105, 0.4);
-    color: #ff9f9f;
-    font-size: 1rem;
+    gap: 0.8rem;
+    max-width: 700px;
+    margin: 2rem auto;
+    padding: 1.15rem 1.5rem;
+    border: 1px solid rgba($oraculum-cobre, 0.7);
+    background: rgba($oraculum-vinho, 0.3);
+    font-family: $fonte-corpo;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    text-align: center;
+    color: $oraculum-pergaminho-claro;
 
-    i { font-size: 1.1rem; }
+    svg {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      color: $oraculum-cobre-claro;
+    }
   }
 
-  &__acoes {
+  &__conteudo {
+    width: 100%;
+    min-width: 0;
+  }
+
+  &__conteudo-cabecalho {
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba($oraculum-ouro, 0.35);
+    font-family: $fonte-titulo;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    line-height: 1.5;
+    color: $oraculum-ouro;
+
+    span {
+      min-width: 0;
+    }
+
+    span:last-child {
+      flex-shrink: 0;
+    }
+  }
+
+  &__conteudo-introducao {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem 0 2.5rem;
+    text-align: left;
+  }
+
+  &__conteudo-rotulo {
+    display: block;
+    margin-bottom: 0.7rem;
+    font-family: $fonte-titulo;
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    line-height: 1.5;
+    color: $oraculum-cobre-claro;
+  }
+
+  &__conteudo-titulo {
+    margin: 0;
+    font-family: $fonte-titulo;
+    font-size: clamp(1.4rem, 3vw, 2.1rem);
+    font-weight: 500;
+    line-height: 1.3;
+    color: $oraculum-pergaminho-claro;
+  }
+
+  &__conteudo-rodape {
+    display: flex;
+    align-items: center;
     justify-content: center;
-    
+    gap: 0.85rem;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba($oraculum-ouro, 0.35);
+    font-family: $fonte-titulo;
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    line-height: 1.5;
+    text-align: center;
+    color: $oraculum-ouro;
+
+    svg {
+      flex-shrink: 0;
+      width: 13px;
+      height: 13px;
+    }
   }
 }
 
-.painel-matriz-destino__titulo-linha {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.7rem;
-}
+@media (max-width: 700px) {
+  .painel-matriz-destino {
+    padding: 1rem 0 3rem;
 
-.painel-matriz-destino__info {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: rgba(167, 139, 250, 0.15);
-  border: 1px solid rgba(167, 139, 250, 0.35);
-  color: $cor-secundaria;
-  cursor: pointer;
-  transition: all $transicao-rapida;
+    &__cabecalho {
+      margin-bottom: 2.5rem;
+    }
 
-  &:hover {
-    background: rgba(167, 139, 250, 0.35);
-    transform: scale(1.1);
+    &__identificacao {
+      font-size: 0.52rem;
+      letter-spacing: 0.07em;
+    }
+
+    &__apresentacao {
+      padding: 2.25rem 0;
+    }
+
+    &__emblema {
+      width: 110px;
+      height: 110px;
+      margin-bottom: 2rem;
+    }
+
+    &__emblema-anel {
+      inset: 11px;
+
+      &::before {
+        inset: 10px;
+      }
+
+      svg {
+        width: 65px;
+        height: 65px;
+      }
+    }
+
+    &__emblema-numero {
+      font-size: 2rem;
+    }
+
+    &__rotulo {
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+    }
+
+    &__titulo {
+      font-size: clamp(2rem, 7vw, 3.25rem);
+    }
+
+    &__descricao {
+      font-size: 1.2rem;
+    }
+
+    &__conteudo-cabecalho {
+      font-size: 0.52rem;
+      letter-spacing: 0.06em;
+    }
+
+    &__conteudo-introducao {
+      padding: 1.75rem 0 2rem;
+    }
   }
 }
 
+@media (max-width: 480px) {
+  .painel-matriz-destino {
+    &__identificacao {
+      gap: 0.5rem;
+      font-size: 0.43rem;
+      letter-spacing: 0.03em;
+    }
+
+    &__apresentacao {
+      padding: 6rem 0;
+    }
+
+    &__emblema {
+      width: 90px;
+      height: 90px;
+    }
+
+    &__emblema-anel {
+      inset: 9px;
+
+      &::before {
+        inset: 8px;
+      }
+
+      svg {
+        width: 53px;
+        height: 53px;
+      }
+    }
+
+    &__emblema-numero {
+      font-size: 1.65rem;
+    }
+
+    &__rotulo {
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+    }
+
+    &__titulo {
+      font-size: clamp(1.8rem, 8vw, 2.5rem);
+    }
+
+    &__divisor {
+      margin: 1.5rem 0;
+    }
+
+    &__descricao {
+      font-size: 1.15rem;
+    }
+
+    &__info {
+      width: 100%;
+      max-width: 100%;
+      gap: 0.6rem;
+      padding: 0.85rem 0.75rem;
+      font-size: 0.62rem;
+      white-space: normal;
+
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      span {
+        white-space: normal;
+      }
+    }
+
+    &__conteudo-cabecalho {
+      gap: 0.5rem;
+      font-size: 0.43rem;
+      letter-spacing: 0.02em;
+    }
+
+    &__conteudo-introducao {
+      padding: 1.5rem 0 2rem;
+    }
+
+    &__conteudo-rodape {
+      gap: 0.5rem;
+      font-size: 0.48rem;
+      letter-spacing: 0.04em;
+    }
+
+    &__erro {
+      align-items: flex-start;
+      padding: 1rem;
+      font-size: 1.1rem;
+      text-align: left;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .painel-matriz-destino__info {
+    transition: none;
+  }
+}

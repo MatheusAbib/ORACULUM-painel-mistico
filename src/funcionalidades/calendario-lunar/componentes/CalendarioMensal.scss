@@ -2,171 +2,502 @@
 
 .calendario-mensal {
   width: 100%;
-  margin: 0 auto;
-  padding: 1.5rem;
-  border-radius: 20px;
-  background: rgba(40, 32, 70, 0.65);
-  border: 1px solid rgba(167, 139, 250, 0.3);
-  backdrop-filter: blur(8px);
+  min-width: 0;
+  border: 1px solid rgba($oraculum-ouro, 0.45);
+  border-radius: 0;
+  background: $oraculum-noite-profunda;
+  color: $oraculum-pergaminho;
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
 
   &__cabecalho {
+    padding: clamp(1.25rem, 3vw, 2rem);
+    border-bottom: 1px solid rgba($oraculum-ouro, 0.3);
+  }
+
+  &__cabecalho-superior {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 0.8rem;
-    margin-bottom: 1.2rem;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba($oraculum-ouro, 0.2);
+    font-family: $fonte-titulo;
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    line-height: 1.5;
+    color: $oraculum-cobre-claro;
+  }
+
+  &__navegacao {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-top: 1.75rem;
+  }
+
+  &__nav {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border: 1px solid rgba($oraculum-ouro, 0.55);
+    border-radius: 0;
+    background: rgba($oraculum-vinho, 0.2);
+    box-shadow: none;
+    color: $oraculum-ouro-claro;
+    cursor: pointer;
+    transition:
+      background 180ms ease,
+      border-color 180ms ease;
+
+    svg {
+      width: 25px;
+      height: 25px;
+    }
+
+    &:hover {
+      border-color: $oraculum-ouro;
+      background: $oraculum-vinho;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $oraculum-ouro-claro;
+      outline-offset: 3px;
+    }
   }
 
   &__titulo-area {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.2rem;
     flex: 1;
-  }
-
-  &__titulo {
-    font-family: $fonte-titulo;
-    font-size: 1.15rem;
-    color: $cor-primaria;
+    gap: 0.65rem;
+    min-width: 0;
     text-align: center;
   }
 
-  &__hoje-btn {
-    background: none;
-    border: none;
-    color: $cor-secundaria;
+  &__titulo-rotulo {
     font-family: $fonte-titulo;
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    cursor: pointer;
-    padding: 0.1rem 0.4rem;
-    border-radius: 4px;
-    transition: all $transicao-rapida;
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    line-height: 1.5;
+    color: $oraculum-cobre-claro;
+  }
 
-    &:hover {
-      background: rgba(240, 164, 184, 0.12);
+  &__titulo {
+    margin: 0;
+    font-family: $fonte-titulo;
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    font-weight: 500;
+    line-height: 1.3;
+    color: $oraculum-pergaminho-claro;
+
+    span {
+      color: $oraculum-pergaminho-escuro;
     }
   }
 
-  &__nav {
-    flex-shrink: 0;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: rgba(167, 139, 250, 0.08);
-    border: 1px solid rgba(167, 139, 250, 0.45);
-    color: $cor-primaria;
-    font-size: 1.3rem;
-    line-height: 1;
-    font-family: Arial, sans-serif;
-    cursor: pointer;
-    transition: all $transicao-rapida;
+  &__hoje-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0;
+    gap: 0.5rem;
+    min-height: 30px;
+    padding: 0.35rem 0.75rem;
+    border: 1px solid rgba($oraculum-ouro, 0.4);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    font-family: $fonte-titulo;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    line-height: 1.4;
+    color: $oraculum-ouro;
+    cursor: pointer;
+    transition:
+      background 180ms ease,
+      border-color 180ms ease;
+
+    svg {
+      width: 15px;
+      height: 15px;
+    }
 
     &:hover {
-      background: rgba(167, 139, 250, 0.22);
-      border-color: $cor-primaria;
-      transform: scale(1.05);
+      border-color: $oraculum-ouro;
+      background: rgba($oraculum-ouro, 0.1);
     }
 
-    &:active {
-      transform: scale(0.95);
+    &:focus-visible {
+      outline: 2px solid $oraculum-ouro-claro;
+      outline-offset: 3px;
     }
+  }
+
+  &__corpo {
+    min-width: 0;
+    padding: clamp(0.75rem, 2vw, 1.5rem);
   }
 
   &__dias-semana {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 0.3rem;
-    margin-bottom: 0.5rem;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 0.5rem;
+    margin-bottom: 0.65rem;
   }
 
   &__dia-semana {
-    text-align: center;
+    display: grid;
+    place-items: center;
+    min-width: 0;
+    min-height: 42px;
+    padding: 0.5rem 0.25rem;
+    border-bottom: 1px solid rgba($oraculum-ouro, 0.35);
     font-family: $fonte-titulo;
-    font-size: 0.75rem;
-    color: $cor-secundaria;
-    opacity: 0.8;
-    padding: 0.3rem 0;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-align: center;
+    color: $oraculum-cobre-claro;
   }
 
   &__grade {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 0.3rem;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 0.5rem;
+    min-width: 0;
   }
 
   &__celula,
   &__celula-vazia {
-    aspect-ratio: 1 / 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 0.15rem;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(167, 139, 250, 0.1);
-    transition: all $transicao-rapida;
-    font: inherit;
-    color: inherit;
-    padding: 0;
+    justify-content: space-between;
+    gap: 0.5rem;
+    min-width: 0;
+    min-height: 105px;
+    padding: 0.75rem 0.5rem;
+    border: 1px solid rgba($oraculum-ouro, 0.2);
+    border-radius: 0;
+    background: rgba($oraculum-pergaminho, 0.025);
+    box-shadow: none;
+    color: $oraculum-pergaminho;
+  }
+
+  &__celula {
     cursor: pointer;
+    transition:
+      border-color 180ms ease,
+      background 180ms ease;
+
+    &:hover {
+      border-color: rgba($oraculum-ouro, 0.75);
+      background: rgba($oraculum-ouro, 0.08);
+    }
+
+    &:focus-visible {
+      outline: 2px solid $oraculum-ouro-claro;
+      outline-offset: -3px;
+    }
+
+    &.hoje {
+      border-color: $oraculum-cobre;
+      background: rgba($oraculum-vinho, 0.2);
+
+      .calendario-mensal__numero {
+        color: $oraculum-cobre-claro;
+      }
+    }
+
+    &.selecionado {
+      border-color: $oraculum-cobre;
+      color: $oraculum-tinta;
+    }
   }
 
   &__celula-vazia {
+    border-color: transparent;
     background: transparent;
-    border: none;
-    cursor: default;
+    pointer-events: none;
   }
 
-  &__celula:hover {
-    border-color: rgba(167, 139, 250, 0.4);
-    background: rgba(167, 139, 250, 0.08);
-  }
-
-  &__celula.hoje {
-    border-color: $cor-secundaria;
-    background: rgba(240, 164, 184, 0.12);
-    box-shadow: 0 0 12px rgba(240, 164, 184, 0.3);
-
-    .calendario-mensal__numero {
-      color: $cor-secundaria;
-      font-weight: 700;
-    }
-  }
-
-  &__celula.selecionado {
-    border-color: $cor-primaria;
-    background: rgba(167, 139, 250, 0.18);
-    box-shadow: 0 0 14px rgba(167, 139, 250, 0.45);
-    transform: scale(1.05);
-
-    .calendario-mensal__numero {
-      color: $cor-primaria;
-      font-weight: 700;
-    }
+  &__celula-topo {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.25rem;
+    width: 100%;
   }
 
   &__numero {
     font-family: $fonte-titulo;
-    font-size: 0.75rem;
-    color: $cor-texto-suave;
+    font-size: 0.85rem;
+    font-weight: 500;
+    line-height: 1.3;
+    color: $oraculum-pergaminho-claro;
+  }
+
+  &__hoje-marcador {
+    display: block;
+    flex-shrink: 0;
+    width: 6px;
+    height: 6px;
+    margin-top: 0.25rem;
+    border-radius: 50%;
+    background: $oraculum-cobre;
+  }
+
+  &__fase {
+    display: grid;
+    place-items: center;
+    flex: 1;
+    min-height: 28px;
+    color: $oraculum-ouro;
+
+    svg {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+  }
+
+  &__iluminacao {
+    font-family: $fonte-corpo;
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.2;
+    color: $oraculum-pergaminho-escuro;
+  }
+
+  &__rodape {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1.15rem clamp(0.75rem, 2vw, 1.5rem);
+    border-top: 1px solid rgba($oraculum-ouro, 0.3);
+  }
+
+  &__legenda {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+  }
+
+  &__legenda-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: $fonte-corpo;
+    font-size: 1rem;
+    line-height: 1.3;
+    color: $oraculum-pergaminho-escuro;
+  }
+
+  &__legenda-hoje {
+    display: block;
+    width: 13px;
+    height: 13px;
+    border: 1px solid $oraculum-cobre;
+    background: rgba($oraculum-vinho, 0.2);
+  }
+
+  &__legenda-selecionado {
+    display: block;
+    width: 13px;
+    height: 13px;
+    border: 1px solid $oraculum-cobre;
+    background: $oraculum-pergaminho-claro;
+  }
+
+  &__rodape-nota {
+    font-family: $fonte-titulo;
+    font-size: 0.52rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    line-height: 1.5;
+    color: $oraculum-cobre-claro;
   }
 }
 
-@media (max-width: $breakpoint-mobile) {
+@media (max-width: 700px) {
   .calendario-mensal {
-    padding: 1rem;
+    &__dias-semana,
+    &__grade {
+      gap: 0.3rem;
+    }
 
-    &__titulo { font-size: 1rem; }
-    &__numero { font-size: 0.65rem; }
-    &__dia-semana { font-size: 0.65rem; }
-    &__nav { width: 34px; height: 34px; font-size: 1.1rem; }
+    &__celula,
+    &__celula-vazia {
+      min-height: 85px;
+      padding: 0.55rem 0.3rem;
+    }
+
+    &__numero {
+      font-size: 0.75rem;
+    }
+
+    &__iluminacao {
+      font-size: 0.8rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .calendario-mensal {
+    &__cabecalho {
+      padding: 1.15rem 0.85rem;
+    }
+
+    &__cabecalho-superior {
+      font-size: 0.5rem;
+    }
+
+    &__navegacao {
+      gap: 0.6rem;
+      padding-top: 1.35rem;
+    }
+
+    &__nav {
+      width: 36px;
+      height: 36px;
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    &__titulo-rotulo {
+      font-size: 0.5rem;
+    }
+
+    &__titulo {
+      font-size: clamp(1rem, 4.5vw, 1.4rem);
+    }
+
+    &__hoje-btn {
+      min-height: 28px;
+      padding: 0.3rem 0.55rem;
+      font-size: 0.52rem;
+
+      svg {
+        width: 13px;
+        height: 13px;
+      }
+    }
+
+    &__corpo {
+      padding: 0.6rem 0.35rem;
+    }
+
+    &__dias-semana,
+    &__grade {
+      gap: 3px;
+    }
+
+    &__dia-semana {
+      min-height: 32px;
+      padding: 0.35rem 0;
+      font-size: 0.53rem;
+      letter-spacing: 0;
+    }
+
+    &__celula,
+    &__celula-vazia {
+      min-height: 66px;
+      gap: 0.15rem;
+      padding: 0.35rem 0.1rem;
+    }
+
+    &__celula-topo {
+      justify-content: center;
+    }
+
+    &__numero {
+      font-size: 0.62rem;
+    }
+
+    &__hoje-marcador {
+      width: 4px;
+      height: 4px;
+      margin-top: 0.15rem;
+    }
+
+    &__fase {
+      min-height: 20px;
+
+      svg {
+        width: 19px;
+        height: 19px;
+      }
+    }
+
+    &__iluminacao {
+      font-size: 0.7rem;
+    }
+
+    &__rodape {
+      gap: 0.75rem;
+      padding: 1rem 0.75rem;
+    }
+
+    &__legenda {
+      gap: 0.85rem;
+    }
+
+    &__legenda-item {
+      font-size: 0.85rem;
+    }
+
+    &__rodape-nota {
+      font-size: 0.45rem;
+    }
+  }
+}
+
+@media (max-width: 350px) {
+  .calendario-mensal {
+    &__dia-semana {
+      font-size: 0.47rem;
+    }
+
+    &__celula,
+    &__celula-vazia {
+      min-height: 60px;
+    }
+
+    &__fase svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    &__iluminacao {
+      font-size: 0.62rem;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .calendario-mensal {
+    &__nav,
+    &__hoje-btn,
+    &__celula {
+      transition: none;
+    }
   }
 }

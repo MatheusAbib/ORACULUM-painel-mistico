@@ -1,171 +1,466 @@
 ﻿@use "../../../estilos/variaveis" as *;
 
 .seletor-tiragem {
-  text-align: center;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
 
-  &__titulo {
-    font-family: $fonte-titulo;
-    font-size: 2.2rem;
-    margin-bottom: 0.5rem;
-    background: $gradiente-primario;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
   }
 
-  &__subtitulo {
-    font-size: 1.05rem;
-    opacity: 0.75;
-    margin-bottom: 3rem;
+  &__identificacao {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+    margin-bottom: 1.75rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba($oraculum-ouro, 0.35);
+    font-family: $fonte-titulo;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    line-height: 1.5;
+    color: $oraculum-ouro;
+
+    > span:first-child {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    svg {
+      width: 19px;
+      height: 19px;
+      color: $oraculum-cobre-claro;
+    }
   }
 
   &__grade {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.3rem;
-    max-width: 1270px;
-    margin: 0 auto;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1rem, 2vw, 1.5rem);
+    width: 100%;
+    min-width: 0;
   }
 
   &__cartao {
+    position: relative;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 2.5rem 2rem;
-    cursor: pointer;
-    position: relative;
-    border: $vidro-borda-roxa;
-    background: $vidro-fundo-escuro;
-    transition: all $transicao-media;
-    color: $cor-texto;
+    min-width: 0;
+    min-height: 570px;
+    padding: clamp(1.1rem, 2vw, 1.65rem);
+    border: 1px solid $oraculum-cobre;
+    background:
+      radial-gradient(
+        ellipse at 50% 0%,
+        rgba($oraculum-ouro, 0.16),
+        transparent 65%
+      ),
+      $oraculum-pergaminho-claro;
+    color: $oraculum-tinta;
+    transition: border-color 180ms ease;
 
-    &:hover:not(.bloqueada) {
-      border-color: rgba(153, 105, 255, 0.6);
+    &:hover {
+      border-color: $oraculum-ouro;
     }
 
     &.bloqueada {
-      opacity: 0.5;
-      cursor: not-allowed;
-      filter: grayscale(0.6);
+      background:
+        radial-gradient(
+          ellipse at 50% 0%,
+          rgba($oraculum-vinho, 0.07),
+          transparent 65%
+        ),
+        $oraculum-pergaminho;
     }
   }
 
-  &__quantidade {
+  &__cartao-moldura {
     position: absolute;
-    top: 0.9rem;
-    left: 0.9rem;
-    font-family: $fonte-titulo;
-    font-size: 0.7rem;
-    padding: 0.25rem 0.7rem;
-    border-radius: 50px;
-    background: rgba(167, 139, 250, 0.18);
-    border: 1px solid rgba(167, 139, 250, 0.4);
-    color: $cor-texto-suave;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
+    inset: 7px;
+    border: 1px solid rgba($oraculum-cobre, 0.3);
+    pointer-events: none;
   }
 
-  &__icone {
-    font-size: 3rem;
-    margin-bottom: 1.2rem;
-    background: $gradiente-primario;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    transition: transform $transicao-media;
+  &__cartao-topo {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba($oraculum-cobre, 0.4);
+    font-family: $fonte-titulo;
+    font-size: 0.55rem;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    line-height: 1.5;
+    color: $oraculum-cobre;
+
+    svg {
+      flex-shrink: 0;
+      width: 13px;
+      height: 13px;
+      color: $oraculum-vinho;
+    }
+  }
+
+  &__gravura {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 190px;
+    padding: 1.5rem 0;
+  }
+
+  &__gravura-anel {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 145px;
+    height: 145px;
+    border: 1px solid rgba($oraculum-cobre, 0.8);
+    border-radius: 50%;
+    outline: 1px solid rgba($oraculum-cobre, 0.35);
+    outline-offset: 7px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 11px;
+      border: 1px solid rgba($oraculum-cobre, 0.35);
+      border-radius: 50%;
+    }
+
+    > svg {
+      width: 82px;
+      height: 82px;
+      color: $oraculum-vinho;
+    }
+  }
+
+  &__gravura-estrela {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+
+    svg {
+      width: 16px;
+      height: 16px;
+      color: $oraculum-cobre;
+    }
+
+    &--esquerda {
+      left: 4%;
+    }
+
+    &--direita {
+      right: 4%;
+    }
+  }
+
+  &__cartao-conteudo {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    min-width: 0;
+    text-align: center;
+  }
+
+  &__indice {
+    margin-bottom: 0.75rem;
+    font-family: $fonte-titulo;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: $oraculum-cobre;
   }
 
   &__nome {
+    margin: 0;
     font-family: $fonte-titulo;
-    font-size: 1.4rem;
-    margin-bottom: 0.8rem;
-    color: $cor-primaria;
+    font-size: clamp(1.05rem, 1.7vw, 1.4rem);
+    font-weight: 600;
+    line-height: 1.4;
+    color: $oraculum-vinho;
+  }
+
+  &__ornamento {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    width: 75%;
+    margin: 1rem auto;
+
+    span {
+      flex: 1;
+      height: 1px;
+      background: rgba($oraculum-cobre, 0.45);
+    }
+
+    svg {
+      width: 12px;
+      height: 12px;
+      color: $oraculum-cobre;
+    }
   }
 
   &__descricao {
-    font-size: 1rem;
-    line-height: 1.5;
-    opacity: 0.85;
-    margin-bottom: 0.9rem;
+    max-width: 340px;
+    margin: 0;
+    font-family: $fonte-corpo;
+    font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+    line-height: 1.55;
+    color: $oraculum-tinta-suave;
+    overflow-wrap: break-word;
   }
 
-  &__bloqueio {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    margin-top: 1rem;
-    font-size: 0.85rem;
-    color: $cor-secundaria;
-    font-family: $fonte-titulo;
+  &__cartao-rodape {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    width: 100%;
+    margin-top: 1.75rem;
+    padding-top: 1.15rem;
+    border-top: 1px solid rgba($oraculum-cobre, 0.4);
+  }
 
-    i {
-      font-size: 0.8rem;
+  &__disponivel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 25px;
+    font-family: $fonte-titulo;
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    line-height: 1.5;
+    text-align: center;
+    color: $oraculum-verde;
+
+    svg {
+      flex-shrink: 0;
+      width: 13px;
+      height: 13px;
+    }
+  }
+
+  &__contador {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    min-height: 49px;
+
+    > span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      font-family: $fonte-titulo;
+      font-size: 0.55rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: $oraculum-vinho;
+
+      svg {
+        width: 15px;
+        height: 15px;
+      }
+    }
+
+    strong {
+      font-family: $fonte-titulo;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      color: $oraculum-tinta;
+    }
+  }
+
+  &__acao {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    width: 100%;
+    min-height: 52px;
+    padding: 0.85rem 1rem;
+    border: 1px solid $oraculum-vinho;
+    border-radius: 0;
+    background: $oraculum-vinho;
+    font-family: $fonte-titulo;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    line-height: 1.4;
+    color: $oraculum-pergaminho-claro;
+    cursor: pointer;
+    transition:
+      background 180ms ease,
+      border-color 180ms ease;
+
+    span {
+      flex: 1;
+      text-align: center;
+    }
+
+    svg {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      color: $oraculum-ouro-claro;
+    }
+
+    &:hover {
+      border-color: $oraculum-vinho-claro;
+      background: $oraculum-vinho-claro;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $oraculum-cobre;
+      outline-offset: 3px;
+    }
+
+    &--salva {
+      border-color: $oraculum-cobre;
+      background: transparent;
+      color: $oraculum-vinho;
+
+      svg {
+        color: $oraculum-vinho;
+      }
+
+      &:hover {
+        border-color: $oraculum-vinho;
+        background: rgba($oraculum-vinho, 0.08);
+      }
     }
   }
 }
 
-.seletor-tiragem__contador {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 1rem;
-  font-family: $fonte-titulo;
-  font-size: 0.75rem;
-  color: $cor-texto-suave;
-  opacity: 0.45;
-  letter-spacing: 0.3px;
-
-
-  strong {
-    font-family: $fonte-mono;
-    font-size: 0.8rem;
-    color: $cor-secundaria;
-    opacity: 0.9;
-    letter-spacing: 0.4px;
+@media (max-width: 1100px) {
+  .seletor-tiragem {
+    &__grade {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 }
 
-.seletor-tiragem__acao {
-  margin-top: 1.5rem;
-  padding: 0.6rem 1.5rem;
-  border-radius: 50px;
-  border: 1px solid rgba(153, 105, 255, 0.4);
-  background: linear-gradient(45deg, rgba(153, 105, 255, 0.25), rgba(255, 105, 161, 0.25));
-  color: $cor-texto;
-  font-family: $fonte-titulo;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: all $transicao-rapida;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
+@media (max-width: 700px) {
+  .seletor-tiragem {
+    &__identificacao {
+      margin-bottom: 1.25rem;
+      font-size: 0.52rem;
+    }
 
-  &:hover {
-    background: linear-gradient(45deg, rgba(153, 105, 255, 0.45), rgba(255, 105, 161, 0.45));
+    &__grade {
+      gap: 1rem;
+    }
+
+    &__cartao {
+      min-height: 540px;
+      padding: 1.15rem;
+    }
+
+    &__gravura {
+      min-height: 165px;
+    }
+
+    &__gravura-anel {
+      width: 120px;
+      height: 120px;
+
+      > svg {
+        width: 68px;
+        height: 68px;
+      }
+    }
   }
 }
 
-.seletor-tiragem__acao--salva {
-  background: rgba(153, 105, 255, 0.1);
-  border-color: rgba(153, 105, 255, 0.3);
+@media (max-width: 580px) {
+  .seletor-tiragem {
+    &__grade {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1.25rem;
+    }
 
-  &:hover {
-    background: rgba(153, 105, 255, 0.25);
+    &__cartao {
+      min-height: 0;
+      padding: 1.25rem;
+    }
+
+    &__gravura {
+      min-height: 175px;
+    }
+
+    &__gravura-anel {
+      width: 135px;
+      height: 135px;
+
+      > svg {
+        width: 76px;
+        height: 76px;
+      }
+    }
+
+    &__nome {
+      font-size: 1.35rem;
+    }
+
+    &__descricao {
+      font-size: 1.15rem;
+    }
   }
 }
 
-.seletor-tiragem__cartao.bloqueada {
-  opacity: 1;
-  filter: none;
-  cursor: default;
+@media (max-width: 380px) {
+  .seletor-tiragem {
+    &__identificacao {
+      gap: 0.5rem;
+      font-size: 0.43rem;
+      letter-spacing: 0.03em;
 
-  .seletor-tiragem__icone {
-    opacity: 0.7;
-  }
+      svg {
+        width: 15px;
+        height: 15px;
+      }
+    }
 
-  .seletor-tiragem__nome,
-  .seletor-tiragem__descricao {
-    opacity: 0.7;
+    &__cartao {
+      padding: 1rem;
+    }
+
+    &__cartao-topo {
+      font-size: 0.48rem;
+    }
+
+    &__acao {
+      padding: 0.8rem 0.65rem;
+      font-size: 0.62rem;
+    }
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .seletor-tiragem {
+    &__cartao,
+    &__acao {
+      transition: none;
+    }
+  }
+}
