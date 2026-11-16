@@ -1,4 +1,4 @@
-﻿import type { FaseLua } from "../servicos/lunar";
+import type { FaseLua } from "../servicos/lunar";
 import "./IconeFaseLua.scss";
 
 interface Props {

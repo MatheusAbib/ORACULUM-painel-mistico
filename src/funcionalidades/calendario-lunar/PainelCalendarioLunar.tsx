@@ -1,4 +1,4 @@
-﻿import { Icon } from "@iconify/react";
+import { Icon } from "@iconify/react";
 import { CalendarioMensal } from "./componentes/CalendarioMensal";
 import { IconeFaseLua } from "./componentes/IconeFaseLua";
 import { useCalendarioLunar } from "./ganchos/useCalendarioLunar";

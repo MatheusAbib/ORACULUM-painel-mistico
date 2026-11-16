@@ -1,4 +1,4 @@
-﻿import { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Icon } from "@iconify/react";
 import type { PlanetaCalculado } from "../servicos/astrologia";
 import { calcularAspectos } from "../servicos/aspectos";
@@ -12,14 +12,6 @@ interface Props {
 }
 
 type Filtro = "todos" | TipoAspecto;
-
-const CORES: Record<TipoAspecto, string> = {
-  conjuncao: "#d7ad68",
-  sextil: "#56827b",
-  quadratura: "#b9764e",
-  trigono: "#86a9b2",
-  oposicao: "#89535d",
-};
 
 const NOMES: Record<TipoAspecto, string> = {
   conjuncao: "Conjunção",
