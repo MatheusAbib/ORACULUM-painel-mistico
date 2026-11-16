@@ -93,6 +93,7 @@ export function SeletorTiragem({
           return (
             <article
               key={tiragem.id}
+              onClick={() => aoEscolher(tiragem.id)}
               className={`seletor-tiragem__cartao ${
                 bloqueada ? "bloqueada" : ""
               }`}
