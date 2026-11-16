@@ -2,17 +2,73 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/ORACULUM-painel-mistico/assets/piramide-CtyTItuh.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="Portal místico de tarô, astrologia, numerologia, matriz do destino e signos." />
+
+    <link
+      id="favicon"
+      rel="icon"
+      type="image/svg+xml"
+      href="https://api.iconify.design/game-icons/all-seeing-eye.svg?color=%23392b2d"
+    />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <meta
+      name="description"
+      content="Portal místico de tarô, astrologia, numerologia, matriz do destino e signos."
+    />
+
     <title>ORACULVM</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script type="module" crossorigin src="/ORACULUM-painel-mistico/assets/index-Dcenpwem.js"></script>
-    <link rel="stylesheet" crossorigin href="/ORACULUM-painel-mistico/assets/index-CBY019DQ.css">
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Cormorant+Garamond:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <script>
+      const favicon = document.getElementById("favicon");
+      const canvas = document.createElement("canvas");
+      const context = canvas.getContext("2d");
+      const image = new Image();
+
+      canvas.width = 128;
+      canvas.height = 128;
+
+      image.crossOrigin = "anonymous";
+      image.src = "https://api.iconify.design/game-icons/all-seeing-eye.svg?color=%23392b2d";
+
+      image.onload = () => {
+        context.fillStyle = "#ffffff";
+        context.beginPath();
+        context.roundRect(0, 0, 128, 128, 20);
+        context.fill();
+
+        context.drawImage(image, 10, 10, 108, 108);
+
+        try {
+          favicon.type = "image/png";
+          favicon.href = canvas.toDataURL("image/png");
+        } catch {
+          favicon.href = image.src;
+        }
+      };
+    </script>
+    <script type="module" crossorigin src="/ORACULUM-painel-mistico/assets/index-CBrKzRgo.js"></script>
+    <link rel="stylesheet" crossorigin href="/ORACULUM-painel-mistico/assets/index-6sIC08r9.css">
   </head>
+
   <body>
     <div id="root"></div>
   </body>
